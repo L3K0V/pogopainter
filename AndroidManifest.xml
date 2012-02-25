@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="game.pogopainter"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="7" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        <activity
+            android:name=".PogoPainterActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/about_title"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name=".MultiplayerActivity"
+            android:label="@string/multiplayer_title" >
+        </activity>
+        <activity
+            android:name=".ClassicHelpActivity"
+            android:label="@string/classic_help_title"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name=".CoopHelpActivity"
+            android:label="@string/coop_help_title"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name=".DeathmatchHelpActivity"
+            android:label="@string/deathmatch_help_title"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name=".PreferencesActivity"
+            android:label="@string/settings_title" />
+    </application>
+
+</manifest>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- general -->
+    <string name="app_name">Pogo-Painter</string>
+
+    <!-- titles -->
+    <string name="main_title">Pogo-Painter</string>
+    <string name="about_title">About Pogo-Painter</string>
+    <string name="multiplayer_title">Multiplayer</string>
+    <string name="classic_help_title">Classic game rules</string>
+    <string name="coop_help_title">Coop game rules</string>
+    <string name="deathmatch_help_title">Deathmatch game rules</string>
+
+    <!-- lebels -->
+    <string name="single_player_label">Single player</string>
+    <string name="multi_player_label">Multi player</string>
+    <string name="about_label">About</string>
+    <string name="help_label">Help</string>
+    <string name="options_label">Options</string>
+    <string name="classic_label">Classic</string>
+    <string name="coop_label">Co-op</string>
+    <string name="deathmatch_label">Deathmatch</string>
+    <string name="question_label">What?</string>
+    
+    <string name="settings_label">Settings</string>
+    <string name="settings_title">Pogo-Settings</string>
+    <string name="settings_shortcut">s</string>
+
+    <!-- texts -->
+    <string name="about_text">		Pogo-Painter is one funny arcade game, that`s copying an old playstation game named <i>"Crash Bash"</i>		We developed it because we didn`t have playstation to play it anymore. 
+		Also we are students in Elsys and thats is our course work :P</string>
+
+</resources>
