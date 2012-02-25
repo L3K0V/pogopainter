@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+<!-- Classic options -->
+    <ListPreference
+        android:defaultValue="8"
+        android:dialogTitle="Choose size"
+        android:entries="@array/classic_game_cells"
+        android:entryValues="@array/classic_game_cells_values"
+        android:key="CLASSIC_BOARD_SIZE"
+        android:summary="Board size of Classic game type."
+        android:title="Classic board size" />
+    <ListPreference
+        android:defaultValue="90"
+        android:dialogTitle="Choose round time"
+        android:entries="@array/classic_game_time"
+        android:entryValues="@array/classic_game_time_values"
+        android:key="CLASSIC_GAME_TIME"
+        android:summary="Round time of every classic game"
+        android:title="Classic round time" />
+
+<!-- Deathmatch options -->
+    <ListPreference
+        android:defaultValue="8"
+        android:dialogTitle="Choose size"
+        android:entries="@array/classic_game_cells"
+        android:entryValues="@array/classic_game_cells_values"
+        android:key="DEATHMATCH_BOARD_SIZE"
+        android:summary="Board size of Deathmatch game type."
+        android:title="Deathmatch board size" />
+    <ListPreference
+        android:defaultValue="120"
+        android:dialogTitle="Choose round time"
+        android:entries="@array/deathmatch_game_time"
+        android:entryValues="@array/deathmatch_game_time_values"
+        android:key="DEATHMATCH_GAME_TIME"
+        android:summary="Round time of every deathmatch game"
+        android:title="Deathmath round time" />
+
+<!-- General -->
+    <ListPreference
+        android:defaultValue="red"
+        android:dialogTitle="Choose your color"
+        android:entries="@array/player_color"
+        android:entryValues="@array/player_color_values"
+        android:key="PLAYER_COLOR"
+        android:summary="Choose your color in-game"
+        android:title="Your color" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="GAME_SOUNDS"
+        android:summary="check if want ingame sounds"
+        android:title="Game sounds" />
+
+</PreferenceScreen>
