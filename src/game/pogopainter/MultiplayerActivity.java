@@ -9,7 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class MultiplayerActivity extends Activity implements OnClickListener{
+public class MultiplayerActivity extends Activity implements OnClickListener {
+	boolean choiceMenu = false;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -23,6 +24,15 @@ public class MultiplayerActivity extends Activity implements OnClickListener{
 
 		View deathmatchHelp = findViewById(R.id.deathmatch_help_button);
 		deathmatchHelp.setOnClickListener(this);
+		
+		View classic = findViewById(R.id.classic_button);
+		classic.setOnClickListener(this);
+
+		View coop = findViewById(R.id.coop_button);
+		coop.setOnClickListener(this);
+
+		View deathmatch = findViewById(R.id.deathmatch_button);
+		deathmatch.setOnClickListener(this);
 	}
 
 
@@ -43,6 +53,17 @@ public class MultiplayerActivity extends Activity implements OnClickListener{
 		}
 		return false;
 	}
+	
+	 @Override
+	    public boolean onPrepareOptionsMenu(Menu menu) {
+	        menu.clear(); //Clear view of previous menu
+	        MenuInflater inflater = getMenuInflater();
+	        if(choiceMenu)
+	            inflater.inflate(R.menu.multiplayer, menu);
+	        else
+	            inflater.inflate(R.menu.menu, menu);
+	        return super.onPrepareOptionsMenu(menu);
+	    }
 
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -54,6 +75,18 @@ public class MultiplayerActivity extends Activity implements OnClickListener{
 			break;
 		case R.id.deathmatch_help_button: 
 			startActivity(new Intent( this, DeathmatchHelpActivity.class));
+			break;
+		case R.id.classic_button:
+			choiceMenu = true;
+			openOptionsMenu();
+			break;
+		case R.id.coop_button: 
+			choiceMenu = true;
+			openOptionsMenu();
+			break;
+		case R.id.deathmatch_button:
+			choiceMenu = true;
+			openOptionsMenu();
 			break;
 		}
 	}
