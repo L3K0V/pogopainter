@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
 <!-- Classic options -->
+<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android" android:title="Classic">
     <ListPreference
         android:defaultValue="8"
         android:dialogTitle="Choose size"
@@ -9,7 +10,7 @@
         android:entryValues="@array/classic_game_cells_values"
         android:key="CLASSIC_BOARD_SIZE"
         android:summary="Board size of Classic game type."
-        android:title="Classic board size" />
+        android:title="Board size" />
     <ListPreference
         android:defaultValue="90"
         android:dialogTitle="Choose round time"
@@ -17,9 +18,10 @@
         android:entryValues="@array/classic_game_time_values"
         android:key="CLASSIC_GAME_TIME"
         android:summary="Round time of every classic game"
-        android:title="Classic round time" />
-
+        android:title="Round time" />
+</PreferenceCategory>
 <!-- Deathmatch options -->
+<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android" android:title="Deathmatch">
     <ListPreference
         android:defaultValue="8"
         android:dialogTitle="Choose size"
@@ -27,7 +29,7 @@
         android:entryValues="@array/classic_game_cells_values"
         android:key="DEATHMATCH_BOARD_SIZE"
         android:summary="Board size of Deathmatch game type."
-        android:title="Deathmatch board size" />
+        android:title="Board size" />
     <ListPreference
         android:defaultValue="120"
         android:dialogTitle="Choose round time"
@@ -35,8 +37,10 @@
         android:entryValues="@array/deathmatch_game_time_values"
         android:key="DEATHMATCH_GAME_TIME"
         android:summary="Round time of every deathmatch game"
-        android:title="Deathmath round time" />
+        android:title="Round time" />
+</PreferenceCategory>
 
+<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android" android:title="General">
 <!-- General -->
     <ListPreference
         android:defaultValue="red"
@@ -51,5 +55,5 @@
         android:key="GAME_SOUNDS"
         android:summary="check if want ingame sounds"
         android:title="Game sounds" />
-
+</PreferenceCategory>
 </PreferenceScreen>
