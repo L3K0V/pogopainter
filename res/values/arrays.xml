@@ -1,51 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-
     <string-array name="classic_game_cells">
         <item>Board of 36 cells (6x6)</item>
         <item>Board of 64 cells (8x8)</item>
     </string-array>
-    <string-array name="classic_game_cells_values">
+    <integer-array name="classic_game_cells_values">
         <item>6</item>
         <item>8</item>
-    </string-array>
+    </integer-array>
      <string-array name="classic_game_time">
         <item>1:30 min (90 sec)</item>
         <item>2:00 min (120 sec)</item>
     </string-array>
-    <string-array name="classic_game_time_values">
-        <item>90</item>
-        <item>120</item>
-    </string-array>
+    <integer-array name="classic_game_time_values">
+        <item>90000</item>
+        <item>120000</item>
+    </integer-array>
     <string-array name="deathmatch_game_cells">
         <item>Board of 36 cells (6x6)</item>
         <item>Board of 64 cells (8x8)</item>
     </string-array>
-    <string-array name="deathmatch_game_cells_values">
+    <integer-array name="deathmatch_game_cells_values">
         <item>6</item>
         <item>8</item>
-    </string-array>
+    </integer-array>
     <string-array name="deathmatch_game_time">
         <item>1:30 min (90 sec)</item>
         <item>2:00 min (120 sec)</item>
         <item>3:00 min (180 sec)</item>
     </string-array>
-    <string-array name="deathmatch_game_time_values">
-        <item>90</item>
-        <item>120</item>
-         <item>180</item>
-    </string-array>
+    <integer-array name="deathmatch_game_time_values">
+        <item>90000</item>
+        <item>120000</item>
+         <item>180000</item>
+    </integer-array>
     <string-array name="player_color">
         <item>Red</item>
         <item>Blue</item>
         <item>Green</item>
         <item>Yellow</item>
     </string-array>
-    <string-array name="player_color_values">
+    <array name="player_color_values">
         <item>red</item>
         <item>blue</item>
          <item>green</item>
           <item>yellow</item>
-    </string-array>
+    </array>
 
 </resources>
