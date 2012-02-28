@@ -1,8 +1,12 @@
 package game.pogopainter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -52,8 +56,21 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
             startActivity(About);
             break;
         case R.id.multiPlayer_button:
-        	Intent Multiplayer = new Intent(this, MultiplayerActivity.class);
-            startActivity(Multiplayer);
+        	BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+			if (mBluetoothAdapter == null) {
+				new AlertDialog.Builder( this )
+				.setTitle( "Ops..." )
+				.setMessage( "Bluetooth unavailiable on your device" )
+				.setNegativeButton( "Okay", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						Log.d( "AlertDialog", "Negative" );
+					}
+				} )
+				.show();
+			} else {
+				Intent Multiplayer = new Intent(this, MultiplayerActivity.class);
+	            startActivity(Multiplayer);
+			}
             break;
         case R.id.options_button:
         	Intent Options = new Intent(this, PreferencesActivity.class);
