@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="game.pogopainter"
     android:versionCode="0"
-    android:versionName="0.2.4" >
+    android:versionName="0.3.0" >
     <uses-permission  android:name="android.permission.BLUETOOTH"/>
 	<uses-permission  android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-sdk android:minSdkVersion="7" />
@@ -32,22 +32,23 @@
         </activity>
         <activity
             android:name=".ClassicHelpActivity"
-            android:label="@string/classic_help_title"
-            android:theme="@android:style/Theme.Dialog" >
+            android:label="@string/classic_help_title" >
         </activity>
         <activity
             android:name=".CoopHelpActivity"
-            android:label="@string/coop_help_title"
-            android:theme="@android:style/Theme.Dialog" >
+            android:label="@string/coop_help_title" >
         </activity>
         <activity
             android:name=".DeathmatchHelpActivity"
-            android:label="@string/deathmatch_help_title"
-            android:theme="@android:style/Theme.Dialog" >
+            android:label="@string/deathmatch_help_title" >
         </activity>
         <activity
             android:name=".PreferencesActivity"
             android:label="@string/settings_title" />
+         <activity
+            android:name=".ScoreSystemHelpActivity"
+            android:label="Score system" 
+            android:theme="@android:style/Theme.Dialog"/>
     </application>
 
 </manifest>

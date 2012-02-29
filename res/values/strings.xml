@@ -6,6 +6,7 @@
 
     <!-- titles -->
     <string name="main_title">Pogo-Painter</string>
+    <string name="about_us_title">About us</string>
     <string name="about_title">About Pogo-Painter</string>
     <string name="multiplayer_title">Multiplayer</string>
     <string name="classic_help_title">Classic game rules</string>
@@ -25,10 +26,12 @@
     <string name="settings_label">Settings</string>
     <string name="settings_title">Pogo-Settings</string>
     <string name="settings_shortcut">s</string>
+    <string name="score_rules_label">Score system</string>
 
     <!-- texts -->
-    <string name="about_text">		Pogo-Painter is one funny arcade game, that`s copying an old playstation game named <i>"Crash Bash"</i>		We developed it because we didn`t have playstation to play it anymore. 
-		Also we are students in Elsys and thats is our course work :P</string>
+    <string name="about_game_text">Pogo-Painter is a funny arcade game. It provides single &amp; multiplayer modes with different types of gameplay.</string>
+ <string name="about_us_text">We are two students from ELSYS and that`s our course project.
+</string>
     <string name="multiplayer_create_label">Create game</string>
     <string name="multiplayer_join_label">Join game</string>
 
