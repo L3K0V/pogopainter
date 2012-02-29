@@ -123,8 +123,9 @@ public class MultiplayerActivity extends Activity implements OnClickListener {
 		boolean bt = false;
 		if (jBluetoothAdapter == null) {
 			new AlertDialog.Builder( this )
-			.setTitle( "Opss..." )
-			.setMessage( "Bluetooth unavailiable on your device" )
+			.setTitle( "Ops..." )
+			.setMessage( "Bluetooth unavailable on your device. You cannot use multiplayer option!" )
+			.setIcon(android.R.drawable.ic_dialog_alert)
 			.setNegativeButton( "Okay", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					Log.d( "AlertDialog", "Negative" );
