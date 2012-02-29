@@ -6,3 +6,8 @@
 29.02
 + fixed: AlertDialog icons
 + changed: Bluetooth alert text
++ Added: coop options
++ fixed: Classic & Deathmatch options in options menu
++ changed: About screen
++ added: App version button which shows current version
++ added: Exit confirmation dialog
