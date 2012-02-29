@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="game.pogopainter"
-    android:versionCode="2"
-    android:versionName="0.2.29" >
+    android:versionCode="0"
+    android:versionName="0.2.4" >
     <uses-permission  android:name="android.permission.BLUETOOTH"/>
 	<uses-permission  android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-sdk android:minSdkVersion="7" />
+    <uses-sdk android:maxSdkVersion="13"/>
 
     <application
         android:icon="@drawable/ic_launcher"

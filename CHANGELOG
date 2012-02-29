@@ -3,7 +3,7 @@
 + fixed: version number 0.mouth.date
 + changed: main menu wallpaper (still not ready)
 
-29.02
+0.2.3(20120229)
 + fixed: AlertDialog icons
 + changed: Bluetooth alert text
 + Added: coop options
@@ -11,3 +11,7 @@
 + changed: About screen
 + added: App version button which shows current version
 + added: Exit confirmation dialog
+
+0.2.4(20120229)
++ fixed: versions
++ changed: maxSDK to version 13 Android 3.2
