@@ -38,7 +38,7 @@ public class AboutActivity extends Activity implements OnClickListener {
 
 			new AlertDialog.Builder( this )
 			.setTitle( "Pogo-Version" )
-			.setMessage("Application version: " + versionName +"("+ versionNumber + ")")
+			.setMessage("Application version: " + versionName)
 			.setIcon(android.R.drawable.ic_dialog_alert)
 			.setNegativeButton( "Okay", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
