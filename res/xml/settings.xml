@@ -20,6 +20,27 @@
         android:summary="Round time of every classic game"
         android:title="Round time" />
 </PreferenceCategory>
+
+<!-- Coop options -->
+<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android" android:title="Co-op">
+    <ListPreference
+        android:defaultValue="8"
+        android:dialogTitle="Choose size"
+        android:entries="@array/coop_game_cells"
+        android:entryValues="@array/coop_game_cells_values"
+        android:key="COOP_BOARD_SIZE"
+        android:summary="Board size of co-op game type."
+        android:title="Board size" />
+    <ListPreference
+        android:defaultValue="90"
+        android:dialogTitle="Choose round time"
+        android:entries="@array/coop_game_time"
+        android:entryValues="@array/coop_game_time_values"
+        android:key="COOP_GAME_TIME"
+        android:summary="Round time of every co-op game"
+        android:title="Round time" />
+</PreferenceCategory>
+
 <!-- Deathmatch options -->
 <PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android" android:title="Deathmatch">
     <ListPreference
@@ -31,13 +52,13 @@
         android:summary="Board size of Deathmatch game type."
         android:title="Board size" />
     <ListPreference
-        android:defaultValue="120"
-        android:dialogTitle="Choose round time"
-        android:entries="@array/deathmatch_game_time"
-        android:entryValues="@array/deathmatch_game_time_values"
-        android:key="DEATHMATCH_GAME_TIME"
-        android:summary="Round time of every deathmatch game"
-        android:title="Round time" />
+        android:defaultValue="100"
+        android:dialogTitle="Choose round points"
+        android:entries="@array/deathmatch_game_points"
+        android:entryValues="@array/deathmatch_game_points_values"
+        android:key="DEATHMATCH_POINTS"
+        android:summary="Round points of every deathmatch game"
+        android:title="Round points" />
 </PreferenceCategory>
 
 <PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android" android:title="General">

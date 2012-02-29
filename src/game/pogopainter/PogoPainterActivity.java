@@ -50,6 +50,27 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 		return false;
 	}
     
+	@Override
+	public void onBackPressed() {
+		new AlertDialog.Builder( this )
+		.setTitle( "Exit?" )
+		.setMessage( "Are you sure you want to exit?" )
+		.setIcon(android.R.drawable.ic_dialog_alert)
+		.setNegativeButton( "No", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				Log.d( "AlertDialog", "Negative" );
+			}
+		})
+		.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			
+			public void onClick(DialogInterface dialog, int which) {
+				Log.d("AlertDialog", "Positive");
+				finish();
+				
+			}
+		})
+		.show();
+	}
     public void onClick(View v) {
     	
         switch (v.getId()) {
