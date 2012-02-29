@@ -4,18 +4,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.SimpleAdapter;
 
-public class ClassicHelpActivity extends ListActivity {
+public class ClassicHelpActivity extends ListActivity implements OnClickListener {
+
+	ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.custom_list_view);
-		final ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>(); 
 
-		populateList(list);
+		
+		populateList();
+
 		SimpleAdapter adapter = new SimpleAdapter(
 				this, list,
 				R.layout.custom_row_view,
@@ -23,9 +30,12 @@ public class ClassicHelpActivity extends ListActivity {
 				new int[] {R.id.text1,R.id.text2, R.id.text3}
 				);
 		setListAdapter(adapter);
+
+		View scoreSystem = findViewById(R.id.score_button);
+		scoreSystem.setOnClickListener(this);
 	}
-	
-	private void populateList(ArrayList<HashMap<String, String>> list) {
+
+	private void populateList() {
 		HashMap<String,String> temp = new HashMap<String,String>();
 		temp.put("title","Game purpose");
 		temp.put("content", "Get most points!");
@@ -46,5 +56,14 @@ public class ClassicHelpActivity extends ListActivity {
 		temp3.put("content", "Speed, Arrow, Mark, Random");
 		temp3.put("comment", "Hint: Use bonuses to get advantage over other players");
 		list.add(temp3);
+
+	}
+
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.score_button:
+			startActivity(new Intent( this, ScoreSystemHelpActivity.class));
+			break;
+		}
 	}
 }

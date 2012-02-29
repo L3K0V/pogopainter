@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.SimpleAdapter;
 
-public class DeathmatchHelpActivity extends ListActivity {
+public class DeathmatchHelpActivity extends ListActivity implements OnClickListener {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,9 @@ public class DeathmatchHelpActivity extends ListActivity {
 				new int[] {R.id.text1,R.id.text2, R.id.text3}
 				);
 		setListAdapter(adapter);
+		
+		View scoreSystem = findViewById(R.id.score_button);
+		scoreSystem.setOnClickListener(this);
 	}
 	
 	private void populateList(ArrayList<HashMap<String, String>> list) {
@@ -46,5 +52,13 @@ public class DeathmatchHelpActivity extends ListActivity {
 		temp3.put("content", "Speed, Arrow, Mark, Random, GetPoint, HealPoints");
 		temp3.put("comment", "Hint: Use bonuses to get advantage over other players");
 		list.add(temp3);
+	}
+	
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.score_button:
+			startActivity(new Intent( this, ScoreSystemHelpActivity.class));
+			break;
+		}
 	}
 }

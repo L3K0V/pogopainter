@@ -15,3 +15,13 @@
 0.2.4(20120229)
 + fixed: versions
 + changed: maxSDK to version 13 Android 3.2
+
+0.3.0(20120229)
++ edited: about text
++ added: about us text
++ added: about us & about game in About menu layout
++ changed: "App version" to "Check application version"
++ changed: margin-top of Check application version button
++ added: Score system help
++ added: Score system button in WHAT? menus
++ change: WHAT? layouts
