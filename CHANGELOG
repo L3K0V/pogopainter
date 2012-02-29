@@ -25,3 +25,6 @@
 + added: Score system help
 + added: Score system button in WHAT? menus
 + change: WHAT? layouts
+
+0.3.1(20120229)
++ fix minor type error in strings

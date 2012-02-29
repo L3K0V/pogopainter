@@ -17,7 +17,7 @@
         android:entries="@array/classic_game_time"
         android:entryValues="@array/classic_game_time_values"
         android:key="CLASSIC_GAME_TIME"
-        android:summary="Round time of every classic game"
+        android:summary="Round time of every Classic game"
         android:title="Round time" />
 </PreferenceCategory>
 
@@ -29,7 +29,7 @@
         android:entries="@array/coop_game_cells"
         android:entryValues="@array/coop_game_cells_values"
         android:key="COOP_BOARD_SIZE"
-        android:summary="Board size of co-op game type."
+        android:summary="Board size of Co-op game type."
         android:title="Board size" />
     <ListPreference
         android:defaultValue="90"
@@ -37,7 +37,7 @@
         android:entries="@array/coop_game_time"
         android:entryValues="@array/coop_game_time_values"
         android:key="COOP_GAME_TIME"
-        android:summary="Round time of every co-op game"
+        android:summary="Round time of every Co-op game"
         android:title="Round time" />
 </PreferenceCategory>
 
@@ -57,7 +57,7 @@
         android:entries="@array/deathmatch_game_points"
         android:entryValues="@array/deathmatch_game_points_values"
         android:key="DEATHMATCH_POINTS"
-        android:summary="Round points of every deathmatch game"
+        android:summary="Round points of every Deathmatch game"
         android:title="Round points" />
 </PreferenceCategory>
 
@@ -74,7 +74,7 @@
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="GAME_SOUNDS"
-        android:summary="check if want ingame sounds"
+        android:summary="Check if you want in-game sounds"
         android:title="Game sounds" />
 </PreferenceCategory>
 </PreferenceScreen>
