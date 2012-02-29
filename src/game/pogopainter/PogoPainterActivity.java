@@ -1,10 +1,12 @@
 package game.pogopainter;
 
+import android.R.drawable;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -60,7 +62,8 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 			if (mBluetoothAdapter == null) {
 				new AlertDialog.Builder( this )
 				.setTitle( "Ops..." )
-				.setMessage( "Bluetooth unavailiable on your device" )
+				.setMessage( "Bluetooth unavailable on your device. You cannot use multiplayer option!" )
+				.setIcon(android.R.drawable.ic_dialog_alert)
 				.setNegativeButton( "Okay", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						Log.d( "AlertDialog", "Negative" );
