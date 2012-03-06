@@ -1,12 +1,10 @@
 package game.pogopainter;
 
-import android.R.drawable;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -58,13 +56,12 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 		.setIcon(android.R.drawable.ic_dialog_alert)
 		.setNegativeButton( "No", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-				Log.d( "AlertDialog", "Negative" );
+				Log.d( "ExitDialog", "Negative" );
 			}
 		})
 		.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-			
 			public void onClick(DialogInterface dialog, int which) {
-				Log.d("AlertDialog", "Positive");
+				Log.d("ExitDialog", "Positive");
 				finish();
 				
 			}
@@ -75,31 +72,42 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
     	
         switch (v.getId()) {
         case R.id.about_button:
+        	Log.d("MainActivity:AboutButton", "Clicked");
         	Intent About = new Intent(this, AboutActivity.class);
             startActivity(About);
             break;
         case R.id.multiPlayer_button:
         	BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 			if (mBluetoothAdapter == null) {
+				Log.d("MainActivity:MultiplaterButton", "BluetoothAlert");
 				new AlertDialog.Builder( this )
 				.setTitle( "Ops..." )
 				.setMessage( "Bluetooth unavailable on your device. You cannot use multiplayer option!" )
 				.setIcon(android.R.drawable.ic_dialog_alert)
 				.setNegativeButton( "Okay", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
-						Log.d( "AlertDialog", "Negative" );
+						Log.d( "MainActivity:BluetoothAlert", "Clicked" );
 					}
 				} )
 				.show();
 			} else {
+				Log.d("MainActivity:MultiplayerButton", "Clicked");
 				Intent Multiplayer = new Intent(this, MultiplayerActivity.class);
 	            startActivity(Multiplayer);
 			}
             break;
         case R.id.options_button:
+        	Log.d("MainActivity:PreferencesButton", "Clicked");
         	Intent Options = new Intent(this, PreferencesActivity.class);
             startActivity(Options);
             break;
         }
+    }
+    
+    @Override
+    protected void onDestroy() {
+    	Log.d("MainActivity:onDestroy", "Exiting");
+    	this.finish();
+    	super.onDestroy();
     }
 }
