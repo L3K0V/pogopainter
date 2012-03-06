@@ -15,7 +15,12 @@ import android.view.View.OnClickListener;
 
 public class MultiplayerActivity extends Activity implements OnClickListener {
 	boolean choiceMenu = false;
-	
+	private static BluetoothAdapter myBluetoothAdapter = null;
+
+	public static BluetoothAdapter getPogoBluetoothAdapter() {
+		return myBluetoothAdapter;
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,6 +49,7 @@ public class MultiplayerActivity extends Activity implements OnClickListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
+		Log.d("Options menu", "Initialized");
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu, menu);
 		return true;
@@ -53,14 +59,15 @@ public class MultiplayerActivity extends Activity implements OnClickListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.settings:
+			Log.d("Multiplayer", "Settings opened");
 			startActivity(new Intent(this, PreferencesActivity.class));
 			return true;
 		case R.id.create:
 			if (checkForBluetooth() == true) {
-
 				Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
 				discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
 				startActivity(discoverableIntent);
+				myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 			} else {
 				checkForBluetooth();
 			}
@@ -70,6 +77,7 @@ public class MultiplayerActivity extends Activity implements OnClickListener {
 				Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 				int REQUEST_ENABLE_BT = 0;
 				startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT );
+				myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 			} else {
 				checkForBluetooth();
 			}
@@ -117,7 +125,7 @@ public class MultiplayerActivity extends Activity implements OnClickListener {
 			break;
 		}
 	}
-	
+
 	private boolean checkForBluetooth() {
 		BluetoothAdapter jBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		boolean bt = false;

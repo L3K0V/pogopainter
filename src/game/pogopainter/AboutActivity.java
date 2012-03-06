@@ -3,7 +3,6 @@ package game.pogopainter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
@@ -25,12 +24,10 @@ public class AboutActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.version_button:
-
 			PackageInfo pinfo = null;
 			try {
 				pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 			} catch (NameNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			int versionNumber = pinfo.versionCode;
@@ -38,11 +35,11 @@ public class AboutActivity extends Activity implements OnClickListener {
 
 			new AlertDialog.Builder( this )
 			.setTitle( "Pogo-Version" )
-			.setMessage("Application version: " + versionName)
+			.setMessage("Application version: " + versionNumber + "." + versionName)
 			.setIcon(android.R.drawable.ic_dialog_alert)
 			.setNegativeButton( "Okay", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
-					Log.d( "AlertDialog", "Negative" );
+					Log.d( "Version dialog", "Positive (exit)" );
 				}
 			} )
 			.show();

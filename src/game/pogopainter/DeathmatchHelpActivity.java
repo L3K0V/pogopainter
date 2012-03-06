@@ -6,6 +6,7 @@ import java.util.HashMap;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.SimpleAdapter;
@@ -57,6 +58,7 @@ public class DeathmatchHelpActivity extends ListActivity implements OnClickListe
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.score_button:
+			Log.d("CoopHelp", "Score clicked");
 			startActivity(new Intent( this, ScoreSystemHelpActivity.class));
 			break;
 		}

@@ -28,3 +28,8 @@
 
 0.3.1(20120229)
 + fix minor type error in strings
+
+0.3.2(20120306)
++ changed way for versioning
++ Added: preference toast (need to be fixed)
++ Added: some log debugs
