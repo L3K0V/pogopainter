@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:gravity="center_vertical"
     android:background="@drawable/repeatable"
     android:baselineAligned="true"
     android:orientation="horizontal"
-    android:padding="30dip" >
+    android:padding="20dip" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -39,18 +40,13 @@
             android:layout_height="wrap_content"
             android:text="@string/options_label" />
 
-        <RelativeLayout
-            android:id="@+id/help_options"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
-
-            <Button
-                android:id="@+id/about_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:text="@string/about_label" />
+         <Button
+             android:id="@+id/about_button"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:layout_alignParentRight="true"
+             android:layout_alignParentTop="true"
+             android:text="@string/about_label" />
 
             <Button
                 android:id="@+id/help_button"
@@ -59,8 +55,6 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/about_button"
                 android:text="@string/help_label" />
-
-        </RelativeLayout>
     </LinearLayout>
 
 </LinearLayout>

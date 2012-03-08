@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/resetSettings" android:title="Reset Settings" android:icon="@android:drawable/ic_menu_revert"></item>
+    <item android:id="@id/version" android:title="@string/version" android:icon="@android:drawable/ic_menu_info_details"></item>
+</menu>

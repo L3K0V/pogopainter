@@ -8,13 +8,15 @@ import android.os.Bundle;
 import android.widget.SimpleAdapter;
 
 public class ScoreSystemHelpActivity extends ListActivity {
+
 	ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_score_help);
 
-		
+
 		populateList();
 
 		SimpleAdapter adapter = new SimpleAdapter(
@@ -22,7 +24,16 @@ public class ScoreSystemHelpActivity extends ListActivity {
 				R.layout.custom_row_view,
 				new String[] {"title","content","comment"},
 				new int[] {R.id.text1,R.id.text2, R.id.text3}
-				);
+				) {
+			public boolean areAllItemsEnabled() 
+			{ 
+				return false; 
+			} 
+			public boolean isEnabled(int position) 
+			{ 
+				return false; 
+			}
+		};
 		setListAdapter(adapter);
 	}
 

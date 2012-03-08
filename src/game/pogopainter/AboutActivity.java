@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 public class AboutActivity extends Activity implements OnClickListener {
-	/** Called when the activity is first created. */
+	
+	private String tag = "About";
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,7 +41,7 @@ public class AboutActivity extends Activity implements OnClickListener {
 			.setIcon(android.R.drawable.ic_dialog_alert)
 			.setNegativeButton( "Okay", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
-					Log.d( "Version dialog", "Positive (exit)" );
+					Log.d( tag, "Version exit" );
 				}
 			} )
 			.show();

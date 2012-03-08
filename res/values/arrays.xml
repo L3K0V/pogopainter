@@ -10,6 +10,7 @@
         <item>6</item>
         <item>8</item>
     </string-array>
+    
     <string-array name="classic_game_time">
         <item>1:30 min (90 sec)</item>
         <item>2:00 min (120 sec)</item>
@@ -28,6 +29,7 @@
         <item>6</item>
         <item>8</item>
     </string-array>
+   
     <string-array name="coop_game_time">
         <item>1:30 min (90 sec)</item>
         <item>2:00 min (120 sec)</item>
@@ -36,7 +38,7 @@
         <item>90</item>
         <item>120</item>
     </string-array>
-    
+
     <!-- deathmatch -->
     <string-array name="deathmatch_game_cells">
         <item>Board of 36 cells (6x6)</item>
@@ -46,6 +48,7 @@
         <item>6</item>
         <item>8</item>
     </string-array>
+    
     <string-array name="deathmatch_game_points">
         <item>100</item>
         <item>250</item>
@@ -56,6 +59,7 @@
         <item>250</item>
         <item>500</item>
     </string-array>
+    
     <string-array name="player_color">
         <item>Red</item>
         <item>Blue</item>

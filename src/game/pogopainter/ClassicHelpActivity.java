@@ -13,14 +13,15 @@ import android.widget.SimpleAdapter;
 
 public class ClassicHelpActivity extends ListActivity implements OnClickListener {
 
-	ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
+	final ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
+	private String tag = "Classic help";
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.custom_list_view);
-		
+
 		populateList();
 
 		SimpleAdapter adapter = new SimpleAdapter(
@@ -28,7 +29,19 @@ public class ClassicHelpActivity extends ListActivity implements OnClickListener
 				R.layout.custom_row_view,
 				new String[] {"title","content","comment"},
 				new int[] {R.id.text1,R.id.text2, R.id.text3}
-				);
+				) {
+			public boolean areAllItemsEnabled() 
+			{ 
+				return false; 
+			} 
+			public boolean isEnabled(int position) 
+			{ 
+				return false; 
+			} 
+		};
+
+
+
 		setListAdapter(adapter);
 
 		View scoreSystem = findViewById(R.id.score_button);
@@ -62,7 +75,7 @@ public class ClassicHelpActivity extends ListActivity implements OnClickListener
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.score_button:
-			Log.d("ClassicHelp", "Score clicked");
+			Log.d(tag, "Score");
 			startActivity(new Intent( this, ScoreSystemHelpActivity.class));
 			break;
 		}
