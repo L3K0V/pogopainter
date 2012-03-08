@@ -5,12 +5,14 @@
     android:background="@drawable/repeatable"
     android:baselineAligned="true"
     android:orientation="horizontal"
-    android:padding="30dip" >
- <LinearLayout
+    android:padding="20dip" >
+
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical" >
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -18,16 +20,21 @@
             android:layout_marginBottom="25dip"
             android:text="Pogo-Rules"
             android:textSize="24.5sp" />
-    <ListView
-        android:id="@android:id/list"
-        android:layout_width="fill_parent"
-        android:layout_marginBottom="25dip"
-        android:layout_height="wrap_content" >
-    </ListView>
-     <Button
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dip"
+            android:cacheColorHint="#00000000"
+            android:listSelector="@android:color/transparent" >
+        </ListView>
+
+        <Button
             android:id="@+id/score_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/score_rules_label" />
-   </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>

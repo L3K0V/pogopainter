@@ -33,3 +33,20 @@
 + changed way for versioning
 + Added: preference toast (need to be fixed)
 + Added: some log debugs
+
+0.3.3(20120307)
++ fixed: preference toast
++ fixed: debug logs
++ added: debug logs all Activities
++ changed: help button position in main menu
++ Layouts minor changes in padding
++ Cosmetic changes & indention in strings.xml
+
+
+0.3.4(20120306)
++ fixed: version check multiplayer`s option menu
++ added: version check in option menu
++ added: resetSettings entry in option menu
++ working reset preference button
++ fixed: score system now is not clickable
++ fixed: list help sections in game modes now are not clickable

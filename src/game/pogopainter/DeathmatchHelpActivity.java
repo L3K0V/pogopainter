@@ -12,27 +12,38 @@ import android.view.View.OnClickListener;
 import android.widget.SimpleAdapter;
 
 public class DeathmatchHelpActivity extends ListActivity implements OnClickListener {
-	/** Called when the activity is first created. */
+
+	final ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>(); 
+	private String tag = "Deathmatch";
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.custom_list_view);
-		final ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>(); 
 
-		populateList(list);
+		populateList();
 		SimpleAdapter adapter = new SimpleAdapter(
 				this, list,
 				R.layout.custom_row_view,
 				new String[] {"title","content","comment"},
 				new int[] {R.id.text1,R.id.text2, R.id.text3}
-				);
+				) {
+			public boolean areAllItemsEnabled() 
+			{ 
+				return false; 
+			} 
+			public boolean isEnabled(int position) 
+			{ 
+				return false; 
+			} 
+		};
 		setListAdapter(adapter);
-		
+
 		View scoreSystem = findViewById(R.id.score_button);
 		scoreSystem.setOnClickListener(this);
 	}
-	
-	private void populateList(ArrayList<HashMap<String, String>> list) {
+
+	private void populateList() {
 		HashMap<String,String> temp = new HashMap<String,String>();
 		temp.put("title","Game purpose");
 		temp.put("content", "Zero the oponent points");
@@ -54,11 +65,11 @@ public class DeathmatchHelpActivity extends ListActivity implements OnClickListe
 		temp3.put("comment", "Hint: Use bonuses to get advantage over other players");
 		list.add(temp3);
 	}
-	
+
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.score_button:
-			Log.d("CoopHelp", "Score clicked");
+			Log.d(tag, "Score");
 			startActivity(new Intent( this, ScoreSystemHelpActivity.class));
 			break;
 		}
