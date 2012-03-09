@@ -60,6 +60,7 @@
         <item>500</item>
     </string-array>
     
+    <!-- general -->
     <string-array name="player_color">
         <item>Red</item>
         <item>Blue</item>
@@ -72,6 +73,16 @@
         <item>blue</item>
         <item>green</item>
         <item>yellow</item>
+    </array>
+    
+     <string-array name="player_controls">
+        <item>Left</item>
+        <item>Right</item>
+    </string-array>
+
+    <array name="player_controls_values">
+        <item>left</item>
+        <item>right</item>
     </array>
 
 </resources>

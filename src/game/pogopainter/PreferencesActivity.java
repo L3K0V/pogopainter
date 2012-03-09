@@ -1,5 +1,7 @@
 package game.pogopainter;
 
+import java.util.Map;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -60,7 +62,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 
 				new AlertDialog.Builder( this )
 				.setTitle( "Pogo-Version" )
-				.setMessage("Application version: " + versionNumber + "." + versionName)
+				.setMessage("Application version: " + versionName)
 				.setIcon(android.R.drawable.ic_dialog_alert)
 				.setNegativeButton( "Okay", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
@@ -100,7 +102,9 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
-		Log.d(tag, "Change " + key);
+		Map<String, ?> prefs = sharedPreferences.getAll();
+
+		Log.d(tag, "Change " + key + " to " + prefs.get(key));
 		setResult(RESULT_OK, data);
 	}
 }

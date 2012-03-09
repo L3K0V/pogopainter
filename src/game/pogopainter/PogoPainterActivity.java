@@ -32,6 +32,9 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
         View multiPlayerButton = findViewById(R.id.multiPlayer_button);
         multiPlayerButton.setOnClickListener(this);
         
+        View singlePlayerButton = findViewById(R.id.singlePlayer_button);
+        singlePlayerButton.setOnClickListener(this);
+        
         View optionsButton = findViewById(R.id.options_button);
         optionsButton.setOnClickListener(this);
     }
@@ -102,6 +105,11 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
         	Log.d( tag, "About");
         	Intent About = new Intent(this, AboutActivity.class);
             startActivity(About);
+            break;
+        case R.id.singlePlayer_button:
+        	Log.d( tag, "Singleplayer");
+        	Intent Single = new Intent(this, MultiplayerActivity.class);
+            startActivity(Single);
             break;
         case R.id.multiPlayer_button:
         	BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();

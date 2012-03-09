@@ -35,6 +35,7 @@
 + Added: some log debugs
 
 0.3.3(20120307)
++ changed: oriantation of application to Portrait
 + fixed: preference toast
 + fixed: debug logs
 + added: debug logs all Activities
@@ -43,10 +44,16 @@
 + Cosmetic changes & indention in strings.xml
 
 
-0.3.4(20120306)
+0.3.4(20120308)
 + fixed: version check multiplayer`s option menu
 + added: version check in option menu
 + added: resetSettings entry in option menu
 + working reset preference button
 + fixed: score system now is not clickable
 + fixed: list help sections in game modes now are not clickable
+
+0.3.4(20120309)
++ changed: preferences debug will now show changed value
+from: "Change GAME_SOUNDS" 
+to: "Change GAME_SOUNDS to true"
++ added: option for controls position

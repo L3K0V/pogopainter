@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="game.pogopainter"
     android:versionCode="0"
-    android:versionName="3.4" >
+    android:versionName="0.3.4" >
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -29,6 +29,11 @@
             android:label="@string/about_title"
             android:theme="@android:style/Theme.Dialog" 
             android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".BoardActivity"
+            android:label="SinglePlayer"
+            android:screenOrientation="landscape">
         </activity>
         <activity
             android:name=".MultiplayerActivity"
