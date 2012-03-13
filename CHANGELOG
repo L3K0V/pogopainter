@@ -57,3 +57,8 @@
 from: "Change GAME_SOUNDS" 
 to: "Change GAME_SOUNDS to true"
 + added: option for controls position
+
+0.3.5(20120313)
++ added: Lang options
++ added: Initial bulgarian translate
+- bug: need to restart app to change completely lang

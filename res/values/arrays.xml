@@ -10,7 +10,6 @@
         <item>6</item>
         <item>8</item>
     </string-array>
-    
     <string-array name="classic_game_time">
         <item>1:30 min (90 sec)</item>
         <item>2:00 min (120 sec)</item>
@@ -29,7 +28,6 @@
         <item>6</item>
         <item>8</item>
     </string-array>
-   
     <string-array name="coop_game_time">
         <item>1:30 min (90 sec)</item>
         <item>2:00 min (120 sec)</item>
@@ -48,7 +46,6 @@
         <item>6</item>
         <item>8</item>
     </string-array>
-    
     <string-array name="deathmatch_game_points">
         <item>100</item>
         <item>250</item>
@@ -59,7 +56,7 @@
         <item>250</item>
         <item>500</item>
     </string-array>
-    
+
     <!-- general -->
     <string-array name="player_color">
         <item>Red</item>
@@ -74,8 +71,8 @@
         <item>green</item>
         <item>yellow</item>
     </array>
-    
-     <string-array name="player_controls">
+
+    <string-array name="player_controls">
         <item>Left</item>
         <item>Right</item>
     </string-array>
@@ -83,6 +80,23 @@
     <array name="player_controls_values">
         <item>left</item>
         <item>right</item>
+    </array>
+
+    <string-array name="game_lang">
+        <item>English</item>
+        <item>Bulgarian</item>
+        <item>German</item>
+        <item>Portoguese</item>
+        <item>Spanish</item>
+
+    </string-array>
+
+    <array name="game_lang_values">
+        <item>English</item>
+        <item>Bulgarian</item>
+        <item>German</item>
+        <item>Portoguese</item>
+        <item>Spanish</item>
     </array>
 
 </resources>
