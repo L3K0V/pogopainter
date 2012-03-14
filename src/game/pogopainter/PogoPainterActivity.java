@@ -6,7 +6,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,12 +25,6 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
-		DisplayMetrics metrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		
-		extras.setScreenHeight(metrics.heightPixels);
-		extras.setScreenWidth(metrics.widthPixels);
 
 		View aboutButton = findViewById(R.id.about_button);
 		aboutButton.setOnClickListener(this);
@@ -53,7 +46,7 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 		inflater.inflate(R.menu.menu, menu);
 		return true;
 	}
-
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {

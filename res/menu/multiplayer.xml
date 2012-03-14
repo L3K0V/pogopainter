@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/create" android:title="@string/multiplayer_create_label" android:icon="@android:drawable/ic_menu_add"></item>
-    <item android:id="@+id/join" android:title="Join" android:icon="@android:drawable/ic_menu_share"></item>
+
+    <item
+        android:id="@+id/create"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/multiplayer_create_label">
+    </item>
+    <item
+        android:id="@+id/join"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="Join">
+    </item>
+
 </menu>
