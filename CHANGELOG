@@ -80,3 +80,9 @@ to: "Change GAME_SOUNDS to true"
 + changed: some cosmetics on about screen
 + changed: about to 2 tabs (about us & about pogo)
 + reduced strings redundancy (70% left)
+
+0.4.2(20120314)
++ Canvas init (20%)
++ Getting options from preferences
++ added: Context menu in about
++ reduced many lines of code

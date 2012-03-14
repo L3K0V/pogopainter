@@ -11,9 +11,6 @@ import android.util.Log;
 
 public class ExtrasActivity extends Activity {
 	private String tag = "Extras";
-	private int width;
-	private int height;
-	private int cell;
 
 	public void checkAppVersion(Context context) {
 
@@ -21,7 +18,7 @@ public class ExtrasActivity extends Activity {
 			Log.d(tag, "Version check");
 			PackageInfo pinfo = null;
 			pinfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-			int versionNumber = pinfo.versionCode;
+//			int versionNumber = pinfo.versionCode;
 			String versionName = pinfo.versionName;
 
 			new AlertDialog.Builder(context)
@@ -57,40 +54,5 @@ public class ExtrasActivity extends Activity {
 		} else 
 			bt = true;
 		return bt;
-	}
-
-	public void calculateScreen() {
-
-		//this.width = metrics.widthPixels;
-		//this.height = metrics.heightPixels;
-		this.cell = width / 8;
-		//width = shirochina
-		//height = visochina
-		// TODO: return cell numbers too 
-	}
-	
-	public int getCellSize() {
-		calculateScreen();
-		return this.cell;
-	}
-	
-	public int getScreenWidth() {
-		calculateScreen();
-		return this.width;
-	}
-	
-	public int getScreenHeight() {
-		calculateScreen();
-		return this.height;
-	}
-	
-	public void setScreenWidth(int w) {
-		//calculateScreen();
-		this.width = w;
-	}
-	
-	public void setScreenHeight(int h) {
-		//calculateScreen();
-		this.height = h;
 	}
 }

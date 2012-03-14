@@ -1,26 +1,27 @@
 package game.graphics;
 
 import game.pogopainter.ExtrasActivity;
-import game.system.Board;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
 
 public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	private CanvasThread _thread;
 	public ExtrasActivity extras = new ExtrasActivity();
+
 	
 	public Panel(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		getHolder().addCallback(this);
 		_thread = new CanvasThread(getHolder(), this);
 		setFocusable(true);
+
 	}
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
@@ -49,7 +50,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		canvas.drawColor(Color.YELLOW);
 		Paint paint = new Paint();
 		
-		int cellSize = extras.getCellSize();
+		//int cellSize = extras.getCellSize();
 		
 //		Board board = new Board(8);
 //		
@@ -66,8 +67,9 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 //			}
 //		}
 		
-		paint.setColor(Color.BLACK);
-		Rect rect = new Rect((1 * cellSize), (1 * cellSize), cellSize, cellSize);
+		
+		paint.setColor(Color.RED);
+		Rect rect = new Rect(100, 100, getWidth(), getWidth());
 		canvas.drawRect(rect, paint);
 		
 		paint.setColor(Color.RED);
