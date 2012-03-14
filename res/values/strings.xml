@@ -4,6 +4,17 @@
     <!-- general -->
     <string name="app_name">Pogo Painter</string>
     <string name="version">Version</string>
+    <string name="exit">Exit</string>
+    <string name="exit_question">Are you sure you want to exit?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="ok">Okay</string>
+    <string name="ops">Opss...</string>
+    <string name="bluetooth_miss">Bluetooth unavailable on your device. You cannot use multiplayer option!</string>
+    <string name="pref_changed">Preferences changed</string>
+    <string name="pref_reset">Preference reset</string>
+    <string name="change_saved">Changes saved</string>
+    <string name="lang_change">Language changed</string>
 
     <!-- main menu -->
     <string name="main_title">Pogo Painter</string>
@@ -32,6 +43,7 @@
   	<!-- about -->
     <string name="about_us_title">About us</string>
     <string name="about_title">About Pogo Painter</string>
+    <string name="contact_us">Contact us</string>
     
     <string name="about_game_text">
         Pogo Painter is a funny &amp; arcade game. It provides single &amp; multiplayer modes with different types of gameplay.
@@ -42,6 +54,8 @@
 	</string>
 
     <!-- settings -->
+    <string name="pogo_reset">Pogo Reset</string>
+    <string name="pogo_reset_question">"Do you want to reset game preferences?"</string>
     <string name="settings_label">Settings</string>
     <string name="settings_title">Pogo Settings</string>
     <string name="settings_shortcut">s</string>

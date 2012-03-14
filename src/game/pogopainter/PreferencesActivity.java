@@ -8,8 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
@@ -24,6 +22,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 	private SharedPreferences settings;
 	private String tag = "Preferences";
 	private Intent data = new Intent();
+	private ExtrasActivity extras = new ExtrasActivity();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,37 +51,19 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.version:
-			PackageInfo pinfo = null;
-			try {
-				pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-			} catch (NameNotFoundException e) {
-				e.printStackTrace();
-			}
-			int versionNumber = pinfo.versionCode;
-			String versionName = pinfo.versionName;
-
-			new AlertDialog.Builder( this )
-			.setTitle( "Pogo-Version" )
-			.setMessage("Application version: " + versionName)
-			.setIcon(android.R.drawable.ic_dialog_alert)
-			.setNegativeButton( "Okay", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					Log.d( tag, "Version exit" );
-				}
-			} )
-			.show();
+			extras.checkAppVersion(this);
 			return true;
 		case R.id.resetSettings:
-			new AlertDialog.Builder( this )
-			.setTitle( "Pogo-Reset" )
-			.setMessage("Do you want to reset game preferences?")
+			new AlertDialog.Builder(this)
+			.setTitle(getString(R.string.pogo_reset))
+			.setMessage(getString(R.string.pogo_reset_question))
 			.setIcon(android.R.drawable.ic_dialog_alert)
-			.setNegativeButton( "No", new DialogInterface.OnClickListener() {
+			.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					Log.d( tag, "Reset negative" );
 				}
 			})
-			.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					Log.d(tag, "Reset positive");
 					settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -110,7 +91,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 			} else if ("Bulgarian".equals(lang)) {
 				lang = "bg";
 			}
-			
+
 			Locale local = new Locale(lang);
 			Locale.setDefault(local);
 			Configuration config = new Configuration();

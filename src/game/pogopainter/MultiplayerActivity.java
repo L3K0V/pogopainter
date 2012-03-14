@@ -1,12 +1,8 @@
 package game.pogopainter;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,6 +16,7 @@ public class MultiplayerActivity extends Activity implements OnClickListener {
 	private String tag = "Multiplayer";
 	boolean choiceMenu = false;
 	private static BluetoothAdapter myBluetoothAdapter = null;
+	private ExtrasActivity extras = new ExtrasActivity();
 
 	public static BluetoothAdapter getPogoBluetoothAdapter() {
 		return myBluetoothAdapter;
@@ -67,47 +64,29 @@ public class MultiplayerActivity extends Activity implements OnClickListener {
 			return true;
 		case R.id.create:
 			Log.d(tag, "Create");
-			if (checkForBluetooth() == true) {
+			if (extras.checkForBluetooth(this) == true) {
 				Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
 				discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
 				startActivity(discoverableIntent);
 				myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 			} else {
-				checkForBluetooth();
+				extras.checkForBluetooth(this);
 			}
 			return true;
 		case R.id.join:
 			Log.d(tag, "Join");
-			if (checkForBluetooth() == true) {
+			if (extras.checkForBluetooth(this) == true) {
 				Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 				int REQUEST_ENABLE_BT = 0;
 				startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT );
 				myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 			} else {
-				checkForBluetooth();
+				extras.checkForBluetooth(this);
 			}
 			return true;
 
 		case R.id.version:
-			PackageInfo pinfo = null;
-			try {
-				pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-			} catch (NameNotFoundException e) {
-				e.printStackTrace();
-			}
-			int versionNumber = pinfo.versionCode;
-			String versionName = pinfo.versionName;
-
-			new AlertDialog.Builder( this )
-			.setTitle( "Pogo-Version" )
-			.setMessage("Application version: " + versionName)
-			.setIcon(android.R.drawable.ic_dialog_alert)
-			.setNegativeButton( "Okay", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					Log.d( tag, "Version exit" );
-				}
-			} )
-			.show();
+			extras.checkAppVersion(this);
 			return true;
 		}
 		return false;
@@ -160,25 +139,5 @@ public class MultiplayerActivity extends Activity implements OnClickListener {
 			choiceMenu = false;
 			break;
 		}
-	}
-
-	private boolean checkForBluetooth() {
-		BluetoothAdapter jBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		boolean bt = false;
-		if (jBluetoothAdapter == null) {
-			new AlertDialog.Builder( this )
-			.setTitle( "Ops..." )
-			.setMessage( "Bluetooth unavailable on your device. You cannot use multiplayer option!" )
-			.setIcon(android.R.drawable.ic_dialog_alert)
-			.setNegativeButton( "Okay", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					Log.d(tag, "Bluetooth alert" );
-				}
-			} )
-			.show();
-			bt = false;
-		} else 
-			bt = true;
-		return bt;
 	}
 }

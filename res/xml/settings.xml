@@ -80,7 +80,7 @@
         android:summary="Choose your controls position"
         android:title="Controls" />
     <ListPreference
-        android:defaultValue="en"
+        android:defaultValue="English"
         android:dialogTitle="Game language"
         android:entries="@array/game_lang"
         android:entryValues="@array/game_lang_values"
