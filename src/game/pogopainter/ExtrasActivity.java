@@ -11,18 +11,21 @@ import android.util.Log;
 
 public class ExtrasActivity extends Activity {
 	private String tag = "Extras";
-	
+	private int width;
+	private int height;
+	private int cell;
+
 	public void checkAppVersion(Context context) {
-		
+
 		try {
 			Log.d(tag, "Version check");
 			PackageInfo pinfo = null;
 			pinfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
 			int versionNumber = pinfo.versionCode;
 			String versionName = pinfo.versionName;
-			
+
 			new AlertDialog.Builder(context)
-			.setTitle( "Pogo-Version" )
+			.setTitle( "Pogo Version" )
 			.setMessage("Application version: " + versionName)
 			.setIcon(android.R.drawable.ic_dialog_alert)
 			.setNegativeButton( "Okay", new DialogInterface.OnClickListener() {
@@ -35,7 +38,7 @@ public class ExtrasActivity extends Activity {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean checkForBluetooth(Context context) {
 		BluetoothAdapter jBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		boolean bt = false;
@@ -54,5 +57,40 @@ public class ExtrasActivity extends Activity {
 		} else 
 			bt = true;
 		return bt;
+	}
+
+	public void calculateScreen() {
+
+		//this.width = metrics.widthPixels;
+		//this.height = metrics.heightPixels;
+		this.cell = width / 8;
+		//width = shirochina
+		//height = visochina
+		// TODO: return cell numbers too 
+	}
+	
+	public int getCellSize() {
+		calculateScreen();
+		return this.cell;
+	}
+	
+	public int getScreenWidth() {
+		calculateScreen();
+		return this.width;
+	}
+	
+	public int getScreenHeight() {
+		calculateScreen();
+		return this.height;
+	}
+	
+	public void setScreenWidth(int w) {
+		//calculateScreen();
+		this.width = w;
+	}
+	
+	public void setScreenHeight(int h) {
+		//calculateScreen();
+		this.height = h;
 	}
 }

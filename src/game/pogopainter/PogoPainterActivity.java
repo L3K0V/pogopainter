@@ -5,9 +5,8 @@ import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +26,12 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
+		DisplayMetrics metrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		
+		extras.setScreenHeight(metrics.heightPixels);
+		extras.setScreenWidth(metrics.widthPixels);
 
 		View aboutButton = findViewById(R.id.about_button);
 		aboutButton.setOnClickListener(this);
@@ -92,6 +97,8 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.singlePlayer_button:
 			Log.d( tag, "Singleplayer");
+			Intent Single = new Intent(this, CanvasActivity.class);
+			startActivity(Single);
 			break;
 		case R.id.multiPlayer_button:
 			BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
