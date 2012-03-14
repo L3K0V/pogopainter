@@ -1,4 +1,4 @@
-package game.graphics;
+package game.pogopainter;
 
 import game.pogopainter.R;
 import android.app.Activity;

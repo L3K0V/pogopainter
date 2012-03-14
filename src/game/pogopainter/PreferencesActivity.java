@@ -20,6 +20,7 @@ import android.view.MenuItem;
 public class PreferencesActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
 	private SharedPreferences settings;
+	public SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 	private String tag = "Preferences";
 	private Intent data = new Intent();
 	private ExtrasActivity extras = new ExtrasActivity();
