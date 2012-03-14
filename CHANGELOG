@@ -68,3 +68,15 @@ to: "Change GAME_SOUNDS to true"
 + added: player package
 + added: graphics package
 + added: Canvas init
+
+0.4.1(20120313)
++ fixed: bug when change language
++ fixed: bug - application shutdown when open a physical keyboard
++ fixed: bug in application version check from main menu
++ fixed: bug - no default value for language
++ added: Contact us button that opens send mail to us in About us window
++ reducing redundancy for version check
++ added: class activity extras for functions
++ changed: some cosmetics on about screen
++ changed: about to 2 tabs (about us & about pogo)
++ reduced strings redundancy (70% left)

@@ -20,6 +20,7 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 
 	private int reques_code = 1;
 	private String tag = "Pogo";
+	private ExtrasActivity extras = new ExtrasActivity();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,25 +56,7 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 			startActivity(new Intent(this, PreferencesActivity.class));
 			return true;
 		case R.id.version:
-			PackageInfo pinfo = null;
-			try {
-				pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-			} catch (NameNotFoundException e) {
-				e.printStackTrace();
-			}
-			int versionNumber = pinfo.versionCode;
-			String versionName = pinfo.versionName;
-
-			new AlertDialog.Builder( this )
-			.setTitle( "Pogo-Version" )
-			.setMessage("Application version: " + versionNumber + "." + versionName)
-			.setIcon(android.R.drawable.ic_dialog_alert)
-			.setNegativeButton( "Okay", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					Log.d( tag, "Version exit" );
-				}
-			} )
-			.show();
+			extras.checkAppVersion(this);
 			return true;
 		}
 		return false;
@@ -82,15 +65,15 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 	@Override
 	public void onBackPressed() {
 		new AlertDialog.Builder( this )
-		.setTitle( "Exit?" )
-		.setMessage( "Are you sure you want to exit?" )
+		.setTitle(getString(R.string.exit))
+		.setMessage(getString(R.string.exit_question))
 		.setIcon(android.R.drawable.ic_dialog_alert)
-		.setNegativeButton( "No", new DialogInterface.OnClickListener() {
+		.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				Log.d( tag, "Exit - Negative" );
 			}
 		})
-		.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+		.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				Log.d( tag, "Exit - Positive");
 				finish();
@@ -104,23 +87,21 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.about_button:
 			Log.d( tag, "About");
-			Intent About = new Intent(this, AboutActivity.class);
+			Intent About = new Intent(this, AboutTabActivity.class);
 			startActivity(About);
 			break;
 		case R.id.singlePlayer_button:
 			Log.d( tag, "Singleplayer");
-			Intent Single = new Intent(this, MultiplayerActivity.class);
-			startActivity(Single);
 			break;
 		case R.id.multiPlayer_button:
 			BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 			if (mBluetoothAdapter == null) {
 				Log.d(tag, "BluetoothAlert");
 				new AlertDialog.Builder( this )
-				.setTitle( "Ops..." )
-				.setMessage( "Bluetooth unavailable on your device. You cannot use multiplayer option!" )
+				.setTitle(getString(R.string.ops))
+				.setMessage(getString(R.string.bluetooth_miss))
 				.setIcon(android.R.drawable.ic_dialog_alert)
-				.setNegativeButton( "Okay", new DialogInterface.OnClickListener() {
+				.setNegativeButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						Log.d(tag, "BluetoothAlert - Positive" );
 					}
@@ -151,11 +132,17 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == reques_code) {
 			if (resultCode == RESULT_OK) {
-				Log.d(tag, "Preferences changed");
-				Toast.makeText(getBaseContext(), "Changes saved", Toast.LENGTH_SHORT).show();
+				Log.d(tag, getString(R.string.pref_changed));
+				Toast.makeText(getBaseContext(), getString(R.string.change_saved), Toast.LENGTH_SHORT).show();
 			} else if (resultCode == 3) {
 				Log.d(tag, "Preferences reset");
-				Toast.makeText(getBaseContext(), "Preferences reset", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getBaseContext(), getString(R.string.pref_reset), Toast.LENGTH_SHORT).show();
+			} else if (resultCode == 4) {
+				Log.d(tag, "Restarting main activity");
+				Intent intent = getIntent();
+				finish();
+				startActivity(intent);
+				Toast.makeText(getBaseContext(), getString(R.string.lang_change), Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
