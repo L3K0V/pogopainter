@@ -3,6 +3,7 @@ package game.pogopainter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,12 +20,15 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 	private int reques_code = 1;
 	private String tag = "Pogo";
 	private ExtrasActivity extras = new ExtrasActivity();
+	private static Context context;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
+		context = getBaseContext();
 
 		View aboutButton = findViewById(R.id.about_button);
 		aboutButton.setOnClickListener(this);
@@ -37,8 +41,9 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 
 		View optionsButton = findViewById(R.id.options_button);
 		optionsButton.setOnClickListener(this);
-	}
 	
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
@@ -46,7 +51,7 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 		inflater.inflate(R.menu.menu, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -145,5 +150,9 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 				Toast.makeText(getBaseContext(), getString(R.string.lang_change), Toast.LENGTH_SHORT).show();
 			}
 		}
+	}
+
+	public static Context getAppContext() {
+		return PogoPainterActivity.context;
 	}
 }
