@@ -1,6 +1,7 @@
 package game.graphics;
 
 import game.pogopainter.ExtrasActivity;
+import game.system.Metrics;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -49,6 +50,9 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	public void onDraw(Canvas canvas) {
 		canvas.drawColor(Color.YELLOW);
 		Paint paint = new Paint();
+		Metrics m = new Metrics();
+		
+		int n = m.getClassicCellNumber();
 		
 		//int cellSize = extras.getCellSize();
 		
@@ -67,8 +71,9 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 //			}
 //		}
 		
+		paint.setColor(m.getPlayerColor());
 		
-		paint.setColor(Color.RED);
+		
 		Rect rect = new Rect(100, 100, getWidth(), getWidth());
 		canvas.drawRect(rect, paint);
 		

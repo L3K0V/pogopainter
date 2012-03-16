@@ -86,3 +86,7 @@ to: "Change GAME_SOUNDS to true"
 + Getting options from preferences
 + added: Context menu in about
 + reduced many lines of code
+
+0.4.3(20120316)
++ Canvas init (50%)
++ Fixed: Getting all options from preferences
