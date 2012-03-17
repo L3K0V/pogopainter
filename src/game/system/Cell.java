@@ -13,7 +13,7 @@ public class Cell {
 	public Cell(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.setColor(Color.BLACK);
+		this.setColor(Color.GRAY);
 	}
 	
 	public void setX(int x) {
