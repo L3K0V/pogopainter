@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="game.pogopainter"
     android:versionCode="0"
-    android:versionName="0.4.3" >
+    android:versionName="0.4.4" >
 
     <supports-screens
         android:anyDensity="true"
