@@ -95,3 +95,7 @@ to: "Change GAME_SOUNDS to true"
 + Strings refractoring (40%)
 - Lang bugs when change it...
 + Added: bulgarian init translate (have bugs)
+
+0.5.0(20120318)
++ Canvas init (70%)
++ Added game type classes
