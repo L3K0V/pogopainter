@@ -1,6 +1,9 @@
 package game.gametypes;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import android.graphics.Color;
 
 import game.player.Player;
 import game.system.Board;
@@ -8,7 +11,8 @@ import game.system.Metrics;
 
 public class ClassicGameType {
 	private Board b;
-	private List<Player> players;
+	private List<Player> AIs = new ArrayList<Player>();
+	private Player user;
 	private int time;
 	
 	public ClassicGameType() {
@@ -19,59 +23,57 @@ public class ClassicGameType {
 		time = m.getClassicGameTime();
 
 		switch (playerColor) {
-		case 1:
-			players.add(new Player(classicCellNumber-1, 0, playerColor, 0, null));
-			players.add(new Player(classicCellNumber-1, classicCellNumber-1, 2, 0, null));
-			players.add(new Player(0, 0, 3, 0, null));
-			players.add(new Player(0, classicCellNumber-1, 4, 0, null));
+		case Color.RED:
+			user = new Player(0, classicCellNumber - 1, Color.RED, 0, null);
+			AIs.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
+			AIs.add(new Player(0, 0, Color.GREEN, 0, null));
+			AIs.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
 			break;
-		case 2:
-			players.add(new Player(classicCellNumber-1, 0, 1, 0, null));
-			players.add(new Player(classicCellNumber-1, classicCellNumber-1, playerColor, 0, null));
-			players.add(new Player(0, 0, 3, 0, null));
-			players.add(new Player(0, classicCellNumber-1, 4, 0, null));
+		case Color.BLUE:
+			AIs.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
+			user = new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null);
+			AIs.add(new Player(0, 0, Color.GREEN, 0, null));
+			AIs.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
 			break;
-		case 3:
-			players.add(new Player(classicCellNumber-1, 0, 1, 0, null));
-			players.add(new Player(classicCellNumber-1, classicCellNumber-1, 2, 0, null));
-			players.add(new Player(0, 0, playerColor, 0, null));
-			players.add(new Player(0, classicCellNumber-1, 4, 0, null));
+		case Color.GREEN:
+			AIs.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
+			AIs.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
+			user = new Player(0, 0, Color.GREEN, 0, null);
+			AIs.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
 			break;
-		case 4:
-			players.add(new Player(classicCellNumber-1, 0, 1, 0, null));
-			players.add(new Player(classicCellNumber-1, classicCellNumber-1, 2, 0, null));
-			players.add(new Player(0, 0, 3, 0, null));
-			players.add(new Player(0, classicCellNumber-1, playerColor, 0, null));
+		case Color.YELLOW:
+			AIs.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
+			AIs.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
+			AIs.add(new Player(0, 0, Color.GREEN, 0, null));
+			user = new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null);
 			break;
-
 		default:
-			players.add(new Player(classicCellNumber-1, 0, playerColor, 0, null));
-			players.add(new Player(classicCellNumber-1, classicCellNumber-1, 2, 0, null));
-			players.add(new Player(0, 0, 3, 0, null));
-			players.add(new Player(0, classicCellNumber-1, 4, 0, null));
+			user = new Player(0, classicCellNumber - 1, Color.RED, 0, null);
+			AIs.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
+			AIs.add(new Player(0, 0, Color.GREEN, 0, null));
+			AIs.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
 			break;
 		}
-
-		b.setPlayerColorOnCell(players.get(0));
-		b.setPlayerColorOnCell(players.get(1));
-		b.setPlayerColorOnCell(players.get(2));
-		b.setPlayerColorOnCell(players.get(3));
-
-		// 1 - red
-		// 2 - blue
-		// 3 - green
-		// 4 - yellow
+		
+		b.setPlayerColorOnCell(AIs.get(0));
+		b.setPlayerColorOnCell(AIs.get(1));
+		b.setPlayerColorOnCell(AIs.get(2));
+		b.setPlayerColorOnCell(user);
 	}
 
 	public Board getBoard() {
 		return b;
 	}
 
-	public List<Player> getPlayers() {
-		return players;
+	public List<Player> getAIs() {
+		return AIs;
 	}
 	
 	public int getTime() {
 		return time;
+	}
+	
+	public Player getUser() {
+		return user;
 	}
 }

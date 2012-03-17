@@ -1,28 +1,27 @@
 package game.graphics;
 
-import game.pogopainter.ExtrasActivity;
-import game.system.Metrics;
+import game.gametypes.ClassicGameType;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 
 public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	private CanvasThread _thread;
-	public ExtrasActivity extras = new ExtrasActivity();
-
+	private ClassicGameType game = new ClassicGameType();
+	private String tag = "Canvas";
 	
 	public Panel(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		getHolder().addCallback(this);
 		_thread = new CanvasThread(getHolder(), this);
 		setFocusable(true);
-
 	}
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
@@ -49,34 +48,39 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	@Override
 	public void onDraw(Canvas canvas) {
 		canvas.drawColor(Color.BLACK);
+		drawBoard(canvas);
+		drawPlayers(canvas);
+		_thread.setRunning(false);
+	}
+
+	private void drawPlayers(Canvas canvas) {
 		Paint paint = new Paint();
-		Metrics m = new Metrics();
 		
-		int n = m.getClassicCellNumber();
+	}
+
+	private void drawBoard(Canvas canvas) {
+		Paint paint = new Paint();
 		
-		//int cellSize = extras.getCellSize();
+		int cellNumber = game.getBoard().getBoardSize();
+		int cellSize = (canvas.getHeight() / cellNumber ) - 1;
 		
-//		Board board = new Board(8);
-//		
-//		for (int y = 0; y < 8; y++) {
-//			for (int x = 0; x < 8; x++) {
-//				int color  = board.getCellAt(x, y).getColor();
-//				int width  = board.getCellAt(x, y).getX();
-//				int height = board.getCellAt(x, y).getY();
-//				
-//				paint.setColor(color);
-//				Rect rect = new Rect((width * cellSize), (height * cellSize), cellSize, cellSize);
-//				canvas.drawRect(rect, paint);
-//				
-//			}
-//		}
-		
-		paint.setColor(m.getPlayerColor());
-		
-		
-		Rect rect = new Rect(100, 100, getWidth(), getWidth());
-		canvas.drawRect(rect, paint);
-		
-		paint.setColor(Color.RED);
+		for (int y = 0; y < cellNumber; y++) {
+			for (int x = 0; x < cellNumber; x++) {
+				
+				int color  = game.getBoard().getCellAt(x, y).getColor();
+				int width  = game.getBoard().getCellAt(x, y).getX();
+				int height = game.getBoard().getCellAt(x, y).getY();
+				Log.d(tag, "line" + x + " " + y);
+				
+				paint.setStyle(Paint.Style.FILL);
+				paint.setColor(color);
+				Rect rect = new Rect((width * cellSize), (height * cellSize), (width * cellSize) + cellSize, (height * cellSize) + cellSize);
+				canvas.drawRect(rect, paint);
+				
+				paint.setStyle(Paint.Style.STROKE);
+				paint.setColor(Color.WHITE);
+				canvas.drawRect(rect, paint);
+			}
+		}
 	}
 }
