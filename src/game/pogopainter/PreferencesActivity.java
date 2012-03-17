@@ -22,6 +22,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 	private SharedPreferences settings;
 	private String tag = "Preferences";
 	private Intent data = new Intent();
+	private Locale locale = null;
 	private ExtrasActivity extras = new ExtrasActivity();
 
 	@Override
@@ -69,7 +70,6 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 					settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 					SharedPreferences.Editor editor = settings.edit();
 					editor.clear();
-					//PreferenceManager.setDefaultValues(getBaseContext(), R.xml.settings, true);
 					PreferenceManager.setDefaultValues(getBaseContext(), R.xml.settings, false);
 					editor.commit();
 					setResult(3, data);
@@ -92,10 +92,10 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 				lang = "bg";
 			}
 
-			Locale local = new Locale(lang);
-			Locale.setDefault(local);
+			locale = new Locale(lang);
+			//Locale.setDefault(locale);
 			Configuration config = new Configuration();
-			config.locale = local;
+			config.locale = locale;
 			getBaseContext().getResources().updateConfiguration(config, null);
 			setResult(4, data);
 		} else {

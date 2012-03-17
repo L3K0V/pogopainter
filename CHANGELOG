@@ -90,3 +90,8 @@ to: "Change GAME_SOUNDS to true"
 0.4.3(20120316)
 + Canvas init (50%)
 + Fixed: Getting all options from preferences
++ Fixed: When reset setting and click on single player crash & enter in endless loop
++ Fixed: Getters methods, wrong return values
++ Strings refractoring (40%)
+- Lang bugs when change it...
++ Added: bulgarian init translate (have bugs)
