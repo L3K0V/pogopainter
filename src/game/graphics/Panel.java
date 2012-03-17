@@ -48,7 +48,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	
 	@Override
 	public void onDraw(Canvas canvas) {
-		canvas.drawColor(Color.YELLOW);
+		canvas.drawColor(Color.BLACK);
 		Paint paint = new Paint();
 		Metrics m = new Metrics();
 		

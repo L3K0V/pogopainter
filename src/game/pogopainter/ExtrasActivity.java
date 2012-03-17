@@ -1,12 +1,18 @@
 package game.pogopainter;
 
+
+import java.util.Locale;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.preference.PreferenceManager;
+import android.provider.Settings.System;
 import android.util.Log;
 
 public class ExtrasActivity extends Activity {

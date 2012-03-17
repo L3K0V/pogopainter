@@ -2,18 +2,18 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
 <!-- Classic options -->
-<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android" android:title="Classic">
+<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android" android:title="@string/classic">
     <ListPreference
         android:defaultValue="8"
-        android:dialogTitle="Choose size"
+        android:dialogTitle="@string/choose_size"
         android:entries="@array/classic_game_cells"
         android:entryValues="@array/classic_game_cells_values"
         android:key="CLASSIC_BOARD_SIZE"
         android:summary="Board size of Classic game type."
-        android:title="Board size" />
+        android:title="@string/board_size" />
     <ListPreference
         android:defaultValue="90"
-        android:dialogTitle="Choose round time"
+        android:dialogTitle="@string/choose_time"
         android:entries="@array/classic_game_time"
         android:entryValues="@array/classic_game_time_values"
         android:key="CLASSIC_GAME_TIME"
@@ -22,15 +22,15 @@
 </PreferenceCategory>
 
 <!-- Coop options -->
-<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android" android:title="Co-op">
+<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android" android:title="@string/coop">
     <ListPreference
         android:defaultValue="8"
-        android:dialogTitle="Choose size"
+        android:dialogTitle="@string/choose_size"
         android:entries="@array/coop_game_cells"
         android:entryValues="@array/coop_game_cells_values"
         android:key="COOP_BOARD_SIZE"
         android:summary="Board size of Co-op game type."
-        android:title="Board size" />
+        android:title="@string/board_size" />
     <ListPreference
         android:defaultValue="90"
         android:dialogTitle="Choose round time"
@@ -42,18 +42,18 @@
 </PreferenceCategory>
 
 <!-- Deathmatch options -->
-<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android" android:title="Deathmatch">
+<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android" android:title="@string/deathmatch">
     <ListPreference
         android:defaultValue="8"
-        android:dialogTitle="Choose size"
+        android:dialogTitle="@string/choose_size"
         android:entries="@array/classic_game_cells"
         android:entryValues="@array/classic_game_cells_values"
         android:key="DEATHMATCH_BOARD_SIZE"
         android:summary="Board size of Deathmatch game type."
-        android:title="Board size" />
+        android:title="@string/board_size" />
     <ListPreference
         android:defaultValue="100"
-        android:dialogTitle="Choose round points"
+        android:dialogTitle="@string/choose_points"
         android:entries="@array/deathmatch_game_points"
         android:entryValues="@array/deathmatch_game_points_values"
         android:key="DEATHMATCH_POINTS"
@@ -61,7 +61,7 @@
         android:title="Round points" />
 </PreferenceCategory>
 
-<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android" android:title="General">
+<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android" android:title="@string/general">
 <!-- General -->
     <ListPreference
         android:defaultValue="red"
@@ -81,7 +81,7 @@
         android:title="Controls" />
     <ListPreference
         android:defaultValue="English"
-        android:dialogTitle="Game language"
+        android:dialogTitle="@string/game_lang"
         android:entries="@array/game_lang"
         android:entryValues="@array/game_lang_values"
         android:key="GAME_LANGUEGE"
@@ -90,7 +90,7 @@
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="GAME_SOUNDS"
-        android:summary="Check if you want in-game sounds"
-        android:title="Game sounds" />
+        android:summary="@string/game_sounds_sum"
+        android:title="@string/game_sounds" android:enabled="false" android:selectable="false"/>
 </PreferenceCategory>
 </PreferenceScreen>

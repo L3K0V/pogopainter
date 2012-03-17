@@ -22,8 +22,8 @@ public class Metrics {
 	private int COOP_BOARD_SIZE;
 	private int COOP_GAME_TIME;
 
-	private int D_BOARD_SIZE;
-	private int D_ROUND_POINTS;
+	private int DEATHMATCH_BOARD_SIZE;
+	private int DEATHMATCH_ROUND_POINTS;
 
 	private int playerColor;
 
@@ -40,25 +40,25 @@ public class Metrics {
 		HEIGHT = displayMetrics.heightPixels;
 		Log.d(tag + " height ", new Integer(HEIGHT).toString());
 
-		CLASSIC_BOARD_SIZE = Integer.parseInt(pref.getString("CLASSIC_BOARD_SIZE", ""));
+		CLASSIC_BOARD_SIZE = Integer.parseInt(pref.getString("CLASSIC_BOARD_SIZE", "8"));
 		Log.d(tag + " classic board size ", Integer.toString(CLASSIC_BOARD_SIZE));
 
-		CLASSIC_GAME_TIME = Integer.parseInt(pref.getString("CLASSIC_GAME_TIME", "0"));
+		CLASSIC_GAME_TIME = Integer.parseInt(pref.getString("CLASSIC_GAME_TIME", "90"));
 		Log.d(tag + "classic game time ", Integer.toString(CLASSIC_GAME_TIME));
 
-		COOP_BOARD_SIZE = Integer.parseInt(pref.getString("COOP_BOARD_SIZE", "0"));
+		COOP_BOARD_SIZE = Integer.parseInt(pref.getString("COOP_BOARD_SIZE", "9"));
 		Log.d(tag + "coop board size ", Integer.toString(COOP_BOARD_SIZE));
 
-		COOP_GAME_TIME = Integer.parseInt(pref.getString("COOP_GAME_TIME", "0"));
+		COOP_GAME_TIME = Integer.parseInt(pref.getString("COOP_GAME_TIME", "90"));
 		Log.d(tag + "coop game time ", Integer.toString(COOP_GAME_TIME));
 
-		D_BOARD_SIZE = Integer.parseInt(pref.getString("DEATHMATCH_BOARD_SIZE", "0"));
-		Log.d(tag + "deathmatch board size ", Integer.toString(D_BOARD_SIZE));
+		DEATHMATCH_BOARD_SIZE = Integer.parseInt(pref.getString("DEATHMATCH_BOARD_SIZE", "6"));
+		Log.d(tag + "deathmatch board size ", Integer.toString(DEATHMATCH_BOARD_SIZE));
 
-		D_ROUND_POINTS = Integer.parseInt(pref.getString("DEATHMATCH_POINTS", "0"));
-		Log.d(tag + "deathmatch round points ", Integer.toString(D_ROUND_POINTS));
+		DEATHMATCH_ROUND_POINTS = Integer.parseInt(pref.getString("DEATHMATCH_POINTS", "100"));
+		Log.d(tag + "deathmatch round points ", Integer.toString(DEATHMATCH_ROUND_POINTS));
 		
-		String color = pref.getString("PLAYER_COLOR", "0");
+		String color = pref.getString("PLAYER_COLOR", "red");
 		if (color.equals("red")) {
 			playerColor = Color.RED;
 			Log.d(tag + "player color ", color);
@@ -71,8 +71,6 @@ public class Metrics {
 		} else if (color.equals("yellow")) {
 			playerColor = Color.YELLOW;
 			Log.d(tag + "player color ", color);
-		} else {
-			Log.e(color, "is not defined!");
 		}
 		
 		if (pref.getString("PLAYER_CONTROLS", "left").equals("right")) {
@@ -101,11 +99,11 @@ public class Metrics {
 	}
 
 	public int getDeathmatchCellNumber() {
-		return this.COOP_BOARD_SIZE;
+		return this.DEATHMATCH_BOARD_SIZE;
 	}
 
-	public int getDeathmatchRoundTime() {
-		return this.COOP_GAME_TIME;
+	public int getDeathmatchRoundPoints() {
+		return this.DEATHMATCH_ROUND_POINTS;
 	}
 
 	public int getScreenWidth() {

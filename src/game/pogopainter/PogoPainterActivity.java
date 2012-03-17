@@ -19,15 +19,16 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 
 	private int reques_code = 1;
 	private String tag = "Pogo";
-	private ExtrasActivity extras = new ExtrasActivity();
 	private static Context context;
+	private ExtrasActivity extras = new ExtrasActivity();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
 		
+		setContentView(R.layout.main);
+
 		context = getBaseContext();
 
 		View aboutButton = findViewById(R.id.about_button);
@@ -41,7 +42,7 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 
 		View optionsButton = findViewById(R.id.options_button);
 		optionsButton.setOnClickListener(this);
-	
+
 	}
 
 	@Override
@@ -54,6 +55,7 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+
 		switch (item.getItemId()) {
 		case R.id.settings:
 			startActivity(new Intent(this, PreferencesActivity.class));
