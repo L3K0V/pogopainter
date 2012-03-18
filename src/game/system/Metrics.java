@@ -18,6 +18,7 @@ public class Metrics {
 
 	private int WIDTH;
 	private int HEIGHT;
+	private int HEIGHT_DP;
 
 	private int COOP_BOARD_SIZE;
 	private int COOP_GAME_TIME;
@@ -27,7 +28,7 @@ public class Metrics {
 
 	private int playerColor;
 
-	private boolean LeftControls = true;
+	private boolean LeftControls;
 
 	public Metrics() {
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -39,6 +40,7 @@ public class Metrics {
 		Log.d(tag + " width ", new Integer(WIDTH).toString());
 		HEIGHT = displayMetrics.heightPixels;
 		Log.d(tag + " height ", new Integer(HEIGHT).toString());
+		HEIGHT_DP = HEIGHT / (displayMetrics.densityDpi / 160);
 
 		CLASSIC_BOARD_SIZE = Integer.parseInt(pref.getString("CLASSIC_BOARD_SIZE", "8"));
 		Log.d(tag + " classic board size ", Integer.toString(CLASSIC_BOARD_SIZE));
@@ -73,10 +75,7 @@ public class Metrics {
 			Log.d(tag + "player color ", color);
 		}
 		
-		if (pref.getString("PLAYER_CONTROLS", "left").equals("right")) {
-			LeftControls = false;
-			Log.d(tag + "controls ", pref.getString("PLAYER_CONTROLS", "error"));
-		}
+		LeftControls = pref.getBoolean("CONTROLS", true);
 		
 		context = null;
 	}
@@ -112,6 +111,10 @@ public class Metrics {
 
 	public int getScreenHeight() {
 		return this.HEIGHT;
+	}
+	
+	public int getScreenHDP() {
+		return this.HEIGHT_DP;
 	}
 
 	public int getPlayerColor() {

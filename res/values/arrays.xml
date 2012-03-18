@@ -72,16 +72,6 @@
         <item>yellow</item>
     </string-array>
 
-    <string-array name="player_controls">
-        <item>Left</item>
-        <item>Right</item>
-    </string-array>
-
-    <string-array name="player_controls_values">
-        <item>left</item>
-        <item>right</item>
-    </string-array>
-
     <string-array name="game_lang">
         <item>English</item>
         <item>Bulgarian</item>

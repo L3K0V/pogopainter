@@ -62,5 +62,7 @@
     <string name="game_sounds_sum">Check if you want in-game sounds</string>
     <string name="game_lang">Game languages</string>
     <string name="board_size">Board size</string>
+    <string name="controls">Left controls position</string>
+    <string name="controls_sum">Uncheck for right controls position</string>
 
 </resources>
