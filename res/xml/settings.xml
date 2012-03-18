@@ -72,14 +72,6 @@
         android:summary="Choose your color in-game"
         android:title="Your color" />
     <ListPreference
-        android:defaultValue="left"
-        android:dialogTitle="Choose controls position"
-        android:entries="@array/player_controls"
-        android:entryValues="@array/player_controls_values"
-        android:key="PLAYER_CONTROL"
-        android:summary="Choose your controls position"
-        android:title="Controls" />
-    <ListPreference
         android:defaultValue="English"
         android:dialogTitle="@string/game_lang"
         android:entries="@array/game_lang"
@@ -87,6 +79,11 @@
         android:key="GAME_LANGUEGE"
         android:summary="Choose game language"
         android:title="Languages" />
+     <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="CONTROLS"
+        android:summary="@string/controls_sum"
+        android:title="@string/controls" android:enabled="true" android:selectable="true"/>
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="GAME_SOUNDS"

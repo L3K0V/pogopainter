@@ -99,3 +99,12 @@ to: "Change GAME_SOUNDS to true"
 0.5.0(20120318)
 + Canvas init (70%)
 + Added game type classes
+
+0.5.1(20120318)
++ Added: layer for right controls
+- Missed layer for left
++ Changed: controls option from list to check button
++ fixed: bug in controls position selection
++ added: some assets
++ added: joystick
++ added: score list for players with indicatior icons
