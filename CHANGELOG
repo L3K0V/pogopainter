@@ -111,3 +111,9 @@ to: "Change GAME_SOUNDS to true"
 
 0.5.2(20120319)
 + Fixed: left & right controls layouts
+
+0.5.3(201200319)
++ Refactored some code in Panel
++ Now drawing Players too
++ Make user to be List too because of multiplayer option
++ Refactored some code in ClassicGameType
