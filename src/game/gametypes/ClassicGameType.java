@@ -11,8 +11,8 @@ import game.system.Metrics;
 
 public class ClassicGameType {
 	private Board b;
-	private List<Player> AIs = new ArrayList<Player>();
-	private Player user;
+	private List<Player> AI = new ArrayList<Player>();
+	private List<Player> USER = new ArrayList<Player>();
 	private int time;
 	
 	public ClassicGameType() {
@@ -24,41 +24,42 @@ public class ClassicGameType {
 
 		switch (playerColor) {
 		case Color.RED:
-			user = new Player(0, classicCellNumber - 1, Color.RED, 0, null);
-			AIs.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
-			AIs.add(new Player(0, 0, Color.GREEN, 0, null));
-			AIs.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
+			USER.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
+			AI.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
+			AI.add(new Player(0, 0, Color.GREEN, 0, null));
+			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
 			break;
 		case Color.BLUE:
-			AIs.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
-			user = new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null);
-			AIs.add(new Player(0, 0, Color.GREEN, 0, null));
-			AIs.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
+			AI.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
+			USER.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
+			AI.add(new Player(0, 0, Color.GREEN, 0, null));
+			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
 			break;
 		case Color.GREEN:
-			AIs.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
-			AIs.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
-			user = new Player(0, 0, Color.GREEN, 0, null);
-			AIs.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
+			AI.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
+			AI.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
+			USER.add(new Player(0, 0, Color.GREEN, 0, null));
+			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
 			break;
 		case Color.YELLOW:
-			AIs.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
-			AIs.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
-			AIs.add(new Player(0, 0, Color.GREEN, 0, null));
-			user = new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null);
+			AI.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
+			AI.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
+			AI.add(new Player(0, 0, Color.GREEN, 0, null));
+			USER.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
 			break;
 		default:
-			user = new Player(0, classicCellNumber - 1, Color.RED, 0, null);
-			AIs.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
-			AIs.add(new Player(0, 0, Color.GREEN, 0, null));
-			AIs.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
+			USER.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
+			AI.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
+			AI.add(new Player(0, 0, Color.GREEN, 0, null));
+			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
 			break;
 		}
-		
-		b.setPlayerColorOnCell(AIs.get(0));
-		b.setPlayerColorOnCell(AIs.get(1));
-		b.setPlayerColorOnCell(AIs.get(2));
-		b.setPlayerColorOnCell(user);
+		for (Player ai: AI) {
+			b.setPlayerColorOnCell(ai);
+		}
+		for (Player user: USER) {
+			b.setPlayerColorOnCell(user);
+		}
 	}
 
 	public Board getBoard() {
@@ -66,14 +67,14 @@ public class ClassicGameType {
 	}
 
 	public List<Player> getAIs() {
-		return AIs;
+		return AI;
 	}
 	
 	public int getTime() {
 		return time;
 	}
 	
-	public Player getUser() {
-		return user;
+	public List<Player> getUser() {
+		return USER;
 	}
 }
