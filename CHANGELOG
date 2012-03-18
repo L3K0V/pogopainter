@@ -108,3 +108,6 @@ to: "Change GAME_SOUNDS to true"
 + added: some assets
 + added: joystick
 + added: score list for players with indicatior icons
+
+0.5.2(20120319)
++ Fixed: left & right controls layouts

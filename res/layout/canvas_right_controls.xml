@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/repeatable"
     android:baselineAligned="false"
@@ -12,14 +12,14 @@
 
         <game.graphics.Panel
             android:id="@+id/canvasPanel"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
-    </FrameLayout>
-
+    </FrameLayout>
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:gravity="center_vertical" >
+        android:gravity="center" >
 
         <RelativeLayout
             android:id="@+id/relativeLayout1"
@@ -31,8 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true" >
+                android:layout_alignParentRight="true" >
 
                 <ImageView
                     android:id="@+id/redPlayer"
@@ -152,7 +151,8 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/relativeLayout1"
             android:layout_margin="20dp"
-            android:src="@drawable/joystick" />
+            android:src="@drawable/joystick" />
+
         <Button
             android:id="@+id/buttonDown"
             android:layout_width="wrap_content"
@@ -160,17 +160,17 @@
             android:layout_alignBottom="@+id/joystick"
             android:layout_centerHorizontal="true"
             android:text="Down" />
-
+
         <Button
             android:id="@+id/buttonAction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/buttonDown"
-            android:padding="0dp"
             android:layout_alignTop="@+id/buttonLeft"
             android:layout_centerHorizontal="true"
+            android:padding="0dp"
             android:text="Action" />
-
+
         <Button
             android:id="@+id/buttonUp"
             android:layout_width="wrap_content"
@@ -179,7 +179,8 @@
             android:layout_alignRight="@+id/buttonDown"
             android:layout_alignTop="@+id/joystick"
             android:text="Up" />
-
+
+
         <Button
             android:id="@+id/buttonLeft"
             android:layout_width="wrap_content"
@@ -189,7 +190,7 @@
             android:layout_below="@+id/buttonUp"
             android:layout_toLeftOf="@+id/buttonAction"
             android:text="Left" />
-
+
         <Button
             android:id="@+id/buttonRight"
             android:layout_width="wrap_content"
@@ -199,7 +200,6 @@
             android:layout_alignTop="@+id/buttonAction"
             android:layout_toRightOf="@+id/buttonAction"
             android:text="Right" />
-
     </RelativeLayout>
 
 </LinearLayout>
