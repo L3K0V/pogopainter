@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="25dip"
+            android:layout_marginBottom="10dip"
             android:text="@string/pogo_rules"
             android:textSize="24.5sp" />
 
@@ -25,7 +25,7 @@
             android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25dip"
+            android:layout_marginBottom="10dip"
             android:cacheColorHint="#00000000"
             android:listSelector="@android:color/transparent" >
         </ListView>
@@ -33,7 +33,7 @@
         <Button
             android:id="@+id/score_button"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:text="@string/score_rules_label" />
     </LinearLayout>
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.graphics.Color;
 
+import game.player.Actions;
 import game.player.Player;
 import game.system.Board;
 import game.system.Metrics;
@@ -13,6 +14,7 @@ public class ClassicGameType {
 	private Board b;
 	private List<Player> AI = new ArrayList<Player>();
 	private List<Player> USER = new ArrayList<Player>();
+	private Actions ACTIONS = new Actions();
 	private int time;
 	
 	public ClassicGameType() {
@@ -76,5 +78,9 @@ public class ClassicGameType {
 	
 	public List<Player> getUser() {
 		return USER;
+	}
+	
+	public Actions getActions() {
+		return this.ACTIONS;
 	}
 }
