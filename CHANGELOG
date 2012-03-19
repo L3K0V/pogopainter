@@ -112,8 +112,17 @@ to: "Change GAME_SOUNDS to true"
 0.5.2(20120319)
 + Fixed: left & right controls layouts
 
-0.5.3(201200319)
+0.5.3(20120319)
 + Refactored some code in Panel
 + Now drawing Players too
 + Make user to be List too because of multiplayer option
 + Refactored some code in ClassicGameType
+
+0.5.4(20120320)
++ main & multiplayer layouts cosmetics
++ change: joystick buttons to toggle buttons
++ added: joystick toggle buttons behavior
++ allowed landscape mode
+- need optimize for menus in landscape mode
++ Directions Arrow init
+- Removed colors.xml (not needed)

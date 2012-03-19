@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<resources>
-    <color name="background">#4A4A4A</color>
-    <color name="red_player">#FF0000</color>
-    <color name="blue_player">#0000FF</color>
-    <color name="green_player">#00FF00</color>
-    <color name="yellow_player">#FFFF00</color>
-</resources>
