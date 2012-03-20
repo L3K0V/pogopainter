@@ -2,6 +2,7 @@ package game.pogopainter;
 
 import game.graphics.Panel;
 import game.pogopainter.R;
+import game.system.Direction;
 import game.system.Metrics;
 import android.app.Activity;
 import android.os.Bundle;
@@ -13,7 +14,7 @@ import android.widget.FrameLayout.LayoutParams;
 
 public class CanvasActivity extends Activity implements OnClickListener {
 	private String tag = "Canvas";
-	private ToggleButton up; 
+	private static ToggleButton up; 
 	private ToggleButton left;
 	private ToggleButton right;
 	private ToggleButton down;
@@ -79,5 +80,14 @@ public class CanvasActivity extends Activity implements OnClickListener {
 			break;
 
 		}
+	}
+	
+	public static Direction getDir() {
+		Direction dir = Direction.RIGHT;
+		if (up.isChecked()) {
+			dir = Direction.UP;
+		}
+		
+		return dir; 
 	}
 }

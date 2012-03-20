@@ -5,9 +5,14 @@ import java.util.List;
 
 import android.graphics.Color;
 
+import game.graphics.CanvasThread;
+import game.graphics.Panel;
 import game.player.Actions;
 import game.player.Player;
+import game.pogopainter.CanvasActivity;
+import game.pogopainter.R;
 import game.system.Board;
+import game.system.Direction;
 import game.system.Metrics;
 
 public class ClassicGameType {
@@ -16,13 +21,15 @@ public class ClassicGameType {
 	private List<Player> USER = new ArrayList<Player>();
 	private Actions ACTIONS = new Actions();
 	private int time;
+	private CanvasThread thread;
 	
-	public ClassicGameType() {
+	public ClassicGameType(CanvasThread t) {
 		Metrics m = new Metrics();
 		int classicCellNumber = m.getClassicCellNumber();
 		int playerColor = m.getPlayerColor();
 		b = new Board(classicCellNumber);
 		time = m.getClassicGameTime();
+		thread = t;
 
 		switch (playerColor) {
 		case Color.RED:
@@ -63,7 +70,7 @@ public class ClassicGameType {
 			b.setPlayerColorOnCell(user);
 		}
 	}
-
+	
 	public Board getBoard() {
 		return b;
 	}
@@ -82,5 +89,9 @@ public class ClassicGameType {
 	
 	public Actions getActions() {
 		return this.ACTIONS;
+	}
+	
+	public void draw(boolean bool) {
+		thread.setRunning(bool);
 	}
 }

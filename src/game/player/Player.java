@@ -51,9 +51,4 @@ public class Player {
 	public void changeScore(int score) {
 		this.points += score;
 	}
-
-	public void move() {
-		// TODO Auto-generated method stub
-		
-	}
 }

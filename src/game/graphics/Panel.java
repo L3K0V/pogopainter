@@ -21,7 +21,7 @@ import android.view.SurfaceView;
 
 public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	private CanvasThread _thread;
-	private ClassicGameType game = new ClassicGameType();
+	private ClassicGameType game;
 	private int cellNumber;
 	private int cellSize;
 	private String tag = "Canvas";
@@ -30,6 +30,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		super(context, attrs);
 		getHolder().addCallback(this);
 		_thread = new CanvasThread(getHolder(), this);
+		game = new ClassicGameType(_thread);
 		setFocusable(true);
 	}
 
@@ -62,10 +63,13 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		canvas.drawColor(Color.BLACK);
 		drawBoard(canvas);
 		drawUsers(canvas);
-		drawArrows(canvas);
+		drawNav(canvas);
 		drawAIs(canvas);
+		
 		_thread.setRunning(false);
 	}
+	
+	
 
 	private void drawBoard(Canvas canvas) {
 		Paint paint = new Paint();
@@ -115,20 +119,51 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		}
 	}
 
-	private void drawArrows(Canvas canvas) {
-		int width = game.getUser().get(0).getX() +1 * cellSize;
-		int height = game.getUser().get(0).getY() * cellSize;
+	private void drawNav(Canvas canvas) {
+		if (game.getActions().checkDir(Direction.RIGHT, game.getUser().get(0), game.getBoard().getBoardSize())) {
+			drawArrow(Direction.RIGHT, canvas);
+		}
+		
+		if (game.getActions().checkDir(Direction.LEFT, game.getUser().get(0), game.getBoard().getBoardSize())) {
+			drawArrow(Direction.LEFT, canvas);
+		}
+		
+		if (game.getActions().checkDir(Direction.UP, game.getUser().get(0), game.getBoard().getBoardSize())) {
+			drawArrow(Direction.UP, canvas);
+		}
+		
+		if (game.getActions().checkDir(Direction.DOWN, game.getUser().get(0), game.getBoard().getBoardSize())) {
+			drawArrow(Direction.DOWN, canvas);
+		}
+		
+	}
+	
+	private void drawArrow(Direction dir, Canvas canvas) {
+		int width = 0;
+		int height = 0;
+		Bitmap arrow = getArrow(dir);
+		switch(dir) {
+		case RIGHT:
+			width = (game.getUser().get(0).getX() + 1) * cellSize;
+			height = game.getUser().get(0).getY() * cellSize;
+			break;
+		case LEFT:
+			width = (game.getUser().get(0).getX() - 1) * cellSize;
+			height = game.getUser().get(0).getY() * cellSize;
+			break;
+		case UP:
+			width = game.getUser().get(0).getX() * cellSize;
+			height = (game.getUser().get(0).getY() - 1) * cellSize;
+			break;
+		case DOWN:
+			width = game.getUser().get(0).getX() * cellSize;
+			height = (game.getUser().get(0).getY() + 1) * cellSize;
+			break;
+		}
+		
+		Rect rect = new Rect(width, height, width + cellSize, height + cellSize);
+		canvas.drawBitmap(arrow, null, rect, null);
 
-		int width2 = game.getUser().get(0).getX() * cellSize;
-		int height2 = (game.getUser().get(0).getY() -1) * cellSize;
-
-		Bitmap RIGHT = getArrow(Direction.RIGHT);
-		Bitmap UP = getArrow(Direction.UP);
-		Rect arrow = new Rect(width, height, width + cellSize, height + cellSize);
-		Rect arrow2 = new Rect(width2, height2, width2 + cellSize, height2 + cellSize);
-
-		canvas.drawBitmap(RIGHT, null, arrow, null);
-		canvas.drawBitmap(UP, null, arrow2, null);
 	}
 
 	private Bitmap getPlayerColor(int color) {
@@ -172,7 +207,6 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 			break;
 
 		}
-
 		return rotatedBitmap;
 	}
 }

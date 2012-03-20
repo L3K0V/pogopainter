@@ -126,3 +126,8 @@ to: "Change GAME_SOUNDS to true"
 - need optimize for menus in landscape mode
 + Directions Arrow init
 - Removed colors.xml (not needed)
+
+0.5.5(20120320)
++ Canvas init (90%)
++ Fixed Arrows
++ CanvasThread manipulation(still very buggy)
