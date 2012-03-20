@@ -2,6 +2,7 @@ package game.graphics;
 
 import game.gametypes.ClassicGameType;
 import game.player.Player;
+import game.pogopainter.CanvasActivity;
 import game.pogopainter.R;
 import game.system.Direction;
 
@@ -30,7 +31,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		super(context, attrs);
 		getHolder().addCallback(this);
 		_thread = new CanvasThread(getHolder(), this);
-		game = new ClassicGameType(_thread);
+		game = new ClassicGameType();
 		setFocusable(true);
 	}
 
@@ -65,11 +66,12 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		drawUsers(canvas);
 		drawNav(canvas);
 		drawAIs(canvas);
-		
-		_thread.setRunning(false);
 	}
 	
-	
+	public void update() {
+		Direction dir = CanvasActivity.getDir();
+		game.update(dir);
+	}
 
 	private void drawBoard(Canvas canvas) {
 		Paint paint = new Paint();

@@ -25,7 +25,13 @@ public class CanvasThread extends Thread {
 			try {
 				canvas = _surfaceHolder.lockCanvas(null);
 				synchronized (_surfaceHolder) {
+					_panel.update();
 					_panel.onDraw(canvas);
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 			} finally {
 				if (canvas != null) {
