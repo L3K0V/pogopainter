@@ -1,7 +1,7 @@
 package game.system;
 
 public enum Direction {
-	LEFT(0), RIGHT(1), UP(2), DOWN(3);
+	NONE(0), LEFT(1), RIGHT(2), UP(3), DOWN(4);
 	
 	private int dir;
 	

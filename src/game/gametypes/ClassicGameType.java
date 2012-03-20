@@ -4,13 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Color;
-
-import game.graphics.CanvasThread;
-import game.graphics.Panel;
 import game.player.Actions;
 import game.player.Player;
-import game.pogopainter.CanvasActivity;
-import game.pogopainter.R;
 import game.system.Board;
 import game.system.Direction;
 import game.system.Metrics;
@@ -21,16 +16,14 @@ public class ClassicGameType {
 	private List<Player> USER = new ArrayList<Player>();
 	private Actions ACTIONS = new Actions();
 	private int time;
-	private CanvasThread thread;
 	
-	public ClassicGameType(CanvasThread t) {
+	public ClassicGameType() {
 		Metrics m = new Metrics();
 		int classicCellNumber = m.getClassicCellNumber();
 		int playerColor = m.getPlayerColor();
 		b = new Board(classicCellNumber);
 		time = m.getClassicGameTime();
-		thread = t;
-
+		
 		switch (playerColor) {
 		case Color.RED:
 			USER.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
@@ -91,7 +84,7 @@ public class ClassicGameType {
 		return this.ACTIONS;
 	}
 	
-	public void draw(boolean bool) {
-		thread.setRunning(bool);
+	public void update(Direction dir) {
+		ACTIONS.move(b, USER.get(0), dir);
 	}
 }

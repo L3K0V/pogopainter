@@ -131,3 +131,8 @@ to: "Change GAME_SOUNDS to true"
 + Canvas init (90%)
 + Fixed Arrows
 + CanvasThread manipulation(still very buggy)
+
+0.5.6(20120320)
++ Canvas init (100%)
++ Fixed CanvasThread manipulation
++ Set game loop logic
