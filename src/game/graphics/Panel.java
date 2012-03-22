@@ -67,9 +67,40 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		drawNav(canvas);
 		drawAIs(canvas);
 		drawPointCounters(canvas);
+		drawControls(canvas);
 	}
 	
 	public void update() {
+	}
+
+	private void drawControls(Canvas canvas) {
+		Rect controlRect = new Rect(boardBorder + (cellSize / 5), counterY, getWidth(), getHeight());
+		int centerX = controlRect.centerX();
+		int centerY = controlRect.centerY();
+		Bitmap centerAction = getRotatedBitmap(Direction.RIGHT, R.drawable.joystick);
+		centerY -= 150;
+		centerX -= 150;
+		Rect rect = new Rect(centerX, centerY, centerX + 300, centerY + 300);
+		canvas.drawBitmap(centerAction, null, rect, null);
+		
+//		Bitmap right = getRotatedBitmap(Direction.RIGHT, R.drawable.joystickbutton_normal);
+//		Rect rightButton = new Rect(centerX + 90, centerY - 30, centerX + 180, centerY + 130);
+//		canvas .drawBitmap(right, null, rightButton, null);
+//		
+//		Bitmap left = getRotatedBitmap(Direction.LEFT, R.drawable.joystickbutton_normal);
+//		Rect leftButton = new Rect(centerX - 90, centerY - 30, centerX, centerY + 130);
+//		canvas .drawBitmap(left, null, leftButton, null);
+//		
+//		Bitmap up = getRotatedBitmap(Direction.RIGHT, R.drawable.joystickbutton_normal);
+//		Rect upButton = new Rect(centerX + 90, centerY - 30, centerX + 180, centerY + 130);
+//		canvas .drawBitmap(right, null, rightButton, null);
+		
+		
+		
+//		Paint paint = new Paint();
+//		paint.setColor(Color.MAGENTA);
+//		canvas.drawRect(rightButton, paint);
+		
 	}
 
 	private void drawPointCounters(Canvas canvas) {
@@ -202,8 +233,8 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		return bitmap;
 	}
 
-	private Bitmap getRotatedBitmap(Direction dir, int resid) {
-		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resid);
+	private Bitmap getRotatedBitmap(Direction dir, int resID) {
+		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resID);
 		Bitmap rotatedBitmap = null;
 		Matrix mat;
 
