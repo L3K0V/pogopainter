@@ -142,3 +142,4 @@ to: "Change GAME_SOUNDS to true"
 + Draw point counters for players
 + Added: joystick drawables
 + Changed: method that creates rotated drawables
++ Draw static joystick
