@@ -162,7 +162,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	private void drawArrow(Direction dir, Canvas canvas) {
 		int width = 0;
 		int height = 0;
-		Bitmap arrow = getArrow(dir);
+		Bitmap arrow = getRotatedBitmap(dir, R.drawable.arrow);
 		switch(dir) {
 		case RIGHT:
 			width = (game.getUser().get(0).getX() + 1) * cellSize;
@@ -202,8 +202,8 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		return bitmap;
 	}
 
-	private Bitmap getArrow(Direction dir) {
-		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.arrow);
+	private Bitmap getRotatedBitmap(Direction dir, int resid) {
+		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resid);
 		Bitmap rotatedBitmap = null;
 		Matrix mat;
 
