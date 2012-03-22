@@ -140,3 +140,5 @@ to: "Change GAME_SOUNDS to true"
 0.5.7(20120322)
 + Canvas full screen
 + Draw point counters for players
++ Added: joystick drawables
++ Changed: method that creates rotated drawables
