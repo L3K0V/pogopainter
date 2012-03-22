@@ -2,10 +2,8 @@ package game.graphics;
 
 import game.gametypes.ClassicGameType;
 import game.player.Player;
-import game.pogopainter.CanvasActivity;
 import game.pogopainter.R;
 import game.system.Direction;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,6 +23,8 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	private ClassicGameType game;
 	private int cellNumber;
 	private int cellSize;
+	private int boardBorder;
+	private int counterY;
 	private String tag = "Canvas";
 
 	public Panel(Context context, AttributeSet attrs) {
@@ -66,16 +66,35 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		drawUsers(canvas);
 		drawNav(canvas);
 		drawAIs(canvas);
+		drawPointCounters(canvas);
 	}
 	
 	public void update() {
-		Direction dir = CanvasActivity.getDir();
-		game.update(dir);
+	}
+
+	private void drawPointCounters(Canvas canvas) {
+		Paint paint = new Paint();
+		paint.setStyle(Paint.Style.FILL);
+		paint.setAntiAlias(true);
+		paint.setTextSize(30);
+		counterY = cellSize;
+		drawCounter(Color.RED, paint, "RED : ", canvas, game.getUser().get(0).getPoints());
+		drawCounter(Color.BLUE, paint, "BLUE : ", canvas, game.getAIs().get(0).getPoints());
+		drawCounter(Color.GREEN, paint, "GREEN : ", canvas, game.getAIs().get(1).getPoints());
+		drawCounter(Color.YELLOW, paint, "YELLOW : ", canvas, game.getAIs().get(2).getPoints());
+	}
+
+	private void drawCounter(int color, Paint paint, String text, Canvas canvas, int points) {
+		paint.setColor(color);
+		String spoints = Integer.toString(points);
+		canvas.drawText(text, boardBorder + cellSize, counterY, paint);
+		canvas.drawText(spoints, boardBorder + (4 * cellSize), counterY, paint);
+		counterY += cellSize / 2;
 	}
 
 	private void drawBoard(Canvas canvas) {
 		Paint paint = new Paint();
-
+		boardBorder = ((cellNumber - 1) * cellSize) + cellSize;
 		for (int y = 0; y < cellNumber; y++) {
 			for (int x = 0; x < cellNumber; x++) {
 

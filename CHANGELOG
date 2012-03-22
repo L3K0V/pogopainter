@@ -136,3 +136,7 @@ to: "Change GAME_SOUNDS to true"
 + Canvas init (100%)
 + Fixed CanvasThread manipulation
 + Set game loop logic
+
+0.5.7(20120322)
++ Canvas full screen
++ Draw point counters for players

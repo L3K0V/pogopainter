@@ -51,4 +51,8 @@ public class Player {
 	public void changeScore(int score) {
 		this.points += score;
 	}
+	
+	public int getPoints() {
+		return this.points;
+	}
 }
