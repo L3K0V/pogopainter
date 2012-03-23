@@ -144,3 +144,10 @@ to: "Change GAME_SOUNDS to true"
 + Changed: method that creates rotated drawables
 + Draw static joystick
 + Left Control option added
+
+0.6.0(20120324)
++ Fixed Canvas for low resolutions
++ Change Score display representation
++ Draw Current Direction
++ Implements onTouchEvents
++ User moves now
