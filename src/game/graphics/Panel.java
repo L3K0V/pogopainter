@@ -4,6 +4,7 @@ import game.gametypes.ClassicGameType;
 import game.player.Player;
 import game.pogopainter.R;
 import game.system.Direction;
+import game.system.Metrics;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,8 +24,11 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	private ClassicGameType game;
 	private int cellNumber;
 	private int cellSize;
-	private int boardBorder;
+	private int controlStartX;
+	private int boardStartX;
 	private int counterY;
+	private Rect controlRect;
+	private boolean leftControlns;
 	private String tag = "Canvas";
 
 	public Panel(Context context, AttributeSet attrs) {
@@ -32,6 +36,8 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		getHolder().addCallback(this);
 		_thread = new CanvasThread(getHolder(), this);
 		game = new ClassicGameType();
+		Metrics m = new Metrics();
+		leftControlns = m.isLeftControls();
 		setFocusable(true);
 	}
 
@@ -60,6 +66,17 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	public void onDraw(Canvas canvas) {
 		cellNumber = game.getBoard().getBoardSize();
 		cellSize = (canvas.getHeight() / cellNumber ) - 1;
+		counterY = cellSize;
+		
+		if (leftControlns) {
+			controlStartX = 0;
+			boardStartX = (getWidth() - (cellNumber * cellSize)) - 1;
+			controlRect = new Rect(controlStartX + (cellSize / 5), 3 * cellSize, getWidth() - (getWidth() - boardStartX), getHeight());
+		} else {
+			controlStartX = cellNumber * cellSize;
+			boardStartX = 0;
+			controlRect = new Rect(controlStartX + (cellSize / 5), 3 * cellSize, getWidth(), getHeight());
+		}
 
 		canvas.drawColor(Color.BLACK);
 		drawBoard(canvas);
@@ -74,7 +91,6 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	private void drawControls(Canvas canvas) {
-		Rect controlRect = new Rect(boardBorder + (cellSize / 5), counterY, getWidth(), getHeight());
 		int centerX = controlRect.centerX();
 		int centerY = controlRect.centerY();
 		Bitmap centerAction = getRotatedBitmap(Direction.RIGHT, R.drawable.joystick);
@@ -108,7 +124,6 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		paint.setStyle(Paint.Style.FILL);
 		paint.setAntiAlias(true);
 		paint.setTextSize(30);
-		counterY = cellSize;
 		drawCounter(Color.RED, paint, "RED : ", canvas, game.getUser().get(0).getPoints());
 		drawCounter(Color.BLUE, paint, "BLUE : ", canvas, game.getAIs().get(0).getPoints());
 		drawCounter(Color.GREEN, paint, "GREEN : ", canvas, game.getAIs().get(1).getPoints());
@@ -118,19 +133,18 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	private void drawCounter(int color, Paint paint, String text, Canvas canvas, int points) {
 		paint.setColor(color);
 		String spoints = Integer.toString(points);
-		canvas.drawText(text, boardBorder + cellSize, counterY, paint);
-		canvas.drawText(spoints, boardBorder + (4 * cellSize), counterY, paint);
+		canvas.drawText(text, controlStartX + cellSize, counterY, paint);
+		canvas.drawText(spoints, controlStartX + (4 * cellSize), counterY, paint);
 		counterY += cellSize / 2;
 	}
 
 	private void drawBoard(Canvas canvas) {
 		Paint paint = new Paint();
-		boardBorder = ((cellNumber - 1) * cellSize) + cellSize;
 		for (int y = 0; y < cellNumber; y++) {
 			for (int x = 0; x < cellNumber; x++) {
 
 				int color  = game.getBoard().getCellAt(x, y).getColor();
-				int width = game.getBoard().getCellAt(x, y).getX() * cellSize;
+				int width = (game.getBoard().getCellAt(x, y).getX() * cellSize ) + boardStartX;
 				int height = game.getBoard().getCellAt(x, y).getY() * cellSize;
 
 				paint.setStyle(Paint.Style.FILL);
@@ -147,7 +161,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 
 	private void drawUsers(Canvas canvas) {
 		for (Player user: game.getUser()) {
-			int width = user.getX() * cellSize;
+			int width = (user.getX() * cellSize) + boardStartX;
 			int height = user.getY() * cellSize;
 			int color = user.getColor();
 
@@ -160,7 +174,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 
 	private void drawAIs(Canvas canvas) {
 		for (Player ai: game.getAIs()) {
-			int width = ai.getX() * cellSize;
+			int width = (ai.getX() * cellSize) + boardStartX;
 			int height = ai.getY() * cellSize;
 			int color = ai.getColor();
 
@@ -196,19 +210,19 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		Bitmap arrow = getRotatedBitmap(dir, R.drawable.arrow);
 		switch(dir) {
 		case RIGHT:
-			width = (game.getUser().get(0).getX() + 1) * cellSize;
+			width = ((game.getUser().get(0).getX() + 1) * cellSize) + boardStartX;
 			height = game.getUser().get(0).getY() * cellSize;
 			break;
 		case LEFT:
-			width = (game.getUser().get(0).getX() - 1) * cellSize;
+			width = ((game.getUser().get(0).getX() - 1) * cellSize ) + boardStartX;
 			height = game.getUser().get(0).getY() * cellSize;
 			break;
 		case UP:
-			width = game.getUser().get(0).getX() * cellSize;
+			width = (game.getUser().get(0).getX() * cellSize) + boardStartX;
 			height = (game.getUser().get(0).getY() - 1) * cellSize;
 			break;
 		case DOWN:
-			width = game.getUser().get(0).getX() * cellSize;
+			width = (game.getUser().get(0).getX() * cellSize) + boardStartX;
 			height = (game.getUser().get(0).getY() + 1) * cellSize;
 			break;
 		}

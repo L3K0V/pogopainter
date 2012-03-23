@@ -143,3 +143,4 @@ to: "Change GAME_SOUNDS to true"
 + Added: joystick drawables
 + Changed: method that creates rotated drawables
 + Draw static joystick
++ Left Control option added
