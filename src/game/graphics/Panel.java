@@ -57,7 +57,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		if (leftControlns) {
 			controlStartX = 0;
 			boardStartX = (m.getScreenWidth() - (cellNumber * cellSize)) - 1;
-			controlRect = new Rect(controlStartX + (cellSize / 5), 3 * cellSize, m.getScreenWidth() - (m.getScreenWidth() - boardStartX) - (cellSize / 4), getHeight());
+			controlRect = new Rect(controlStartX + (cellSize / 5), 3 * cellSize, m.getScreenWidth() - (m.getScreenWidth() - boardStartX) - (cellSize / 4), m.getScreenHeight());
 		} else {
 			controlStartX = cellNumber * cellSize;
 			boardStartX = 0;
