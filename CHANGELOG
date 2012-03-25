@@ -151,3 +151,4 @@ to: "Change GAME_SOUNDS to true"
 + Draw Current Direction
 + Implements onTouchEvents
 + User moves now
++ Fix a bug with left control position not drawing properly
