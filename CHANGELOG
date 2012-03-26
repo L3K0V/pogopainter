@@ -152,3 +152,7 @@ to: "Change GAME_SOUNDS to true"
 + Implements onTouchEvents
 + User moves now
 + Fix a bug with left control position not drawing properly
+
+0.6.1(20120326)
++ Added GameThread
++ Thread not functuning correctly yet
