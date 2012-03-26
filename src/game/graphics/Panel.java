@@ -49,7 +49,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	private void initFields() {
-		game = new ClassicGameType();
+		game = new ClassicGameType(this);
 		Metrics m = new Metrics();
 		leftControlns = m.isLeftControls();
 		cellNumber = game.getBoard().getBoardSize();
@@ -85,6 +85,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 			} catch(InterruptedException e) {
 			}
 		}
+		game.stopThread();
 	}
 
 	@Override
@@ -126,12 +127,8 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 			canvas.drawBitmap(clicked, null, controlRect, null);
 		}
 	}
-	
-	public void update() {
-		game.update(currentDir);
-	}
 
-	private Direction getDirection() {
+	public Direction getDirection() {
 		return currentDir;
 	}
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Color;
+import game.graphics.Panel;
 import game.player.Actions;
 import game.player.Player;
 import game.system.Board;
@@ -15,15 +16,32 @@ public class ClassicGameType {
 	private List<Player> AI = new ArrayList<Player>();
 	private List<Player> USER = new ArrayList<Player>();
 	private Actions ACTIONS = new Actions();
+	private GameThread _thread;
+	private Panel _panel;
 	private int time;
 	
-	public ClassicGameType() {
+	public ClassicGameType(Panel panel) {
+		this._panel = panel;
+		_thread = new GameThread(this);
 		Metrics m = new Metrics();
 		int classicCellNumber = m.getClassicCellNumber();
 		int playerColor = m.getPlayerColor();
 		b = new Board(classicCellNumber);
 		time = m.getClassicGameTime();
 		
+		initPlayerColors(classicCellNumber, playerColor);
+		for (Player ai: AI) {
+			b.setPlayerColorOnCell(ai);
+		}
+		for (Player user: USER) {
+			b.setPlayerColorOnCell(user);
+		}
+		
+		_thread.setRunning(true);
+		_thread.start();
+	}
+
+	private void initPlayerColors(int classicCellNumber, int playerColor) {
 		switch (playerColor) {
 		case Color.RED:
 			USER.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
@@ -56,12 +74,6 @@ public class ClassicGameType {
 			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
 			break;
 		}
-		for (Player ai: AI) {
-			b.setPlayerColorOnCell(ai);
-		}
-		for (Player user: USER) {
-			b.setPlayerColorOnCell(user);
-		}
 	}
 	
 	public Board getBoard() {
@@ -84,7 +96,21 @@ public class ClassicGameType {
 		return this.ACTIONS;
 	}
 	
-	public void update(Direction dir) {
+	public void update() {
+		Direction dir = _panel.getDirection();
 		ACTIONS.move(b, USER.get(0), dir);
+	}
+	
+	public void stopThread() {
+		boolean retry = true;
+
+		_thread.setRunning(false);
+		while(retry){
+			try {
+				_thread.join();
+				retry = false;
+			} catch(InterruptedException e) {
+			}
+		}
 	}
 }
