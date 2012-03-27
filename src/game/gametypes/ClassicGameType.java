@@ -29,7 +29,7 @@ public class ClassicGameType {
 		int playerColor = m.getPlayerColor();
 		b = new Board(classicCellNumber);
 		time = m.getClassicGameTime();
-		b.getCellAt(3, 4).setBonus(new Checkpoint());
+		b.getCellAt(1, 7).setBonus(new Checkpoint());
 		b.getCellAt(5, 6).setBonus(new Checkpoint());
 		
 		initPlayerColors(classicCellNumber, playerColor);
