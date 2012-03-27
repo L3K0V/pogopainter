@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Color;
+import game.bonuses.BonusObject;
+import game.bonuses.Checkpoint;
 import game.graphics.Panel;
 import game.player.Actions;
 import game.player.Player;
@@ -28,6 +30,8 @@ public class ClassicGameType {
 		int playerColor = m.getPlayerColor();
 		b = new Board(classicCellNumber);
 		time = m.getClassicGameTime();
+		b.getCellAt(3, 4).setBonus(new Checkpoint());
+		b.getCellAt(5, 6).setBonus(new Checkpoint());
 		
 		initPlayerColors(classicCellNumber, playerColor);
 		for (Player ai: AI) {

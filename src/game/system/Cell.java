@@ -1,5 +1,6 @@
 package game.system;
 
+import game.bonuses.BonusObject;
 import android.graphics.Color;
 
 public class Cell {
@@ -46,6 +47,10 @@ public class Cell {
 	
 	public BonusObject getBonus() {
 		return this.bonus;
+	}
+	
+	public void clearBonus() {
+		this.bonus = null;
 	}
 
 	public boolean isPlayerOnCell() {

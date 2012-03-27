@@ -1,6 +1,6 @@
 package game.player;
 
-import game.system.BonusObject;
+import game.bonuses.BonusObject;
 
 public class Player {
 	private int x;
@@ -54,5 +54,13 @@ public class Player {
 	
 	public int getPoints() {
 		return this.points;
+	}
+	
+	public void setBonus(BonusObject b) {
+		bonus = b;
+	}
+	
+	public BonusObject getBonus() {
+		return bonus;
 	}
 }

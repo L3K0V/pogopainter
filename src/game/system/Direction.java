@@ -8,4 +8,8 @@ public enum Direction {
 	private Direction(int dir) {
 		this.dir = dir;
 	}
+	
+	public int getDirectionInt() {
+		return dir;
+	}
 }
