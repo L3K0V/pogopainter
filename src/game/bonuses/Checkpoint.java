@@ -1,6 +1,5 @@
 package game.bonuses;
 
-import android.util.Log;
 import game.player.Player;
 import game.system.Board;
 import game.system.Score;
@@ -18,7 +17,7 @@ public class Checkpoint extends BonusObject {
 		Score score = new Score(b, p);
 		
 		checkpointScore = score.Calculate();
-		Log.d("Points", Integer.toString(checkpointScore));
+		p.changeScore(checkpointScore);
 		score.reset();
 	}
 

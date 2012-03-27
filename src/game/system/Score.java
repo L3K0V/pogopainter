@@ -5,6 +5,8 @@ import game.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Color;
+
 
 public class Score {
 
@@ -69,7 +71,7 @@ public class Score {
 		public void reset() {
 			for (int x = 0; x < getPSize(); x++) {
 				for (int y = 0; y < getPSize(); y++) {
-					field.getCellAt(playerCells.get(y).getX(), playerCells.get(y).getY()).setColor(0);
+					field.getCellAt(playerCells.get(y).getX(), playerCells.get(y).getY()).setColor(Color.GRAY);
 				}
 			}
 		}

@@ -168,3 +168,8 @@ to: "Change GAME_SOUNDS to true"
 + Created: bonus drawing on canvas
 + Created: Bonuses enum
 + Working in part score system
+
+0.7.1(20120327)
++ Fix showing score in counters
++ Fix cell color after a reset from checkpoint
++ Fix allocating score to player properly
