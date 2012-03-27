@@ -19,7 +19,7 @@ public class Score {
 			return playerCells.size();
 		}
 		
-		Score(Board b, Player p) {
+		public Score(Board b, Player p) {
 			this.field  = b;
 			this.player = p;
 			this.playerPosition = new Cell(p.getX(), p.getY());
@@ -32,13 +32,13 @@ public class Score {
 			boolean full = false;
 			int cells = field.getBoardSize();
 			
-			for (int x = 0; x < cells; x++) {
-				for (int y = 0; y < cells; y++) {
+			for (int y = 0; y < cells; y++) {
+				for (int x = 0; x < cells; x++) {
 					if (field.getCellAt(x, y).getColor() == playerColor) {
 						playerCells.add(field.getCellAt(x, y));
 						row++;
 					}
-					if ((x > 0) && (field.getCellAt(y, x).getColor()) == field.getCellAt(y, x+1).getColor()) {
+					if ((y < cells-1) && (field.getCellAt(x, y).getColor()) == field.getCellAt(x, y+1).getColor()) {
 						col++;
 						if (col % cells == 0) {
 							score += 2;

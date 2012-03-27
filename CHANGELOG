@@ -161,3 +161,10 @@ to: "Change GAME_SOUNDS to true"
 + Thread comunication fixed
 + Now drawing normaly
 + Fix timing lag with drawing
+
+0.7.0(20120327)
++ BonusObject implementation
++ Created: Checkpoint bonus
++ Created: bonus drawing on canvas
++ Created: Bonuses enum
++ Working in part score system

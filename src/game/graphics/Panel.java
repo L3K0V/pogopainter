@@ -1,8 +1,11 @@
 package game.graphics;
 
+import game.bonuses.BonusObject;
+import game.bonuses.Bonuses;
 import game.gametypes.ClassicGameType;
 import game.player.Player;
 import game.pogopainter.R;
+import game.system.Cell;
 import game.system.Direction;
 import game.system.Metrics;
 import android.content.Context;
@@ -18,7 +21,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.Toast;
 
 
 public class Panel extends SurfaceView implements SurfaceHolder.Callback {
@@ -189,9 +191,10 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		for (int y = 0; y < cellNumber; y++) {
 			for (int x = 0; x < cellNumber; x++) {
 
-				int color  = game.getBoard().getCellAt(x, y).getColor();
-				int width = (game.getBoard().getCellAt(x, y).getX() * cellSize ) + boardStartX;
-				int height = game.getBoard().getCellAt(x, y).getY() * cellSize;
+				Cell cell = game.getBoard().getCellAt(x, y);
+				int color  = cell.getColor();
+				int width = (cell.getX() * cellSize ) + boardStartX;
+				int height = cell.getY() * cellSize;
 
 				paint.setStyle(Paint.Style.FILL);
 				paint.setColor(color);
@@ -201,6 +204,10 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 				paint.setStyle(Paint.Style.STROKE);
 				paint.setColor(Color.WHITE);
 				canvas.drawRect(rect, paint);
+				
+				if (cell.getBonus() != null) {
+					drawBonus(canvas, rect, cell.getBonus().getType());
+				}
 			}
 		}
 	}
@@ -217,7 +224,17 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 			canvas.drawBitmap(bitmap, null, rect, null);
 		}
 	}
-
+	
+	private void drawBonus(Canvas canvas, Rect rect, Bonuses type) {
+		Bitmap bitmap = null;
+		switch (type) {
+		case CHECKPOINT:
+			bitmap = getRotatedBitmap(Direction.RIGHT, R.drawable.checkpoint);
+			break;
+		}
+		canvas.drawBitmap(bitmap, null, rect, null);	
+	}
+	
 	private void drawAIs(Canvas canvas) {
 		for (Player ai: game.getAIs()) {
 			int width = (ai.getX() * cellSize) + boardStartX;
