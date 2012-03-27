@@ -22,7 +22,7 @@ public class ClassicGameType {
 	
 	public ClassicGameType(Panel panel) {
 		this._panel = panel;
-		_thread = new GameThread(this);
+		_thread = new GameThread(this.getPanel());
 		Metrics m = new Metrics();
 		int classicCellNumber = m.getClassicCellNumber();
 		int playerColor = m.getPlayerColor();
@@ -101,10 +101,15 @@ public class ClassicGameType {
 		ACTIONS.move(b, USER.get(0), dir);
 	}
 	
+	public Panel getPanel() {
+		return _panel;
+	}
+	
 	public void stopThread() {
 		boolean retry = true;
 
 		_thread.setRunning(false);
+		_thread.interrupt();
 		while(retry){
 			try {
 				_thread.join();

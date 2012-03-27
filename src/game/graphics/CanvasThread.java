@@ -26,7 +26,12 @@ public class CanvasThread extends Thread {
 				canvas = _surfaceHolder.lockCanvas(null);
 				synchronized (_surfaceHolder) {
 					_panel.onDraw(canvas);
+					synchronized (_panel) {
+						_panel.notify();
+						_panel.wait(400);
+					}
 				}
+			} catch (InterruptedException e) {
 			} finally {
 				if (canvas != null) {
 					_surfaceHolder.unlockCanvasAndPost(canvas);
