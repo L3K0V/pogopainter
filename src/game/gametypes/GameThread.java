@@ -19,13 +19,13 @@ public class GameThread extends Thread {
 	public void run() {
 		while(_run) {
 			try {
-				Thread.sleep(700);
+				Thread.sleep(900);
 			} catch (InterruptedException e) {
 			}
 			
 			synchronized (_panel) {
 				try {
-					_panel.wait(200);
+					_panel.wait(500);
 				} catch (InterruptedException e) {
 				}
 				_panel.getGame().update();	
