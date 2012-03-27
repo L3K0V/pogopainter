@@ -156,3 +156,7 @@ to: "Change GAME_SOUNDS to true"
 0.6.1(20120326)
 + Added GameThread
 + Thread not functuning correctly yet
+
+0.6.2(20120327)
++ Thread comunication fixed
++ Now drawing normaly

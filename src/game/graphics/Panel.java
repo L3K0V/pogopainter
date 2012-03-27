@@ -76,8 +76,9 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		boolean retry = true;
-
+		
 		_thread.setRunning(false);
+		_thread.interrupt();
 		while(retry){
 			try {
 				_thread.join();
@@ -119,6 +120,14 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		drawPointCounters(canvas);
 		drawControls(canvas);
 		drawDirection(canvas);
+	}
+	
+	public CanvasThread getThread() {
+		return _thread;
+	}
+	
+	public ClassicGameType getGame() {
+		return game;
 	}
 	
 	private void drawDirection(Canvas canvas) {
