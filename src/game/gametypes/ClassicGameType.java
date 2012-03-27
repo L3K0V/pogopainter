@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Color;
-import game.bonuses.BonusObject;
 import game.bonuses.Checkpoint;
 import game.graphics.Panel;
 import game.player.Actions;

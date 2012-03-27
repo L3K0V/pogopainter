@@ -75,7 +75,6 @@ public class Actions {
 		
 		if (thisCell.getBonus() != null) {
 			p.setBonus(thisCell.getBonus());
-			//p.getBonus().setBonusEffect(p, b);
 			res = true;
 		}
 		

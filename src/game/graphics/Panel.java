@@ -1,6 +1,5 @@
 package game.graphics;
 
-import game.bonuses.BonusObject;
 import game.bonuses.Bonuses;
 import game.gametypes.ClassicGameType;
 import game.player.Player;
@@ -169,10 +168,32 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		paint.setStyle(Paint.Style.FILL);
 		paint.setAntiAlias(true);
 		paint.setTextSize(cellSize / 2);
-		drawCounter(Color.RED, paint, canvas, game.getUser().get(0).getPoints());
-		drawCounter(Color.BLUE, paint, canvas, game.getAIs().get(0).getPoints());
-		drawCounter(Color.GREEN, paint, canvas, game.getAIs().get(1).getPoints());
-		drawCounter(Color.YELLOW, paint, canvas, game.getAIs().get(2).getPoints());
+		
+		switch (game.getUser().get(0).getColor()) {
+		case Color.RED:
+			drawCounter(Color.RED, paint, canvas, game.getUser().get(0).getPoints());
+			drawCounter(Color.BLUE, paint, canvas, game.getAIs().get(0).getPoints());
+			drawCounter(Color.GREEN, paint, canvas, game.getAIs().get(1).getPoints());
+			drawCounter(Color.YELLOW, paint, canvas, game.getAIs().get(2).getPoints());
+			break;
+		case Color.BLUE:
+			drawCounter(Color.RED, paint, canvas, game.getAIs().get(0).getPoints());
+			drawCounter(Color.BLUE, paint, canvas, game.getUser().get(0).getPoints());
+			drawCounter(Color.GREEN, paint, canvas, game.getAIs().get(1).getPoints());
+			drawCounter(Color.YELLOW, paint, canvas, game.getAIs().get(2).getPoints());
+			break;
+		case Color.GREEN:
+			drawCounter(Color.RED, paint, canvas, game.getAIs().get(0).getPoints());
+			drawCounter(Color.BLUE, paint, canvas, game.getAIs().get(1).getPoints());
+			drawCounter(Color.GREEN, paint, canvas, game.getUser().get(0).getPoints());
+			drawCounter(Color.YELLOW, paint, canvas, game.getAIs().get(2).getPoints());
+			break;
+		case Color.YELLOW:
+			drawCounter(Color.RED, paint, canvas, game.getAIs().get(0).getPoints());
+			drawCounter(Color.BLUE, paint, canvas, game.getAIs().get(1).getPoints());
+			drawCounter(Color.GREEN, paint, canvas, game.getAIs().get(2).getPoints());
+			drawCounter(Color.YELLOW, paint, canvas, game.getUser().get(0).getPoints());
+		}
 	}
 
 	private void drawCounter(int color, Paint paint, Canvas canvas, int points) {
