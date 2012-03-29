@@ -193,3 +193,4 @@ to: "Change GAME_SOUNDS to true"
 + Fixed: some minor bugs
 	= On small screen Metrics class gets error
 	= Null point exceptions in AIs init
++ Added: BugSense lib
