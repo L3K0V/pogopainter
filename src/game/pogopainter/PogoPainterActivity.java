@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
+import com.bugsense.trace.BugSenseHandler;
+
 public class PogoPainterActivity extends Activity implements OnClickListener {
 
 	private int reques_code = 1;
@@ -28,6 +30,8 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.main);
+		
+		BugSenseHandler.setup(this, "318415b5");
 
 		context = getBaseContext();
 

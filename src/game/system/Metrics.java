@@ -40,7 +40,6 @@ public class Metrics {
 		Log.d(tag + " width ", new Integer(WIDTH).toString());
 		HEIGHT = displayMetrics.heightPixels;
 		Log.d(tag + " height ", new Integer(HEIGHT).toString());
-		HEIGHT_DP = HEIGHT / (displayMetrics.densityDpi / 160);
 
 		CLASSIC_BOARD_SIZE = Integer.parseInt(pref.getString("CLASSIC_BOARD_SIZE", "8"));
 		Log.d(tag + " classic board size ", Integer.toString(CLASSIC_BOARD_SIZE));

@@ -187,3 +187,9 @@ to: "Change GAME_SOUNDS to true"
 + Stop game at 0 time left
 + Refactoring
 + Move Actions from player package to system package
+
+0.8.2(20120329)
++ Added: Bugtracking system BugSense
++ Fixed: some minor bugs
+	= On small screen Metrics class gets error
+	= Null point exceptions in AIs init
