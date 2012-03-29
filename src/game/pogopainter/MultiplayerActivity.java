@@ -110,15 +110,15 @@ public class MultiplayerActivity extends Activity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.classic_help_button:
 			Log.d(tag, "Classic help");
-			startActivity(new Intent( this, ClassicHelpActivity.class));
+			startActivity(new Intent( this, ClassicHelpTab.class));
 			break;
 		case R.id.coop_help_button:
 			Log.d(tag, "Coop help");
-			startActivity(new Intent( this, CoopHelpActivity.class));
+			startActivity(new Intent( this, CoopHelpTab.class));
 			break;
 		case R.id.deathmatch_help_button:
 			Log.d(tag, "Deathmatch help");
-			startActivity(new Intent( this, DeathmatchHelpActivity.class));
+			startActivity(new Intent( this, DeathmatchHelpTab.class));
 			break;
 		case R.id.classic_button:
 			Log.d(tag, "Classic");

@@ -7,7 +7,7 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.widget.SimpleAdapter;
 
-public class ScoreSystemHelpActivity extends ListActivity {
+public class ScoreSystem extends ListActivity {
 
 	ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
 

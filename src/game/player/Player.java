@@ -63,4 +63,8 @@ public class Player {
 	public BonusObject getBonus() {
 		return bonus;
 	}
+	
+	public AIBehaviour getBehaviour() {
+		return (AIBehaviour) behaviour;
+	}
 }

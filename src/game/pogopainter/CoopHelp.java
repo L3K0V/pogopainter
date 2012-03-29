@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.SimpleAdapter;
 
-public class DeathmatchHelpActivity extends ListActivity implements OnClickListener {
+public class CoopHelp extends ListActivity {
 
 	final ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>(); 
-	private String tag = "Deathmatch";
+	private String tag = "Coop help";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -38,40 +38,28 @@ public class DeathmatchHelpActivity extends ListActivity implements OnClickListe
 			} 
 		};
 		setListAdapter(adapter);
-
-		View scoreSystem = findViewById(R.id.score_button);
-		scoreSystem.setOnClickListener(this);
 	}
 
 	private void populateList() {
 		HashMap<String,String> temp = new HashMap<String,String>();
 		temp.put("title","Game purpose");
-		temp.put("content", "Zero the oponent points");
-		temp.put("comment", "Hint: More points you get, more fast will zero the oponent points");
+		temp.put("content", "Get most points!");
+		temp.put("comment", "Hint: color most cells you can and then get checkpoint");
 		list.add(temp);
 		HashMap<String,String> temp1 = new HashMap<String,String>();
 		temp1.put("title","Number of players");
-		temp1.put("content", "2 players");
-		temp1.put("comment", "Two players every with unique color");
+		temp1.put("content", "4 players");
+		temp1.put("comment", "Four players every with unique color");
 		list.add(temp1);
 		HashMap<String,String> temp2 = new HashMap<String,String>();
 		temp2.put("title","Number of teams");
-		temp2.put("content", "Two teams of One player each");
-		temp2.put("comment", "One for one - to the death!");
+		temp2.put("content", "Two teams of Two player each");
+		temp2.put("comment", "Points are shared in the teams");
 		list.add(temp2);
 		HashMap<String,String> temp3 = new HashMap<String,String>();
 		temp3.put("title","Bonuses");
-		temp3.put("content", "Speed, Arrow, Mark, Random, GetPoint, HealPoints");
+		temp3.put("content", "Speed, Arrow, Mark, Random");
 		temp3.put("comment", "Hint: Use bonuses to get advantage over other players");
 		list.add(temp3);
-	}
-
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.score_button:
-			Log.d(tag, "Score");
-			startActivity(new Intent( this, ScoreSystemHelpActivity.class));
-			break;
-		}
 	}
 }

@@ -16,7 +16,7 @@ public class AboutTabActivity extends TabActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		 setContentView(R.layout.abou_tab);
+		 setContentView(R.layout.tab);
 
 		    Resources res = getResources(); // Resource object to get Drawables
 		    TabHost tabHost = getTabHost();  // The activity TabHost
