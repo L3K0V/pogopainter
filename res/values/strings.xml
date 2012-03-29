@@ -16,7 +16,7 @@
     <string name="change_saved">Changes saved</string>
     <string name="lang_change">Language changed</string>
     <string name="pogo_rules">Pogo rules</string>
-
+    
     <!-- main menu -->
     <string name="main_title">Pogo Painter</string>
     <string name="single_player_label">Single player</string>
