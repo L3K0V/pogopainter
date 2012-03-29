@@ -9,10 +9,10 @@ import game.bonuses.BonusObject;
 import game.bonuses.Checkpoint;
 import game.graphics.Panel;
 import game.player.AIBehaviour;
-import game.player.Actions;
 import game.player.Behaviour;
 import game.player.Difficult;
 import game.player.Player;
+import game.system.Actions;
 import game.system.Board;
 import game.system.Direction;
 import game.system.Metrics;
@@ -26,13 +26,12 @@ public class ClassicGameType {
 	private List<Player> USER = new ArrayList<Player>();
 	private Actions ACTIONS = new Actions();
 	private List<Checkpoint> CHECKPOINTS = new ArrayList<Checkpoint>();
-	private GameThread _thread;
+	
 	private Panel _panel;
 	private int time;
 	
 	public ClassicGameType(Panel panel) {
 		this._panel = panel;
-		_thread = new GameThread(this.getPanel());
 		Metrics m = new Metrics();
 		int classicCellNumber = m.getClassicCellNumber();
 		int playerColor = m.getPlayerColor();
@@ -51,8 +50,7 @@ public class ClassicGameType {
 		bonusRandomNumber = rnd.nextInt(b.getBoardSize())+1;
 		aiNumber = rnd.nextInt(4)+1;
 		
-		_thread.setRunning(true);
-		_thread.start();
+
 	}
 
 	private void initPlayerColors(int classicCellNumber, int playerColor) {
@@ -64,28 +62,28 @@ public class ClassicGameType {
 			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, AIs));
 			break;
 		case Color.BLUE:
-			AI.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
-			USER.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, AIs));
-			AI.add(new Player(0, 0, Color.GREEN, 0, null));
-			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
+			AI.add(new Player(0, classicCellNumber - 1, Color.RED, 0, AIs));
+			USER.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
+			AI.add(new Player(0, 0, Color.GREEN, 0, AIs));
+			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, AIs));
 			break;
 		case Color.GREEN:
-			AI.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
+			AI.add(new Player(0, classicCellNumber - 1, Color.RED, 0, AIs));
 			AI.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, AIs));
 			USER.add(new Player(0, 0, Color.GREEN, 0, null));
-			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
+			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, AIs));
 			break;
 		case Color.YELLOW:
-			AI.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
-			AI.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
-			AI.add(new Player(0, 0, Color.GREEN, 0, null));
+			AI.add(new Player(0, classicCellNumber - 1, Color.RED, 0, AIs));
+			AI.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, AIs));
+			AI.add(new Player(0, 0, Color.GREEN, 0, AIs));
 			USER.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
 			break;
 		default:
 			USER.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
-			AI.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
-			AI.add(new Player(0, 0, Color.GREEN, 0, null));
-			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
+			AI.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, AIs));
+			AI.add(new Player(0, 0, Color.GREEN, 0, AIs));
+			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, AIs));
 			break;
 		}
 	}
@@ -111,30 +109,17 @@ public class ClassicGameType {
 	}
 	
 	public void update() {
+		if (time == 0) {
+			_panel.stopThreads();
+		}
+		time--;
 		Direction dir = _panel.getDirection();
 		ACTIONS.move(b, USER.get(0), dir);
 		for (Player AI : this.AI) {
-			Direction ai = AI.getBehaviour().easy(b,AI, aiNumber);
+			AI.getBehaviour().easy(b, AI, aiNumber);
+			Direction ai = AI.getBehaviour().getDirection();
 			ACTIONS.move(b, AI, ai);
 		}
 		ACTIONS.seedBonus(b, bonusRandomNumber);
-	}
-	
-	public Panel getPanel() {
-		return _panel;
-	}
-	
-	public void stopThread() {
-		boolean retry = true;
-
-		_thread.setRunning(false);
-		_thread.interrupt();
-		while(retry){
-			try {
-				_thread.join();
-				retry = false;
-			} catch(InterruptedException e) {
-			}
-		}
 	}
 }

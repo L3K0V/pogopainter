@@ -88,7 +88,6 @@ public class Metrics {
 		return this.CLASSIC_GAME_TIME;
 	}
 
-
 	public int getCoopCellNumber() {
 		return this.COOP_BOARD_SIZE;
 	}

@@ -181,3 +181,9 @@ to: "Change GAME_SOUNDS to true"
 + Added: Some random algorithm for spawn checkpoint bonuses
 + Changed: Classic, Coop, Deathmatch help & Score systems
 + Implement EASY AI
+
+0.8.1(20120329)
++ Draw Game Timer
++ Stop game at 0 time left
++ Refactoring
++ Move Actions from player package to system package

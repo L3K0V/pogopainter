@@ -1,12 +1,9 @@
-package game.player;
+package game.system;
 
 import java.util.Random;
-
 import game.bonuses.BonusObject;
 import game.bonuses.Checkpoint;
-import game.system.Board;
-import game.system.Cell;
-import game.system.Direction;
+import game.player.Player;
 
 public class Actions {
 
