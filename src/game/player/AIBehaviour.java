@@ -1,8 +1,8 @@
 package game.player;
 
+import game.system.Actions;
 import game.system.Board;
 import game.system.Direction;
-
 import java.util.Random;
 
 public class AIBehaviour implements Behaviour{
@@ -14,7 +14,7 @@ public class AIBehaviour implements Behaviour{
 		this.AIdifficult = AIdifficult;
 	}
 
-	public Direction easy(Board b,Player AI, int randomNumber) {
+	public void easy(Board b,Player AI, int randomNumber) {
 		Direction nextDir = Direction.NONE;
 		Random rnd = new Random();
 		int check = rnd.nextInt(4)+1;
@@ -27,6 +27,14 @@ public class AIBehaviour implements Behaviour{
 		} else {
 			nextDir = lastDir;
 		}
-		return nextDir;
+		setDirection(nextDir);
+	}
+	
+	private void setDirection(Direction dir) {
+		lastDir = dir;
+	}
+	
+	public Direction getDirection() {
+		return lastDir;
 	}
 }

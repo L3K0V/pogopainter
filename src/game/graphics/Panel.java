@@ -2,6 +2,7 @@ package game.graphics;
 
 import game.bonuses.Bonuses;
 import game.gametypes.ClassicGameType;
+import game.gametypes.GameThread;
 import game.player.Player;
 import game.pogopainter.R;
 import game.system.Cell;
@@ -23,7 +24,8 @@ import android.view.SurfaceView;
 
 
 public class Panel extends SurfaceView implements SurfaceHolder.Callback {
-	private CanvasThread _thread;
+	private CanvasThread _panelThread;
+	private GameThread _gameThread;
 	private ClassicGameType game;
 
 	private int cellNumber;
@@ -34,7 +36,6 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	private Rect controlRect;
 	private boolean leftControlns;
 	private String tag = "Canvas";
-	
 	private Rect up;
 	private Rect down;
 	private Rect left;
@@ -44,7 +45,8 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	public Panel(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		getHolder().addCallback(this);
-		_thread = new CanvasThread(getHolder(), this);
+		_panelThread = new CanvasThread(getHolder(), this);
+		_gameThread = new GameThread(this);
 		setFocusable(true);
 		initFields();
 	}
@@ -71,23 +73,41 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	public void surfaceCreated(SurfaceHolder holder) {
-		_thread.setRunning(true);
-		_thread.start();
+		_panelThread.setRunning(true);
+		_panelThread.start();
+		_gameThread.setRunning(true);
+		_gameThread.start();
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
+		if (_panelThread.isAlive()) {
+			stopThreads();
+		}
+	}
+
+	public void stopThreads() {
 		boolean retry = true;
 		
-		_thread.setRunning(false);
-		_thread.interrupt();
+		_panelThread.setRunning(false);
+		_panelThread.interrupt();
 		while(retry){
 			try {
-				_thread.join();
+				_panelThread.join();
 				retry = false;
 			} catch(InterruptedException e) {
 			}
 		}
-		game.stopThread();
+		retry = true;
+
+		_gameThread.setRunning(false);
+		_gameThread.interrupt();
+		while(retry){
+			try {
+				_gameThread.join();
+				retry = false;
+			} catch(InterruptedException e) {
+			}
+		}
 	}
 
 	@Override
@@ -121,10 +141,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		drawPointCounters(canvas);
 		drawControls(canvas);
 		drawDirection(canvas);
-	}
-	
-	public CanvasThread getThread() {
-		return _thread;
+		drawTimer(canvas);
 	}
 	
 	public ClassicGameType getGame() {
@@ -354,5 +371,14 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 			break;
 		}
 		return rotatedBitmap;
+	}
+
+	private void drawTimer(Canvas canvas) {
+		Paint paint = new Paint();
+		paint.setStyle(Paint.Style.FILL);
+		paint.setAntiAlias(true);
+		paint.setTextSize(cellSize / 2);
+		paint.setColor(Color.GRAY);
+		canvas.drawText(Integer.toString(game.getTime()), controlStartX + (3 * cellSize), cellSize, paint);
 	}
 }
