@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.SimpleAdapter;
 
-public class ClassicHelpActivity extends ListActivity implements OnClickListener {
+public class ClassicHelp extends ListActivity {
 
 	final ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
 	private String tag = "Classic help";
@@ -43,9 +43,6 @@ public class ClassicHelpActivity extends ListActivity implements OnClickListener
 
 
 		setListAdapter(adapter);
-
-		View scoreSystem = findViewById(R.id.score_button);
-		scoreSystem.setOnClickListener(this);
 	}
 
 	private void populateList() {
@@ -70,14 +67,5 @@ public class ClassicHelpActivity extends ListActivity implements OnClickListener
 		temp3.put("comment", "Hint: Use bonuses to get advantage over other players");
 		list.add(temp3);
 
-	}
-
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.score_button:
-			Log.d(tag, "Score");
-			startActivity(new Intent( this, ScoreSystemHelpActivity.class));
-			break;
-		}
 	}
 }

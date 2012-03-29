@@ -173,3 +173,11 @@ to: "Change GAME_SOUNDS to true"
 + Fix showing score in counters
 + Fix cell color after a reset from checkpoint
 + Fix allocating score to player properly
+
+0.7.2(20120328)
++ Re-writed score system
+
+0.8.0(20120329)
++ Added: Some random algorithm for spawn checkpoint bonuses
++ Changed: Classic, Coop, Deathmatch help & Score systems
++ Implement EASY AI

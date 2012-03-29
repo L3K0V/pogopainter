@@ -49,15 +49,27 @@
             android:label="@string/multiplayer_title" >
         </activity>
         <activity
-            android:name=".ClassicHelpActivity"
+            android:name=".ClassicHelp"
             android:label="@string/classic_help_title" >
         </activity>
+         <activity
+            android:name=".ClassicHelpTab"
+            android:label="@string/about_title">
+        </activity>
         <activity
-            android:name=".CoopHelpActivity"
+            android:name=".CoopHelp"
             android:label="@string/coop_help_title" >
         </activity>
         <activity
-            android:name=".DeathmatchHelpActivity"
+            android:name=".CoopHelpTab"
+            android:label="@string/coop_help_title" >
+        </activity>
+        <activity
+            android:name=".DeathmatchHelp"
+            android:label="@string/deathmatch_help_title">
+        </activity>
+         <activity
+            android:name=".DeathmatchHelpTab"
             android:label="@string/deathmatch_help_title">
         </activity>
         <activity
@@ -70,7 +82,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ScoreSystemHelpActivity"
+            android:name=".ScoreSystem"
             android:label="Score system"
             android:theme="@android:style/Theme.Dialog" >
         </activity>

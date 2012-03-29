@@ -1,5 +1,9 @@
 package game.player;
 
+import java.util.Random;
+
+import game.bonuses.BonusObject;
+import game.bonuses.Checkpoint;
 import game.system.Board;
 import game.system.Cell;
 import game.system.Direction;
@@ -40,7 +44,7 @@ public class Actions {
 			break;
 		}
 	}
-	
+
 	public boolean checkDir(Direction dir, Player player, int boardSize) {
 		boolean res = false;
 		boardSize --;
@@ -68,28 +72,46 @@ public class Actions {
 		}
 		return res;
 	}
-	
+
 	public boolean checkForBonus(Player p, Board b) {
 		boolean res = false;
 		Cell thisCell = b.getCellAt(p.getX(), p.getY());
-		
+
 		if (thisCell.getBonus() != null) {
 			p.setBonus(thisCell.getBonus());
 			res = true;
 		}
-		
+
 		return res;
 	}
-	
+
 	public void applyBonusEffect(Player p, Board b) {
 		if (checkForBonus(p, b)) {
 			p.getBonus().setBonusEffect(p, b);
 			clearBonus(p, b);
 		}
 	}
-	
+
 	private void clearBonus(Player p, Board b) {
 		p.setBonus(null);
 		b.getCellAt(p.getX(), p.getY()).clearBonus();
+	}
+
+	public void seedBonus(Board b, int chance) {
+		int checkChance = 0;
+		int x;
+		int y;
+		Random rnd = new Random();
+
+		checkChance = rnd.nextInt(b.getBoardSize())+1;
+
+		if (checkChance == chance) {
+			x = rnd.nextInt(b.getBoardSize());
+			y = rnd.nextInt(b.getBoardSize());
+
+			BonusObject bonus = new Checkpoint();
+			b.getCellAt(x, y).setBonus(bonus);
+
+		}
 	}
 }
