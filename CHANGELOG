@@ -194,3 +194,13 @@ to: "Change GAME_SOUNDS to true"
 	= On small screen Metrics class gets error
 	= Null point exceptions in AIs init
 + Added: BugSense lib
+
+0.8.3(20120330)
++ Changed preferences
++ Added some new preferences
++ Fixed Metrics for new preferences
++ Fixed some cosmetics bugs on help activity tabs
+	(now landscape mode is more user friendly)
++ Fixed rules for missing 36 cells board size option
++ Some little code refractoring and cleaning
++ Deleted: some useless drawables

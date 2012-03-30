@@ -42,8 +42,10 @@
     <string name="about_us_title">About us</string>
     <string name="about_title">About Pogo Painter</string>
     <string name="contact_us">Contact us</string>
-    <string name="about_game_text">        Pogo Painter is a funny &amp; arcade game. It provides single &amp; multiplayer modes with different types of gameplay.</string>
-    <string name="about_us_text">        We are two students from ELSYS and Pogo Painter is our project. We will continue developing it if there is interest in it!</string>
+    <string name="about_game_text">        Pogo Painter is a funny &amp; arcade game. It provides single &amp; multiplayer modes with different types of gameplay.
+</string>
+    <string name="about_us_text">        We are two students from ELSYS and Pogo Painter is our project. We will continue developing it if there is interest in it!
+</string>
 
     <!-- settings -->
     <string name="pogo_reset">Pogo Reset</string>
@@ -61,7 +63,9 @@
     <string name="game_sounds">Game sounds</string>
     <string name="game_sounds_sum">Check if you want in-game sounds</string>
     <string name="game_lang">Game languages</string>
-    <string name="board_size">Board size</string>
+    <string name="classic_board_size">Classic board size</string>
+    <string name="coop_board_size">Co-op board size</string>
+    <string name="deathmatch_board_size">Deathmatch board size</string>
     <string name="controls">Left controls position</string>
     <string name="controls_sum">Uncheck for right controls position</string>
 

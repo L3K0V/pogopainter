@@ -1,11 +1,11 @@
 package game.player;
 
-public enum Difficult {
+public enum Difficulty {
 	EASY(0), NORMAL(2), HARD(3);
 
 	private int value;
 	
-	private Difficult(int value) {
+	private Difficulty(int value) {
 		this.value = value;
 	}
 

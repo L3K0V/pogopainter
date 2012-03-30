@@ -22,6 +22,7 @@ public class Score {
 	}
 
 	public Score(Board b, Player p) {
+		this.score = 0;
 		this.field  = b;
 		this.player = p;
 		this.playerPosition = new Cell(p.getX(), p.getY());
@@ -30,7 +31,6 @@ public class Score {
 
 	public int Calculate() {
 		int cells = field.getBoardSize();
-		int score = 0;
 
 		int colScore = 0;
 		int col = 0;
