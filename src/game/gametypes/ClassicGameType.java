@@ -5,12 +5,11 @@ import java.util.List;
 import java.util.Random;
 
 import android.graphics.Color;
-import game.bonuses.BonusObject;
 import game.bonuses.Checkpoint;
 import game.graphics.Panel;
 import game.player.AIBehaviour;
 import game.player.Behaviour;
-import game.player.Difficult;
+import game.player.Difficulty;
 import game.player.Player;
 import game.system.Actions;
 import game.system.Board;
@@ -19,7 +18,7 @@ import game.system.Metrics;
 
 public class ClassicGameType {
 	private Board b;
-	private Behaviour AIs = new AIBehaviour(Difficult.EASY);
+	private Behaviour AIs = new AIBehaviour(Difficulty.EASY);
 	private int bonusRandomNumber;
 	private int aiNumber;
 	private List<Player> AI = new ArrayList<Player>();

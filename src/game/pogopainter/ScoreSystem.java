@@ -44,23 +44,23 @@ public class ScoreSystem extends ListActivity {
 		list.add(score);
 		HashMap<String,String> score1 = new HashMap<String,String>();
 		score1.put("title", "One column");
-		score1.put("content", "10 (8 + 2 bonus) or 8 (6 + 2 bonus) points");
-		score1.put("comment", "Depend on game type");
+		score1.put("content", "10 (8 + 2 bonus)");
+		score1.put("comment", "");
 		list.add(score1);
 		HashMap<String,String> score2 = new HashMap<String,String>();
 		score2.put("title", "One row");
-		score2.put("content", "10 (8 + 2 bonus) or 8 (6 + 2 bonus) points");
-		score2.put("comment", "Depend on game type");
+		score2.put("content", "10 (8 + 2 bonus)");
+		score2.put("comment", "");
 		list.add(score2);
 		HashMap<String,String> score3 = new HashMap<String,String>();
 		score3.put("title", "Two neighbours columns");
-		score3.put("content", "25 or 17 (2 * One col + 5 bonus) points");
-		score3.put("comment", "Depend on game type");
+		score3.put("content", "25 (2 * One col + 5 bonus) points");
+		score3.put("comment", "");
 		list.add(score3);
 		HashMap<String,String> score4 = new HashMap<String,String>();
 		score4.put("title", "Two neighbours rows");
-		score4.put("content", "25 or 17 (2 * One row + 5 bonus) points");
-		score4.put("comment", "Depend on game type");
+		score4.put("content", "25 (2 * One row + 5 bonus) points");
+		score4.put("comment", "");
 		list.add(score4);
 	}
 

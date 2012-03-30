@@ -6,11 +6,11 @@ import game.system.Direction;
 import java.util.Random;
 
 public class AIBehaviour implements Behaviour{
-	private Difficult AIdifficult;
+	private Difficulty AIdifficult;
 	private Actions actions = new Actions();
 	private Direction lastDir = Direction.NONE;
 
-	public AIBehaviour(Difficult AIdifficult) {
+	public AIBehaviour(Difficulty AIdifficult) {
 		this.AIdifficult = AIdifficult;
 	}
 

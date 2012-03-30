@@ -4,13 +4,9 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.TabHost;
 
 public class DeathmatchHelpTab extends TabActivity {
-	private ExtrasActivity extras = new ExtrasActivity();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
