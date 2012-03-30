@@ -7,11 +7,12 @@ import java.util.Random;
 
 public class AIBehaviour implements Behaviour{
 	private Difficulty AIdifficult;
-	private Actions actions = new Actions();
+	private Actions actions;
 	private Direction lastDir = Direction.NONE;
 
-	public AIBehaviour(Difficulty AIdifficult) {
+	public AIBehaviour(Difficulty AIdifficult, Actions actions) {
 		this.AIdifficult = AIdifficult;
+		this.actions = actions;
 	}
 
 	public void easy(Board b,Player AI, int randomNumber) {

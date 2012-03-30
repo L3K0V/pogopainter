@@ -31,6 +31,8 @@ public class Cell {
 	
 	public void setBonus(BonusObject bonus) {
 		this.bonus = bonus;
+		this.bonus.setX(x);
+		this.bonus.setY(y);
 	}
 	
 	public int getX() {

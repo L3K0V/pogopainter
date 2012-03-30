@@ -1,5 +1,6 @@
 package game.system;
 
+import java.util.List;
 import java.util.Random;
 import game.bonuses.BonusObject;
 import game.bonuses.Checkpoint;
@@ -7,6 +8,9 @@ import game.player.Player;
 
 public class Actions {
 
+	private int checkpointLimit = 5;
+	private List<Checkpoint> checkpoints;
+	
 	public void move(Board b, Player player, Direction dir) {
 		int boardSize = b.getBoardSize();
 
@@ -86,6 +90,12 @@ public class Actions {
 		if (checkForBonus(p, b)) {
 			p.getBonus().setBonusEffect(p, b);
 			clearBonus(p, b);
+			for (Checkpoint cp : checkpoints) {
+				if (p.getX() == cp.getX() && p.getY() == cp.getY()) {
+					checkpoints.remove(cp);
+					break;
+				}
+			}
 		}
 	}
 
@@ -100,15 +110,29 @@ public class Actions {
 		int y;
 		Random rnd = new Random();
 
-		checkChance = rnd.nextInt(b.getBoardSize())+1;
+		checkChance = rnd.nextInt(checkpointLimit)+1;
 
-		if (checkChance == chance) {
-			x = rnd.nextInt(b.getBoardSize());
-			y = rnd.nextInt(b.getBoardSize());
-
-			BonusObject bonus = new Checkpoint();
-			b.getCellAt(x, y).setBonus(bonus);
-
+		if (checkChance == chance && checkpoints.size() < checkpointLimit) {
+			while(true) {
+				
+				x = rnd.nextInt(b.getBoardSize());
+				y = rnd.nextInt(b.getBoardSize());
+				
+				if (b.getCellAt(x, y).getBonus() == null) {
+					Checkpoint bonus = new Checkpoint();
+					b.getCellAt(x, y).setBonus(bonus);
+					checkpoints.add(bonus);
+					break;
+				}
+			}
 		}
+	}
+
+	public List<Checkpoint> getCheckpoints() {
+		return checkpoints;
+	}
+
+	public void setCheckpoints(List<Checkpoint> checkpoints) {
+		this.checkpoints = checkpoints;
 	}
 }

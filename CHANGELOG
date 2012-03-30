@@ -202,7 +202,7 @@ to: "Change GAME_SOUNDS to true"
 + Fixed some cosmetics bugs on help activity tabs
 	(now landscape mode is more user friendly)
 + Fixed rules for missing 36 cells board size option
-+ Some little code refractoring and cleaning
++ Some little code refactoring and cleaning
 + Deleted: some useless drawables
 
 0.9.0(20120330)
@@ -210,3 +210,9 @@ to: "Change GAME_SOUNDS to true"
 + Change formulas for controls and counters
 + Fix timer
 + Fix drawing on different resolutions
+
+0.9.1(20120331)
+SAVE THE PROJECT FROM TOTAL BREAKDOWN
++ Limit on checkpoint
++ Changed checkpoint chance
++ Actions optimization
