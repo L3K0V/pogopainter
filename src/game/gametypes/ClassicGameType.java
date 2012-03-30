@@ -17,13 +17,14 @@ import game.system.Direction;
 import game.system.Metrics;
 
 public class ClassicGameType {
+	private Actions ACTIONS = new Actions();
 	private Board b;
-	private Behaviour AIs = new AIBehaviour(Difficulty.EASY);
+	private Behaviour AIs = new AIBehaviour(Difficulty.EASY, ACTIONS);
 	private int bonusRandomNumber;
 	private int aiNumber;
 	private List<Player> AI = new ArrayList<Player>();
 	private List<Player> USER = new ArrayList<Player>();
-	private Actions ACTIONS = new Actions();
+	
 	private List<Checkpoint> CHECKPOINTS = new ArrayList<Checkpoint>();
 	
 	private Panel _panel;
@@ -32,6 +33,7 @@ public class ClassicGameType {
 	public ClassicGameType(Panel panel) {
 		this._panel = panel;
 		Metrics m = new Metrics();
+		ACTIONS.setCheckpoints(CHECKPOINTS);
 		int classicCellNumber = m.getClassicCellNumber();
 		int playerColor = m.getPlayerColor();
 		b = new Board(classicCellNumber);
@@ -46,7 +48,7 @@ public class ClassicGameType {
 		}
 		
 		Random rnd = new Random();
-		bonusRandomNumber = rnd.nextInt(b.getBoardSize())+1;
+		bonusRandomNumber = rnd.nextInt(5)+1;
 		aiNumber = rnd.nextInt(4)+1;
 		
 
