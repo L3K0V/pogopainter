@@ -204,3 +204,9 @@ to: "Change GAME_SOUNDS to true"
 + Fixed rules for missing 36 cells board size option
 + Some little code refractoring and cleaning
 + Deleted: some useless drawables
+
+0.9.0(20120330)
++ Refactored some code in Panel
++ Change formulas for controls and counters
++ Fix timer
++ Fix drawing on different resolutions
