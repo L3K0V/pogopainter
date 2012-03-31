@@ -39,7 +39,6 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	private Rect left;
 	private Rect right;
 	private Direction currentDir = Direction.NONE;
-	private int uiWidth;
 	private int padding;
 	private Rect counterRect;
 	private int screenWidth;
@@ -103,7 +102,6 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		leftControlns = m.isLeftControls();
 		cellNumber = game.getBoard().getBoardSize();
 		cellSize = (screenHeigth / cellNumber ) - 1;	
-		uiWidth = screenWidth - m.getScreenHeight();
 		padding = cellSize / 5;
 		if (leftControlns) {
 			controlStartX = 0;

@@ -19,7 +19,6 @@ import game.system.Metrics;
 public class ClassicGameType {
 	private Actions ACTIONS = new Actions();
 	private Board b;
-	private Behaviour AIs = new AIBehaviour(Difficulty.EASY, ACTIONS);
 	private int bonusRandomNumber;
 	private int aiNumber;
 	private List<Player> AI = new ArrayList<Player>();
@@ -48,7 +47,7 @@ public class ClassicGameType {
 		}
 		
 		Random rnd = new Random();
-		bonusRandomNumber = rnd.nextInt(5)+1;
+		bonusRandomNumber = rnd.nextInt(2)+1;
 		aiNumber = rnd.nextInt(4)+1;
 		
 
@@ -58,33 +57,33 @@ public class ClassicGameType {
 		switch (playerColor) {
 		case Color.RED:
 			USER.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
-			AI.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, AIs));
-			AI.add(new Player(0, 0, Color.GREEN, 0, AIs));
-			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, AIs));
+			AI.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehaviour(Difficulty.EASY, ACTIONS)));
+			AI.add(new Player(0, 0, Color.GREEN, 0, new AIBehaviour(Difficulty.EASY, ACTIONS)));
+			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehaviour(Difficulty.EASY, ACTIONS)));
 			break;
 		case Color.BLUE:
-			AI.add(new Player(0, classicCellNumber - 1, Color.RED, 0, AIs));
+			AI.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new AIBehaviour(Difficulty.EASY, ACTIONS)));
 			USER.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
-			AI.add(new Player(0, 0, Color.GREEN, 0, AIs));
-			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, AIs));
+			AI.add(new Player(0, 0, Color.GREEN, 0, new AIBehaviour(Difficulty.EASY, ACTIONS)));
+			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehaviour(Difficulty.EASY, ACTIONS)));
 			break;
 		case Color.GREEN:
-			AI.add(new Player(0, classicCellNumber - 1, Color.RED, 0, AIs));
-			AI.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, AIs));
+			AI.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new AIBehaviour(Difficulty.EASY, ACTIONS)));
+			AI.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehaviour(Difficulty.EASY, ACTIONS)));
 			USER.add(new Player(0, 0, Color.GREEN, 0, null));
-			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, AIs));
+			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehaviour(Difficulty.EASY, ACTIONS)));
 			break;
 		case Color.YELLOW:
-			AI.add(new Player(0, classicCellNumber - 1, Color.RED, 0, AIs));
-			AI.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, AIs));
-			AI.add(new Player(0, 0, Color.GREEN, 0, AIs));
+			AI.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new AIBehaviour(Difficulty.EASY, ACTIONS)));
+			AI.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehaviour(Difficulty.EASY, ACTIONS)));
+			AI.add(new Player(0, 0, Color.GREEN, 0, new AIBehaviour(Difficulty.EASY, ACTIONS)));
 			USER.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
 			break;
 		default:
 			USER.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
-			AI.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, AIs));
-			AI.add(new Player(0, 0, Color.GREEN, 0, AIs));
-			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, AIs));
+			AI.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehaviour(Difficulty.EASY, ACTIONS)));
+			AI.add(new Player(0, 0, Color.GREEN, 0, new AIBehaviour(Difficulty.EASY, ACTIONS)));
+			AI.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehaviour(Difficulty.EASY, ACTIONS)));
 			break;
 		}
 	}
