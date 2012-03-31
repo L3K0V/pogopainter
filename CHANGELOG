@@ -216,3 +216,9 @@ SAVE THE PROJECT FROM TOTAL BREAKDOWN
 + Limit on checkpoint
 + Changed checkpoint chance
 + Actions optimization
+
+0.9.2(20120401)
++ Created smarter AI behavior
+	= Every bot follow random checkpoint
+	= If checkpoints is one all bots follow it
+	= When theres no checkpoints bot walk randomly
