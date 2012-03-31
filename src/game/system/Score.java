@@ -52,7 +52,7 @@ public class Score {
 			if (row / cells == 1) {
 				rowScore += 2;
 				if (fullRow) {
-					rowScore += 5;
+					rowScore += 10;
 					fullRow = false;
 				} else {
 					fullRow = true;
@@ -71,7 +71,7 @@ public class Score {
 			if (col / cells == 1) {
 				colScore += 2;
 				if (fullCol) {
-					colScore += 5;
+					colScore += 10;
 					fullCol = false;
 				} else {
 					fullCol = true;

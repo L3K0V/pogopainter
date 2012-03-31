@@ -2,7 +2,6 @@ package game.system;
 
 import java.util.List;
 import java.util.Random;
-import game.bonuses.BonusObject;
 import game.bonuses.Checkpoint;
 import game.player.Player;
 
@@ -110,7 +109,7 @@ public class Actions {
 		int y;
 		Random rnd = new Random();
 
-		checkChance = rnd.nextInt(checkpointLimit)+1;
+		checkChance = rnd.nextInt(2)+1;
 
 		if (checkChance == chance && checkpoints.size() < checkpointLimit) {
 			while(true) {
