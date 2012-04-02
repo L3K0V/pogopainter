@@ -228,3 +228,7 @@ SAVE THE PROJECT FROM TOTAL BREAKDOWN
 + Added: new players drawables
 + Added: new cells drawables
 - Arrow rotate but still buggy
+
+0.9.4(20120402)
++ Now drawing bitmaps for cells instead of normal draw
++ Fix changing direction of arrow 
