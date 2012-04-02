@@ -1,7 +1,7 @@
 package game.bonuses;
 
 public enum Bonuses {
-	CHECKPOINT(0), SPEEDUP(1), SHOOT(2);
+	NONE(-1), CHECKPOINT(0), ARROW(1), SPEEDUP(2), SHOOT(3);
 	
 	private int bonus;
 	

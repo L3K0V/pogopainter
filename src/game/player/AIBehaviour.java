@@ -9,7 +9,7 @@ import game.system.Direction;
 import java.util.List;
 import java.util.Random;
 
-public class AIBehaviour implements Behaviour{
+public class AIBehaviour implements Behaviour {
 	private Difficulty AIdifficult;
 	private Actions actions;
 	private Direction lastDir = Direction.NONE;

@@ -2,13 +2,18 @@ package game.system;
 
 import java.util.List;
 import java.util.Random;
+
+import game.bonuses.Arrow;
+import game.bonuses.BonusObject;
 import game.bonuses.Checkpoint;
 import game.player.Player;
 
 public class Actions {
 
 	private int checkpointLimit = 5;
+	private int arrowsLimit = 3;
 	private List<Checkpoint> checkpoints;
+	private List<Arrow> arrows;
 	
 	public void move(Board b, Player player, Direction dir) {
 		int boardSize = b.getBoardSize();
@@ -108,8 +113,9 @@ public class Actions {
 		int x;
 		int y;
 		Random rnd = new Random();
+		int bonusChance = 0;
 
-		checkChance = rnd.nextInt(2)+1;
+		checkChance = rnd.nextInt(checkpointLimit)+1;
 
 		if (checkChance == chance && checkpoints.size() < checkpointLimit) {
 			while(true) {
@@ -124,6 +130,24 @@ public class Actions {
 					break;
 				}
 			}
+		} else {
+			checkChance = rnd.nextInt(5)+1;
+			bonusChance = rnd.nextInt(5)+1;
+			
+			if (checkChance == bonusChance && arrows.size() < arrowsLimit) {
+				while(true) {
+					
+					x = rnd.nextInt(b.getBoardSize());
+					y = rnd.nextInt(b.getBoardSize());
+					
+					if (b.getCellAt(x, y).getBonus() == null) {
+						BonusObject bonus = new Arrow();
+						b.getCellAt(x, y).setBonus(bonus);
+						arrows.add((Arrow) bonus);
+						break;
+					}
+				}
+			}
 		}
 	}
 
@@ -133,5 +157,13 @@ public class Actions {
 
 	public void setCheckpoints(List<Checkpoint> checkpoints) {
 		this.checkpoints = checkpoints;
+	}
+	
+	public List<Arrow> getArrows() {
+		return arrows;
+	}
+
+	public void setArrows(List<Arrow> arrows) {
+		this.arrows = arrows;
 	}
 }
