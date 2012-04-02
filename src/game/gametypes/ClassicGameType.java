@@ -115,15 +115,15 @@ public class ClassicGameType {
 			_panel.stopThreads();
 		} else {
 			time--;
-			for (Arrow aw : ARROWS) {
-				aw.changeState();
-			}
 			Direction dir = _panel.getDirection();
 			ACTIONS.move(b, USER.get(0), dir);
 			for (Player AI : this.AI) {
 				AI.getBehaviour().easy(b, AI, aiNumber);
 				Direction ai = AI.getBehaviour().getDirection();
 				ACTIONS.move(b, AI, ai);
+			}
+			for (Arrow aw : ARROWS) {
+				aw.changeState();
 			}
 			ACTIONS.seedBonus(b, bonusRandomNumber);
 		}

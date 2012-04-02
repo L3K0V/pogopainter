@@ -273,32 +273,6 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		counterY += counterPadding;
 	}
 
-	private void drawBoard(Canvas canvas) {
-		Paint paint = new Paint();
-		for (int y = 0; y < cellNumber; y++) {
-			for (int x = 0; x < cellNumber; x++) {
-
-				Cell cell = game.getBoard().getCellAt(x, y);
-				int color  = cell.getColor();
-				int width = (cell.getX() * cellSize ) + boardStartX;
-				int height = cell.getY() * cellSize;
-
-				paint.setStyle(Paint.Style.FILL);
-				paint.setColor(color);
-				Rect rect = new Rect(width, height, width + cellSize, height + cellSize);
-				canvas.drawRect(rect, paint);
-
-				paint.setStyle(Paint.Style.STROKE);
-				paint.setColor(Color.WHITE);
-				canvas.drawRect(rect, paint);
-
-				if (cell.getBonus() != null) {
-					drawBonus(canvas, rect, cell.getBonus());
-				}
-			}
-		}
-	}
-
 	private void drawUsers(Canvas canvas) {
 		for (Player user: game.getUser()) {
 			int width = (user.getX() * cellSize) + boardStartX;
@@ -309,6 +283,44 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 			Bitmap bitmap = getPlayerColor(color);
 
 			canvas.drawBitmap(bitmap, null, rect, null);
+		}
+	}
+
+	private void drawAIs(Canvas canvas) {
+		for (Player ai: game.getAIs()) {
+			int width = (ai.getX() * cellSize) + boardStartX;
+			int height = ai.getY() * cellSize;
+			int color = ai.getColor();
+	
+			Rect rect = new Rect(width, height, width + cellSize, height + cellSize);
+			Bitmap bitmap = getPlayerColor(color);
+	
+			canvas.drawBitmap(bitmap, null, rect, null);
+		}
+	}
+
+	private void drawBoard(Canvas canvas) {
+		Paint paint = new Paint();
+		for (int y = 0; y < cellNumber; y++) {
+			for (int x = 0; x < cellNumber; x++) {
+	
+				Cell cell = game.getBoard().getCellAt(x, y);
+				int color  = cell.getColor();
+				int width = (cell.getX() * cellSize ) + boardStartX;
+				int height = cell.getY() * cellSize;
+	
+				Rect rect = new Rect(width, height, width + cellSize, height + cellSize);
+				Bitmap bitmap = getCellColor(color);
+				canvas.drawBitmap(bitmap, null, rect, null);
+				
+				paint.setStyle(Paint.Style.STROKE);
+				paint.setColor(Color.WHITE);
+				canvas.drawRect(rect, paint);
+	
+				if (cell.getBonus() != null) {
+					drawBonus(canvas, rect, cell.getBonus());
+				}
+			}
 		}
 	}
 
@@ -341,19 +353,6 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 			break;
 		}
 		canvas.drawBitmap(bitmap, null, rect, null);	
-	}
-
-	private void drawAIs(Canvas canvas) {
-		for (Player ai: game.getAIs()) {
-			int width = (ai.getX() * cellSize) + boardStartX;
-			int height = ai.getY() * cellSize;
-			int color = ai.getColor();
-
-			Rect rect = new Rect(width, height, width + cellSize, height + cellSize);
-			Bitmap bitmap = getPlayerColor(color);
-
-			canvas.drawBitmap(bitmap, null, rect, null);
-		}
 	}
 
 	private void drawNav(Canvas canvas) {
@@ -414,6 +413,23 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 			bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.player_green); break;
 		case Color.YELLOW:
 			bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.player_yellow); break;
+		}
+		return bitmap;
+	}
+	
+	private Bitmap getCellColor(int color) {
+		Bitmap bitmap = null;
+		switch (color) {
+		case Color.RED:
+			bitmap =BitmapFactory.decodeResource(getResources(), R.drawable.cell_red); break;
+		case Color.BLUE:
+			bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cell_blue); break;
+		case Color.GREEN:
+			bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cell_green); break;
+		case Color.YELLOW:
+			bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cell_yellow); break;
+		default : 
+			bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cell_empty); break;
 		}
 		return bitmap;
 	}
