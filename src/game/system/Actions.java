@@ -100,6 +100,12 @@ public class Actions {
 					break;
 				}
 			}
+			for (Arrow aw : arrows) {
+				if (p.getX() == aw.getX() && p.getY() == aw.getY()) {
+					arrows.remove(aw);
+					break;
+				}
+			}
 		}
 	}
 

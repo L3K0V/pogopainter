@@ -221,14 +221,24 @@ SAVE THE PROJECT FROM TOTAL BREAKDOWN
 + Created smarter AI behavior
 	= Every bot follow random checkpoint
 	= If checkpoints is one all bots follow it
-	= When theres no checkpoints bot walk randomly
+	= When theres no checkpoints bots walk randomly
 	
 0.9.3(20120402)
 + Arrow bonus implementation
+	= Arrow limit is now 3
 + Added: new players drawables
 + Added: new cells drawables
 - Arrow rotate but still buggy
 
 0.9.4(20120402)
 + Now drawing bitmaps for cells instead of normal draw
-+ Fix changing direction of arrow 
++ Fix changing direction of arrow
+
+0.9.5(20120403)
++ Changed: drawable for joystick
++ Fixed: Arrow now removed from list & now spawn bug after 3
++ Added: GameOver layout
+	= Progress bars in players color
+	= Need to be attached to game (for now no idea how)
++ Added: Tile background for game (changed ugly black)
++ Fixed: Bonus seed after player input, now bonus seed before players input...
