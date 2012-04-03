@@ -23,7 +23,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-
 public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	private CanvasThread _panelThread;
 	private GameThread _gameThread;
@@ -182,6 +181,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	public void onDraw(Canvas canvas) {
 		counterY = counterRect.top;
 		canvas.drawColor(Color.BLACK);
+		drawBackground(canvas);
 		drawBoard(canvas);
 		drawUsers(canvas);
 		drawNav(canvas);
@@ -196,6 +196,23 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		if (getDirection() != Direction.NONE) {
 			Bitmap clicked = getRotatedBitmap(getDirection(), R.drawable.joystick_clicked);
 			canvas.drawBitmap(clicked, null, controlRect, null);
+		}
+	}
+	
+	private void drawBackground(Canvas canvas) {
+		Bitmap bgTile = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+
+		float left = 0, top = 0;
+		float bgTileWidth = bgTile.getWidth();
+		float bgTileHeight = bgTile.getWidth();
+
+		while (left < screenWidth) {
+		    while (top < screenHeigth) {
+		        canvas.drawBitmap(bgTile, left, top, null);
+		        top += bgTileHeight;
+		    }
+		    left += bgTileWidth;
+		    top = 0;
 		}
 	}
 
@@ -217,10 +234,10 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		Bitmap controls = getRotatedBitmap(Direction.RIGHT, R.drawable.joystick);
 		canvas.drawBitmap(controls, null, controlRect, null);
 
-		canvas.drawRect(up, paint);
-		canvas.drawRect(down, paint);
-		canvas.drawRect(left, paint);
-		canvas.drawRect(right, paint);	
+		//canvas.drawRect(up, paint);
+		//canvas.drawRect(down, paint);
+		//canvas.drawRect(left, paint);
+		//canvas.drawRect(right, paint);	
 		//		canvas.drawRect(controlRect, paint);
 		//		canvas.drawRect(counterRect, paint);
 	}

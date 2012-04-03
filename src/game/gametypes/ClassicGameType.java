@@ -4,13 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import android.content.ComponentName;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
+import android.sax.StartElementListener;
 import game.bonuses.Arrow;
 import game.bonuses.Checkpoint;
 import game.graphics.Panel;
 import game.player.AIBehaviour;
 import game.player.Difficulty;
 import game.player.Player;
+import game.pogopainter.GameOver;
+import game.pogopainter.PogoPainterActivity;
+import game.pogopainter.PreferencesActivity;
 import game.system.Actions;
 import game.system.Board;
 import game.system.Direction;
@@ -115,6 +122,7 @@ public class ClassicGameType {
 			_panel.stopThreads();
 		} else {
 			time--;
+			ACTIONS.seedBonus(b, bonusRandomNumber);
 			Direction dir = _panel.getDirection();
 			ACTIONS.move(b, USER.get(0), dir);
 			for (Player AI : this.AI) {
@@ -125,7 +133,6 @@ public class ClassicGameType {
 			for (Arrow aw : ARROWS) {
 				aw.changeState();
 			}
-			ACTIONS.seedBonus(b, bonusRandomNumber);
 		}
 
 	}
