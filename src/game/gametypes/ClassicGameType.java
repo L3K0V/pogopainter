@@ -118,10 +118,10 @@ public class ClassicGameType {
 	}
 
 	public void update() {
+		time--;
 		if (time == 0) {
 			_panel.stopThreads();
 		} else {
-			time--;
 			ACTIONS.seedBonus(b, bonusRandomNumber);
 			Direction dir = _panel.getDirection();
 			ACTIONS.move(b, USER.get(0), dir);
