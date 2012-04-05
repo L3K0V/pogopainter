@@ -3,6 +3,7 @@ package game.player;
 import game.bonuses.Arrow;
 import game.bonuses.BonusObject;
 import game.bonuses.Checkpoint;
+import game.gametypes.Game;
 import game.system.Actions;
 import game.system.Board;
 import game.system.Cell;
@@ -13,12 +14,12 @@ import java.util.Random;
 
 public class AIBehaviour implements Behaviour {
 	private Difficulty AIdifficult;
-	private Actions actions;
+	private Game actions;
 	private Direction lastDir = Direction.NONE;
 	private Checkpoint random = null;
 	private Arrow arrow = null;
 
-	public AIBehaviour(Difficulty AIdifficult, Actions actions) {
+	public AIBehaviour(Difficulty AIdifficult, Game actions) {
 		this.AIdifficult = AIdifficult;
 		this.actions = actions;
 	}
@@ -39,7 +40,7 @@ public class AIBehaviour implements Behaviour {
 			arrow = arrows.get(rnd.nextInt(arrows.size()));
 		}
 
-		if (checkpoints.size() > 0 && goTo == 1) {
+		if (checkpoints.size() > 0) {
 			nextDir = getNextDirectionToCheckpoint(AI, random);
 		} else if (check == randomNumber) {
 			if (arrows.size() > 0 && goTo == 2) {
