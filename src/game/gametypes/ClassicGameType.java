@@ -57,7 +57,7 @@ public class ClassicGameType {
 
 		Random rnd = new Random();
 		bonusRandomNumber = rnd.nextInt(5)+1;
-		aiNumber = rnd.nextInt(4)+1;
+		aiNumber = rnd.nextInt(2)+1;
 
 
 	}

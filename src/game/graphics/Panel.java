@@ -180,8 +180,9 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	@Override
 	public void onDraw(Canvas canvas) {
 		counterY = counterRect.top;
-		canvas.drawColor(Color.BLACK);
-		drawBackground(canvas);
+		canvas.drawColor(Color.WHITE);
+		Bitmap bg = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+		canvas.drawBitmap(bg, null, new Rect(0,0,getWidth(),getHeight()), null);
 		drawBoard(canvas);
 		drawUsers(canvas);
 		drawNav(canvas);
@@ -196,23 +197,6 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		if (getDirection() != Direction.NONE) {
 			Bitmap clicked = getRotatedBitmap(getDirection(), R.drawable.joystick_clicked);
 			canvas.drawBitmap(clicked, null, controlRect, null);
-		}
-	}
-	
-	private void drawBackground(Canvas canvas) {
-		Bitmap bgTile = BitmapFactory.decodeResource(getResources(), R.drawable.background);
-
-		float left = 0, top = 0;
-		float bgTileWidth = bgTile.getWidth();
-		float bgTileHeight = bgTile.getWidth();
-
-		while (left < screenWidth) {
-		    while (top < screenHeigth) {
-		        canvas.drawBitmap(bgTile, left, top, null);
-		        top += bgTileHeight;
-		    }
-		    left += bgTileWidth;
-		    top = 0;
 		}
 	}
 
