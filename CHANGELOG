@@ -252,3 +252,8 @@ SAVE THE PROJECT FROM TOTAL BREAKDOWN
 	= Bots now go and take arrows bonuses, chance 50%
 	= 50% chance Bot to go to checkpoint
 - Game stop at 1 sec
+
+0.10.0(20120405)
++ Changed the arhitecture of Panel and Game classes
++ Refactored some code in panel and game
++ now CanvasActivity doest use xml usage of panel

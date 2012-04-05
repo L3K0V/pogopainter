@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="horizontal" >
 
-    <game.graphics.Panel
+    <game.graphics.ClassicPanel
         android:id="@+id/canvasPanel"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />

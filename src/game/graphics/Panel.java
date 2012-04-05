@@ -3,7 +3,8 @@ package game.graphics;
 import game.bonuses.Arrow;
 import game.bonuses.BonusObject;
 import game.bonuses.Bonuses;
-import game.gametypes.ClassicGameType;
+import game.gametypes.ClassicGame;
+import game.gametypes.Game;
 import game.gametypes.GameThread;
 import game.player.Player;
 import game.pogopainter.R;
@@ -18,42 +19,41 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-public class Panel extends SurfaceView implements SurfaceHolder.Callback {
-	private CanvasThread _panelThread;
-	private GameThread _gameThread;
-	private ClassicGameType game;
+public abstract class Panel extends SurfaceView implements SurfaceHolder.Callback {
+	protected CanvasThread _panelThread;
+	protected GameThread _gameThread;
+	protected Game game;
 
-	private int cellNumber;
-	private int cellSize;
-	private int controlStartX;
-	private int boardStartX;
-	private int counterY;
-	private Rect controlRect;
-	private boolean leftControlns;
-	private Rect up;
-	private Rect down;
-	private Rect left;
-	private Rect right;
-	private Direction currentDir = Direction.NONE;
-	private int padding;
-	private Rect counterRect;
-	private int screenWidth;
-	private int screenHeigth;
+	protected int cellNumber;
+	protected int cellSize;
+	protected int controlStartX;
+	protected int boardStartX;
+	protected int counterY;
+	protected Rect controlRect;
+	protected boolean leftControlns;
+	protected Rect up;
+	protected Rect down;
+	protected Rect left;
+	protected Rect right;
+	protected Direction currentDir = Direction.NONE;
+	protected int padding;
+	protected Rect counterRect;
+	protected int screenWidth;
+	protected int screenHeigth;
 
-	public Panel(Context context, AttributeSet attrs) {
-		super(context, attrs);
+	public Panel(Context context) {
+		super(context);
 		getHolder().addCallback(this);
 		_panelThread = new CanvasThread(getHolder(), this);
 		_gameThread = new GameThread(this);
 		setFocusable(true);
 		initFields();
 	}
-
+	
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 	}
 
@@ -92,11 +92,10 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 				retry = false;
 			} catch(InterruptedException e) {
 			}
-		}
+		}		
 	}
-
-	private void initFields() {
-		game = new ClassicGameType(this);
+	
+	protected void initFields() {
 		Metrics m = new Metrics();
 		screenWidth = m.getScreenWidth();
 		screenHeigth = m.getScreenHeight();
@@ -125,7 +124,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		defineTouchRect();
 	}
 
-	private void fixControlRect(Rect control) {
+	protected void fixControlRect(Rect control) {
 		int square = 0;
 		if (control.width() > control.height()) {
 			square = control.height() - padding;
@@ -137,7 +136,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 				control.centerX() + square/2, control.centerY() + square/2);
 	}
 
-	private void defineTouchRect() {
+	protected void defineTouchRect() {
 		int centerX = controlRect.centerX();
 		int centerY = controlRect.centerY();
 		int width = controlRect.height();
@@ -165,7 +164,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		return true;
 	}
 
-	private void checkControls(int x, int y) {
+	protected void checkControls(int x, int y) {
 		if (up.contains(x, y)) {
 			currentDir = Direction.UP;
 		} else if (right.contains(x, y)) {
@@ -193,14 +192,14 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		drawDirection(canvas);
 	}
 
-	private void drawDirection(Canvas canvas) {
+	protected void drawDirection(Canvas canvas) {
 		if (getDirection() != Direction.NONE) {
 			Bitmap clicked = getRotatedBitmap(getDirection(), R.drawable.joystick_clicked);
 			canvas.drawBitmap(clicked, null, controlRect, null);
 		}
 	}
 
-	private void drawTimer(Canvas canvas) {
+	protected void drawTimer(Canvas canvas) {
 		counterY += counterRect.height() / 5;
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.FILL);
@@ -211,7 +210,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		canvas.drawText(timeLeft, counterRect.centerX() - counterRect.width()/3, counterY, paint);
 	}
 
-	private void drawControls(Canvas canvas) {
+	protected void drawControls(Canvas canvas) {
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setColor(Color.MAGENTA);
@@ -226,7 +225,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		//		canvas.drawRect(counterRect, paint);
 	}
 
-	private void drawPointCounters(Canvas canvas) {
+	protected void drawPointCounters(Canvas canvas) {
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.FILL);
 		paint.setAntiAlias(true);
@@ -258,7 +257,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		}
 	}
 
-	private void drawCounter(int color, Paint paint, Canvas canvas, int points) {
+	protected void drawCounter(int color, Paint paint, Canvas canvas, int points) {
 		paint.setColor(color);
 		paint.setTextSize(counterRect.height() / 6);
 		String spoints = Integer.toString(points);
@@ -274,7 +273,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		counterY += counterPadding;
 	}
 
-	private void drawUsers(Canvas canvas) {
+	protected void drawUsers(Canvas canvas) {
 		for (Player user: game.getUser()) {
 			int width = (user.getX() * cellSize) + boardStartX;
 			int height = user.getY() * cellSize;
@@ -287,7 +286,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		}
 	}
 
-	private void drawAIs(Canvas canvas) {
+	protected void drawAIs(Canvas canvas) {
 		for (Player ai: game.getAIs()) {
 			int width = (ai.getX() * cellSize) + boardStartX;
 			int height = ai.getY() * cellSize;
@@ -300,7 +299,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		}
 	}
 
-	private void drawBoard(Canvas canvas) {
+	protected void drawBoard(Canvas canvas) {
 		Paint paint = new Paint();
 		for (int y = 0; y < cellNumber; y++) {
 			for (int x = 0; x < cellNumber; x++) {
@@ -325,7 +324,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		}
 	}
 
-	private void drawBonus(Canvas canvas, Rect rect, BonusObject bonus) {
+	protected void drawBonus(Canvas canvas, Rect rect, BonusObject bonus) {
 		Bitmap bitmap = null;
 		Bonuses type = Bonuses.NONE;
 		if (bonus != null) {
@@ -356,26 +355,26 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		canvas.drawBitmap(bitmap, null, rect, null);	
 	}
 
-	private void drawNav(Canvas canvas) {
-		if (game.getActions().checkDir(Direction.RIGHT, game.getUser().get(0), game.getBoard().getBoardSize())) {
+	protected void drawNav(Canvas canvas) {
+		if (game.checkDir(Direction.RIGHT, game.getUser().get(0), game.getBoard().getBoardSize())) {
 			drawArrow(Direction.RIGHT, canvas);
 		}
 
-		if (game.getActions().checkDir(Direction.LEFT, game.getUser().get(0), game.getBoard().getBoardSize())) {
+		if (game.checkDir(Direction.LEFT, game.getUser().get(0), game.getBoard().getBoardSize())) {
 			drawArrow(Direction.LEFT, canvas);
 		}
 
-		if (game.getActions().checkDir(Direction.UP, game.getUser().get(0), game.getBoard().getBoardSize())) {
+		if (game.checkDir(Direction.UP, game.getUser().get(0), game.getBoard().getBoardSize())) {
 			drawArrow(Direction.UP, canvas);
 		}
 
-		if (game.getActions().checkDir(Direction.DOWN, game.getUser().get(0), game.getBoard().getBoardSize())) {
+		if (game.checkDir(Direction.DOWN, game.getUser().get(0), game.getBoard().getBoardSize())) {
 			drawArrow(Direction.DOWN, canvas);
 		}
 
 	}
 
-	private void drawArrow(Direction dir, Canvas canvas) {
+	protected void drawArrow(Direction dir, Canvas canvas) {
 		int width = 0;
 		int height = 0;
 		Bitmap arrow = getRotatedBitmap(dir, R.drawable.arrow);
@@ -403,7 +402,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 
 	}
 
-	private Bitmap getPlayerColor(int color) {
+	protected Bitmap getPlayerColor(int color) {
 		Bitmap bitmap = null;
 		switch (color) {
 		case Color.RED:
@@ -418,7 +417,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		return bitmap;
 	}
 	
-	private Bitmap getCellColor(int color) {
+	protected Bitmap getCellColor(int color) {
 		Bitmap bitmap = null;
 		switch (color) {
 		case Color.RED:
@@ -435,7 +434,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		return bitmap;
 	}
 
-	private Bitmap getRotatedBitmap(Direction dir, int resID) {
+	protected Bitmap getRotatedBitmap(Direction dir, int resID) {
 		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resID);
 		Bitmap rotatedBitmap = null;
 		Matrix mat = new Matrix();
@@ -464,7 +463,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback {
 		return currentDir;
 	}
 
-	public ClassicGameType getGame() {
+	public Game getGame() {
 		return game;
 	}
 }
