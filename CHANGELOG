@@ -242,3 +242,13 @@ SAVE THE PROJECT FROM TOTAL BREAKDOWN
 	= Need to be attached to game (for now no idea how)
 + Added: Tile background for game (changed ugly black)
 + Fixed: Bonus seed after player input, now bonus seed before players input...
+
+0.9.6(20120405)
++ Changed: Checkpoint drawable
++ Chenged: Arrow bonus drawable
++ Changed: In-game background
++ Optimized background drawing
++ AI Improvements (still buggy):
+	= Bots now go and take arrows bonuses, chance 50%
+	= 50% chance Bot to go to checkpoint
+- Game stop at 1 sec

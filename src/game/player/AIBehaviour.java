@@ -1,5 +1,7 @@
 package game.player;
 
+import game.bonuses.Arrow;
+import game.bonuses.BonusObject;
 import game.bonuses.Checkpoint;
 import game.system.Actions;
 import game.system.Board;
@@ -14,6 +16,7 @@ public class AIBehaviour implements Behaviour {
 	private Actions actions;
 	private Direction lastDir = Direction.NONE;
 	private Checkpoint random = null;
+	private Arrow arrow = null;
 
 	public AIBehaviour(Difficulty AIdifficult, Actions actions) {
 		this.AIdifficult = AIdifficult;
@@ -23,20 +26,29 @@ public class AIBehaviour implements Behaviour {
 	public void easy(Board b,Player AI, int randomNumber) {
 		Direction nextDir = Direction.NONE;
 		Random rnd = new Random();
-		int check = rnd.nextInt(4)+1;
+		int check = rnd.nextInt(2)+1;
+		int goTo = rnd.nextInt(2)+1;
 
 		List<Checkpoint> checkpoints = actions.getCheckpoints();
+		List<Arrow> arrows = actions.getArrows();
 		
 		if (checkpoints.size() > 0 && !checkpoints.contains(random)) {
 			random = checkpoints.get(rnd.nextInt(checkpoints.size()));
 		}
+		if (arrows.size() > 0 && !arrows.contains(arrow)) {
+			arrow = arrows.get(rnd.nextInt(arrows.size()));
+		}
 
-		if (checkpoints.size() > 0) {
+		if (checkpoints.size() > 0 && goTo == 1) {
 			nextDir = getNextDirectionToCheckpoint(AI, random);
 		} else if (check == randomNumber) {
-			while(!actions.checkDir(nextDir, AI, b.getBoardSize())) {
-				nextDir = Direction.values()[rnd.nextInt(4)+1];
-				lastDir = nextDir;
+			if (arrows.size() > 0 && goTo == 2) {
+				nextDir = getNextDirectionToCheckpoint(AI, arrow);
+			} else {
+				while(!actions.checkDir(nextDir, AI, b.getBoardSize())) {
+					nextDir = Direction.values()[rnd.nextInt(4)+1];
+					lastDir = nextDir;
+				}
 			}
 		} else {
 			nextDir = lastDir;
@@ -62,11 +74,11 @@ public class AIBehaviour implements Behaviour {
 	//TODO: check every neighbour cell distance to one of the checkpoints and 
 	//		return the direction with shortest distance to update!
 
-	private Direction getNextDirectionToCheckpoint(Player AI, Checkpoint checkpoint) {
+	private Direction getNextDirectionToCheckpoint(Player AI, BonusObject bonus) {
 		Direction nextDirection = Direction.NONE;
 		int x = AI.getX();
 		int y = AI.getY();
-		Cell destination = new Cell(checkpoint.getX(), checkpoint.getY());
+		Cell destination = new Cell(bonus.getX(), bonus.getY());
 		double distance = calcDistance(x,y , destination);
 
 		for (Direction dir : Direction.values()) {
