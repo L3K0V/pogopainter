@@ -288,3 +288,6 @@ FIXED: 	Pause init bugs, threads not pause when close game (home, incoming call 
 FIXED: 	Pause init bugs onBackPressed...
 BUG:   	When press home and then launch again, cant pause game...
 BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
+
+0.11.2(20120411)
++ Now more than 1 player can't be on 1 cell

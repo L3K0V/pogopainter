@@ -19,6 +19,7 @@ public class ClassicGame extends Game {
 	@Override
 	protected void initFields() {
 		PLAYERS = new ArrayList<Player>();
+		movedPlayers = new ArrayList<Player>();
 		Metrics m = new Metrics();
 		int classicCellNumber = m.getClassicCellNumber();
 		int playerColor = m.getPlayerColor();
