@@ -1,6 +1,7 @@
 package game.graphics;
 
-import java.io.BufferedInputStream;
+import java.util.HashMap;
+import java.util.Map;
 import game.bonuses.Arrow;
 import game.bonuses.BonusObject;
 import game.bonuses.Bonuses;
@@ -19,7 +20,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -47,6 +47,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	protected int screenWidth;
 	protected int screenHeigth;
 	protected Activity holder;
+	protected Map<Integer, Bitmap> _bitmapCache;
 
 	public Panel(Context context, Activity owner) {
 		super(context);
@@ -110,6 +111,8 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		cellNumber = game.getBoard().getBoardSize();
 		cellSize = (screenHeigth / cellNumber ) - 1;	
 		padding = cellSize / 5;
+		 _bitmapCache = new HashMap<Integer, Bitmap>();
+		 fillBitmapCache();
 		if (leftControlns) {
 			controlStartX = 0;
 			boardStartX = (screenWidth - (cellNumber * cellSize)) - 1;
@@ -129,6 +132,24 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 					screenWidth - padding / 2, (screenHeigth / 2) - padding / 2);
 		}
 		defineTouchRect();
+	}
+	
+	protected void fillBitmapCache() {
+        _bitmapCache.put(R.drawable.cell_blue, BitmapFactory.decodeResource(getResources(), R.drawable.cell_blue));
+        _bitmapCache.put(R.drawable.cell_empty, BitmapFactory.decodeResource(getResources(), R.drawable.cell_empty));
+        _bitmapCache.put(R.drawable.cell_yellow, BitmapFactory.decodeResource(getResources(), R.drawable.cell_yellow));
+        _bitmapCache.put(R.drawable.cell_green, BitmapFactory.decodeResource(getResources(), R.drawable.cell_green));
+        _bitmapCache.put(R.drawable.cell_red, BitmapFactory.decodeResource(getResources(), R.drawable.cell_red));
+        _bitmapCache.put(R.drawable.player_blue, BitmapFactory.decodeResource(getResources(), R.drawable.player_blue));
+        _bitmapCache.put(R.drawable.player_yellow, BitmapFactory.decodeResource(getResources(), R.drawable.player_yellow));
+        _bitmapCache.put(R.drawable.player_red, BitmapFactory.decodeResource(getResources(), R.drawable.player_red));
+        _bitmapCache.put(R.drawable.player_green, BitmapFactory.decodeResource(getResources(), R.drawable.player_green));
+        _bitmapCache.put(R.drawable.background, BitmapFactory.decodeResource(getResources(), R.drawable.background));
+        _bitmapCache.put(R.drawable.bonus_arrow, BitmapFactory.decodeResource(getResources(), R.drawable.bonus_arrow));
+        _bitmapCache.put(R.drawable.bonus_checkpoint, BitmapFactory.decodeResource(getResources(), R.drawable.bonus_checkpoint));
+        _bitmapCache.put(R.drawable.joystick, BitmapFactory.decodeResource(getResources(), R.drawable.joystick));
+        _bitmapCache.put(R.drawable.joystick_clicked, BitmapFactory.decodeResource(getResources(), R.drawable.joystick_clicked));
+        _bitmapCache.put(R.drawable.arrow, BitmapFactory.decodeResource(getResources(), R.drawable.arrow));
 	}
 
 	protected void fixControlRect(Rect control) {
@@ -187,20 +208,15 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	public void onDraw(Canvas canvas) {
 		counterY = counterRect.top;
 		canvas.drawColor(Color.WHITE);
-		Bitmap bg = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+		Bitmap bg = _bitmapCache.get(R.drawable.background);
 		canvas.drawBitmap(bg, null, new Rect(0,0,getWidth(),getHeight()), null);
 		drawBoard(canvas);
 		drawUsers(canvas);
 		drawNav(canvas);
-		//drawAIs(canvas);
 		drawTimer(canvas);
 		drawPointCounters(canvas);
 		drawControls(canvas);
 		drawDirection(canvas);
-	}
-	
-	public void clreadCanvas(Canvas canvas) {
-		canvas.drawColor(0,PorterDuff.Mode.CLEAR);
 	}
 
 	protected void drawDirection(Canvas canvas) {
@@ -374,13 +390,13 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		Bitmap bitmap = null;
 		switch (color) {
 		case Color.RED:
-			bitmap =BitmapFactory.decodeResource(getResources(), R.drawable.player_red); break;
+			bitmap = _bitmapCache.get(R.drawable.player_red); break;
 		case Color.BLUE:
-			bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.player_blue); break;
+			bitmap = _bitmapCache.get(R.drawable.player_blue); break;
 		case Color.GREEN:
-			bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.player_green); break;
+			bitmap = _bitmapCache.get(R.drawable.player_green); break;
 		case Color.YELLOW:
-			bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.player_yellow); break;
+			bitmap = _bitmapCache.get(R.drawable.player_yellow); break;
 		}
 		return bitmap;
 	}
@@ -389,21 +405,21 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		Bitmap bitmap = null;
 		switch (color) {
 		case Color.RED:
-			bitmap =BitmapFactory.decodeResource(getResources(), R.drawable.cell_red); break;
+			bitmap = _bitmapCache.get(R.drawable.cell_red); break;
 		case Color.BLUE:
-			bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cell_blue); break;
+			bitmap = _bitmapCache.get(R.drawable.cell_blue); break;
 		case Color.GREEN:
-			bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cell_green); break;
+			bitmap = _bitmapCache.get(R.drawable.cell_green); break;
 		case Color.YELLOW:
-			bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cell_yellow); break;
+			bitmap = _bitmapCache.get(R.drawable.cell_yellow); break;
 		default : 
-			bitmap = BitmapFactory.decodeStream(new BufferedInputStream(getResources().openRawResource(R.drawable.cell_empty))); break;
+			bitmap = _bitmapCache.get(R.drawable.cell_empty); break;
 		}
 		return bitmap;
 	}
 
 	protected Bitmap getRotatedBitmap(Direction dir, int resID) {
-		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resID);
+		Bitmap bitmap = _bitmapCache.get(resID);
 		Bitmap rotatedBitmap = null;
 		Matrix mat = new Matrix();
 

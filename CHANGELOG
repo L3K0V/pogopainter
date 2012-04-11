@@ -291,3 +291,7 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 
 0.11.2(20120411)
 + Now more than 1 player can't be on 1 cell
+
+0.11.3(20120411)
++ Now cachening all bitmap
++ Prevent lag and everything now moves smooth
