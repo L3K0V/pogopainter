@@ -30,8 +30,8 @@ public class AIBehaviour implements Behaviour {
 		int check = rnd.nextInt(2)+1;
 		int goTo = rnd.nextInt(2)+1;
 
-		List<Checkpoint> checkpoints = actions.getCheckpoints();
-		List<Arrow> arrows = actions.getArrows();
+		List<Checkpoint> checkpoints = actions.getBonusHandler().getCheckpoints();
+		List<Arrow> arrows = actions.getBonusHandler().getArrows();
 		
 		if (checkpoints.size() > 0 && !checkpoints.contains(random)) {
 			random = checkpoints.get(rnd.nextInt(checkpoints.size()));

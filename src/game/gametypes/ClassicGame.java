@@ -1,7 +1,7 @@
 package game.gametypes;
 
-import game.bonuses.Arrow;
-import game.bonuses.Checkpoint;
+import game.bonuses.BonusHandler;
+import game.bonuses.Bonuses;
 import game.graphics.Panel;
 import game.player.Player;
 import game.system.Board;
@@ -18,28 +18,21 @@ public class ClassicGame extends Game {
 	
 	@Override
 	protected void initFields() {
-		AI = new ArrayList<Player>();
-		USER = new ArrayList<Player>();
-		CHECKPOINTS = new ArrayList<Checkpoint>();
-		ARROWS = new ArrayList<Arrow>();
-		checkpointLimit = 5;
-		arrowsLimit = 3;
+		PLAYERS = new ArrayList<Player>();
 		Metrics m = new Metrics();
 		int classicCellNumber = m.getClassicCellNumber();
 		int playerColor = m.getPlayerColor();
 		b = new Board(classicCellNumber);
-		time = 30;//m.getClassicGameTime();
+		time = m.getClassicGameTime();
 
 		initPlayerColors(classicCellNumber, playerColor);
-		for (Player ai: AI) {
-			b.setPlayerColorOnCell(ai);
+		for (Player players: PLAYERS) {
+			b.setPlayerColorOnCell(players);
 		}
-		for (Player user: USER) {
-			b.setPlayerColorOnCell(user);
-		}
-
 		Random rnd = new Random();
-		bonusRandomNumber = rnd.nextInt(5)+1;
 		aiNumber = rnd.nextInt(2)+1;
+		bHandler = new BonusHandler(b, PLAYERS);
+		Bonuses[] bon = {Bonuses.CHECKPOINT, Bonuses.ARROW};
+		bHandler.seedBonuses(bon);
 	}
 }
