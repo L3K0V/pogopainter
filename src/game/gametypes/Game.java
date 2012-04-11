@@ -23,6 +23,7 @@ public abstract class Game {
 	protected BonusHandler bHandler;
 	
 	protected List<Player> PLAYERS;
+	protected List<Player> movedPlayers;
 	
 	protected abstract void initFields();
 	
@@ -68,32 +69,27 @@ public abstract class Game {
 		case RIGHT:
 			if (checkDir(dir, player, boardSize)) {
 				player.setX(player.getX() + 1);
-				b.setPlayerColorOnCell(player);
-				applyBonusEffect(player, b);
 			}
 			break;
 		case UP:
 			if (checkDir(dir, player, boardSize)) {
 				player.setY(player.getY() -1);
-				b.setPlayerColorOnCell(player);
-				applyBonusEffect(player, b);
 			}
 			break;
 		case LEFT:
 			if (checkDir(dir, player, boardSize)) {
 				player.setX(player.getX() -1);
-				b.setPlayerColorOnCell(player);
-				applyBonusEffect(player, b);
 			}
 			break;
 		case DOWN:
 			if (checkDir(dir, player, boardSize)) {
-				player.setY(player.getY() +1);
-				b.setPlayerColorOnCell(player);
-				applyBonusEffect(player, b);
+				player.setY(player.getY() +1);	
 			}
 			break;
 		}
+		b.setPlayerColorOnCell(player);
+		applyBonusEffect(player, b);
+		movedPlayers.add(player);
 	}
 	
 	public boolean checkDir(Direction dir, Player player, int boardSize) {
@@ -101,26 +97,37 @@ public abstract class Game {
 		boardSize --;
 		switch(dir) {
 		case RIGHT:
-			if (player.getX() < boardSize) {
+			if (player.getX() < boardSize && checkIfPlayer(player.getX() + 1, player.getY())) {
 				res = true;
 			}
 			break;
 		case UP:
-			if(player.getY() > 0) {
+			if(player.getY() > 0 && checkIfPlayer(player.getX(), player.getY() - 1)) {
 				res = true;
 			}
 			break;
 		case LEFT:
-			if (player.getX() > 0) {
+			if (player.getX() > 0 && checkIfPlayer(player.getX() - 1, player.getY())) {
 				res = true;
 			}
 			break;
 		case DOWN:
-			if (player.getY() < boardSize) {
+			if (player.getY() < boardSize && checkIfPlayer(player.getX(), player.getY() + 1)) {
 				res = true;
 			}
 			break;
 		}
+		return res;
+	}
+
+	private boolean checkIfPlayer(int x, int y) {
+		boolean res = true;
+		for (Player pl : movedPlayers) {
+			if (pl.getX() == x && pl.getY() == y) {
+				res = false;
+				break;
+			}
+		}	
 		return res;
 	}
 
@@ -197,6 +204,7 @@ public abstract class Game {
 				Direction ai = AI.getBehaviour().getDirection();
 				move(b, AI, ai);
 			}
+			movedPlayers.clear();
 			bHandler.update();
 		}
 		time--;

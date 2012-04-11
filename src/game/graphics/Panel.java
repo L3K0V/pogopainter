@@ -1,8 +1,6 @@
 package game.graphics;
 
 import java.io.BufferedInputStream;
-import java.security.acl.Owner;
-
 import game.bonuses.Arrow;
 import game.bonuses.BonusObject;
 import game.bonuses.Bonuses;

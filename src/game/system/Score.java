@@ -11,8 +11,6 @@ import android.graphics.Color;
 public class Score {
 
 	private Board field;
-	private Player player;
-	private Cell playerPosition;
 	private int playerColor;
 	private int score;
 	private List<Cell> playerCells = new ArrayList<Cell>();
@@ -24,8 +22,6 @@ public class Score {
 	public Score(Board b, Player p) {
 		this.score = 0;
 		this.field  = b;
-		this.player = p;
-		this.playerPosition = new Cell(p.getX(), p.getY());
 		this.playerColor = p.getColor();
 	}
 
