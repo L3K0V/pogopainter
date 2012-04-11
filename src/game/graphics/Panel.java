@@ -197,7 +197,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		drawBoard(canvas);
 		drawUsers(canvas);
 		drawNav(canvas);
-		drawAIs(canvas);
+		//drawAIs(canvas);
 		drawTimer(canvas);
 		drawPointCounters(canvas);
 		drawControls(canvas);
@@ -232,44 +232,14 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		paint.setColor(Color.MAGENTA);
 		Bitmap controls = getRotatedBitmap(Direction.RIGHT, R.drawable.joystick);
 		canvas.drawBitmap(controls, null, controlRect, null);
-
-		//canvas.drawRect(up, paint);
-		//canvas.drawRect(down, paint);
-		//canvas.drawRect(left, paint);
-		//canvas.drawRect(right, paint);	
-		//		canvas.drawRect(controlRect, paint);
-		//		canvas.drawRect(counterRect, paint);
 	}
 
 	protected void drawPointCounters(Canvas canvas) {
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.FILL);
 		paint.setAntiAlias(true);
-
-		switch (game.getUser().get(0).getColor()) {
-		case Color.RED:
-			drawCounter(Color.RED, paint, canvas, game.getUser().get(0).getPoints());
-			drawCounter(Color.BLUE, paint, canvas, game.getAIs().get(0).getPoints());
-			drawCounter(Color.GREEN, paint, canvas, game.getAIs().get(1).getPoints());
-			drawCounter(Color.YELLOW, paint, canvas, game.getAIs().get(2).getPoints());
-			break;
-		case Color.BLUE:
-			drawCounter(Color.RED, paint, canvas, game.getAIs().get(0).getPoints());
-			drawCounter(Color.BLUE, paint, canvas, game.getUser().get(0).getPoints());
-			drawCounter(Color.GREEN, paint, canvas, game.getAIs().get(1).getPoints());
-			drawCounter(Color.YELLOW, paint, canvas, game.getAIs().get(2).getPoints());
-			break;
-		case Color.GREEN:
-			drawCounter(Color.RED, paint, canvas, game.getAIs().get(0).getPoints());
-			drawCounter(Color.BLUE, paint, canvas, game.getAIs().get(1).getPoints());
-			drawCounter(Color.GREEN, paint, canvas, game.getUser().get(0).getPoints());
-			drawCounter(Color.YELLOW, paint, canvas, game.getAIs().get(2).getPoints());
-			break;
-		case Color.YELLOW:
-			drawCounter(Color.RED, paint, canvas, game.getAIs().get(0).getPoints());
-			drawCounter(Color.BLUE, paint, canvas, game.getAIs().get(1).getPoints());
-			drawCounter(Color.GREEN, paint, canvas, game.getAIs().get(2).getPoints());
-			drawCounter(Color.YELLOW, paint, canvas, game.getUser().get(0).getPoints());
+		for (Player player: game.getPlayers()) {
+			drawCounter(player.getColor(), paint, canvas, player.getPoints());
 		}
 	}
 
@@ -290,23 +260,10 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	}
 
 	protected void drawUsers(Canvas canvas) {
-		for (Player user: game.getUser()) {
+		for (Player user: game.getPlayers()) {
 			int width = (user.getX() * cellSize) + boardStartX;
 			int height = user.getY() * cellSize;
 			int color = user.getColor();
-
-			Rect rect = new Rect(width, height, width + cellSize, height + cellSize);
-			Bitmap bitmap = getPlayerColor(color);
-
-			canvas.drawBitmap(bitmap, null, rect, null);
-		}
-	}
-
-	protected void drawAIs(Canvas canvas) {
-		for (Player ai: game.getAIs()) {
-			int width = (ai.getX() * cellSize) + boardStartX;
-			int height = ai.getY() * cellSize;
-			int color = ai.getColor();
 
 			Rect rect = new Rect(width, height, width + cellSize, height + cellSize);
 			Bitmap bitmap = getPlayerColor(color);
@@ -372,19 +329,19 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	}
 
 	protected void drawNav(Canvas canvas) {
-		if (game.checkDir(Direction.RIGHT, game.getUser().get(0), game.getBoard().getBoardSize())) {
+		if (game.checkDir(Direction.RIGHT, game.getUser(), game.getBoard().getBoardSize())) {
 			drawArrow(Direction.RIGHT, canvas);
 		}
 
-		if (game.checkDir(Direction.LEFT, game.getUser().get(0), game.getBoard().getBoardSize())) {
+		if (game.checkDir(Direction.LEFT, game.getUser(), game.getBoard().getBoardSize())) {
 			drawArrow(Direction.LEFT, canvas);
 		}
 
-		if (game.checkDir(Direction.UP, game.getUser().get(0), game.getBoard().getBoardSize())) {
+		if (game.checkDir(Direction.UP, game.getUser(), game.getBoard().getBoardSize())) {
 			drawArrow(Direction.UP, canvas);
 		}
 
-		if (game.checkDir(Direction.DOWN, game.getUser().get(0), game.getBoard().getBoardSize())) {
+		if (game.checkDir(Direction.DOWN, game.getUser(), game.getBoard().getBoardSize())) {
 			drawArrow(Direction.DOWN, canvas);
 		}
 
@@ -396,20 +353,20 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		Bitmap arrow = getRotatedBitmap(dir, R.drawable.arrow);
 		switch(dir) {
 		case RIGHT:
-			width = ((game.getUser().get(0).getX() + 1) * cellSize) + boardStartX;
-			height = game.getUser().get(0).getY() * cellSize;
+			width = ((game.getUser().getX() + 1) * cellSize) + boardStartX;
+			height = game.getUser().getY() * cellSize;
 			break;
 		case LEFT:
-			width = ((game.getUser().get(0).getX() - 1) * cellSize ) + boardStartX;
-			height = game.getUser().get(0).getY() * cellSize;
+			width = ((game.getUser().getX() - 1) * cellSize ) + boardStartX;
+			height = game.getUser().getY() * cellSize;
 			break;
 		case UP:
-			width = (game.getUser().get(0).getX() * cellSize) + boardStartX;
-			height = (game.getUser().get(0).getY() - 1) * cellSize;
+			width = (game.getUser().getX() * cellSize) + boardStartX;
+			height = (game.getUser().getY() - 1) * cellSize;
 			break;
 		case DOWN:
-			width = (game.getUser().get(0).getX() * cellSize) + boardStartX;
-			height = (game.getUser().get(0).getY() + 1) * cellSize;
+			width = (game.getUser().getX() * cellSize) + boardStartX;
+			height = (game.getUser().getY() + 1) * cellSize;
 			break;
 		}
 

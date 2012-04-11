@@ -1,5 +1,6 @@
 package game.pogopainter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import game.graphics.ClassicPanel;
@@ -7,14 +8,9 @@ import game.player.Player;
 
 import com.bugsense.trace.BugSenseHandler;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.PowerManager;
-import android.util.Log;
 
 
 public class CanvasActivity extends Activity {
@@ -49,7 +45,8 @@ public class CanvasActivity extends Activity {
 		if (showResults) {
 			gameover = new Intent(this, GameOver.class);
 
-			List<Player> users = panel.getGame().getUser();
+			List<Player> users = new ArrayList<Player>();
+			users.add(panel.getGame().getUser());
 			List<Player> AIs = panel.getGame().getAIs();
 
 			collectPlayersPoints(users);
