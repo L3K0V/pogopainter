@@ -7,6 +7,7 @@ import game.graphics.Panel;
 import game.player.AIBehaviour;
 import game.player.Difficulty;
 import game.player.Player;
+import game.pogopainter.CanvasActivity;
 import game.system.Board;
 import game.system.Cell;
 import game.system.Direction;
@@ -21,7 +22,7 @@ public abstract class Game {
 	protected int bonusRandomNumber;
 	protected int aiNumber;
 	protected Panel _panel;
-	protected int time;
+	protected int time = 1000;
 	
 	protected List<Player> AI;
 	protected List<Player> USER;
@@ -238,6 +239,10 @@ public abstract class Game {
 	public void update() {
 		if (time == 0) {
 			_panel.stopThreads();
+			_panel.surfaceDestroyed(_panel.getHolder());
+			_panel.clearFocus();
+			CanvasActivity.showResults = true;
+			_panel.getOwner().finish();
 		} else {
 			seedBonus(b, bonusRandomNumber);
 			Direction dir = _panel.getDirection();

@@ -9,6 +9,7 @@ public class GameThread extends Thread {
 	
 	public GameThread(Panel panel) {
 		this._panel = panel;
+		setName("GameThread");
 	}
 	
 	public void setRunning(boolean run) {

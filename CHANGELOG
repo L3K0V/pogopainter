@@ -257,3 +257,20 @@ SAVE THE PROJECT FROM TOTAL BREAKDOWN
 + Changed the arhitecture of Panel and Game classes
 + Refactored some code in panel and game
 + now CanvasActivity doest use xml usage of panel
+
+0.10.1(20120410-20120411)
++ No more crash when someone calls you...
+	= CanvasActivity -> onPause() & onResume() working
+	= Panel -> surfaceCreated() fixed
+- Removed Coop & Deathmatch gametypes - needs to be rewrited for new game structure
++ Now Game & Canvas threads are named. (Easy debugging)
++ Showing stats when finish game (still now finished yet)
++ Fixed: Yellow progress bar on game stats
++ Added: New team game stats layout
++ Working score system at game`s end.
++ Smooth Incrementing points on stats screen
++ Working game stats buttons
++ Fixed: Game Stats bugs when launch second, third game e.g.
++ Fixed: Game Stats "go to menu" button
+- Pause init bugs, threads not pause when close game (home, incoming call e.g.)...
+- Puase init bugs onBackPressed...
