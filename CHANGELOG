@@ -279,3 +279,12 @@ SAVE THE PROJECT FROM TOTAL BREAKDOWN
 + BonusHandler now working
 + Refactored code in Panel
 + Now using only 1 List for players instead of 2
+
+0.11.1(20120411)
++ Fixed threads start, stop, resume, pause e.g.
++ Some little changes on smooth increment
++ Pause dialog init (needs cosmetic changes)
+FIXED: 	Pause init bugs, threads not pause when close game (home, incoming call e.g.)...
+FIXED: 	Pause init bugs onBackPressed...
+BUG:   	When press home and then launch again, cant pause game...
+BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)

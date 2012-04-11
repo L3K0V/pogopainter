@@ -1,6 +1,7 @@
 package game.graphics;
 
 import java.io.BufferedInputStream;
+import java.security.acl.Owner;
 
 import game.bonuses.Arrow;
 import game.bonuses.BonusObject;
@@ -30,7 +31,6 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	protected CanvasThread _panelThread;
 	protected GameThread _gameThread;
 	protected Game game;
-	protected boolean gamePaused = false;
 
 	protected int cellNumber;
 	protected int cellSize;
@@ -68,7 +68,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	}
 
 	public void surfaceCreated(SurfaceHolder holder) {
-		if (!_panelThread.isAlive() || !gamePaused) {
+		if (!_panelThread.isAlive()) {
 			startThreads();
 		} else {
 			resumeThreads();
@@ -84,7 +84,6 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	public void pauseThreads() {
 		_panelThread.setRunning(false);
 		_gameThread.setRunning(false);
-		gamePaused = true;
 	}
 
 	public void startThreads() {
@@ -101,10 +100,8 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	}
 
 	public void stopThreads() {
-		_panelThread.setRunning(false);
-		_panelThread.interrupt();
-		_gameThread.setRunning(false);
-		_gameThread.interrupt();
+		_panelThread.stopThisShit();
+		_gameThread.stopThisShit();
 	}
 
 	protected void initFields() {

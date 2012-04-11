@@ -16,6 +16,18 @@ public class GameThread extends Thread {
 		this._run = run;
 	}
 	
+	public void stopThisShit() {
+//		boolean retry = true;
+//		while (retry) {
+//			try {
+				setRunning(false);
+//				Thread.currentThread().join();
+//				retry = false;
+//			} catch (InterruptedException e) {}
+//		}
+		Thread.currentThread().interrupt();
+	}
+	
 	@Override
 	public void run() {
 		while(_run) {
