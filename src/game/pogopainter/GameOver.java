@@ -80,7 +80,14 @@ public class GameOver extends Activity implements OnClickListener {
 						if (yellowPlayer.getProgress() <= yellow) {
 							yellowPlayer.setProgress(i);
 						}
-						Thread.sleep(50);
+						if (max < 50) {
+							Thread.sleep(250);
+						} else if (max > 50 && max < 100) {
+							Thread.sleep(100);
+						} else {
+							Thread.sleep(50);
+						}
+						
 					}
 
 				}
