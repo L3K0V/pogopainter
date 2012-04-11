@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:padding="20dip" >
-
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content" 
+        android:padding="20dp">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -15,35 +11,49 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:orientation="horizontal"
-            android:paddingBottom="1.0dip"
-            android:paddingLeft="4.0dip"
-            android:paddingRight="4.0dip"
-            android:paddingTop="5.0dip" >
+            android:paddingBottom="1.0dp"
+            android:paddingTop="5.0dp" >
 
             <Button
-                android:id="@+id/allow"
-                android:layout_width="0.0dip"
+                android:id="@+id/play_again"
+                android:layout_width="0.0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="1.0"
-                android:text="Play again" />
+                android:text="@string/play_again" />
 
             <Button
-                android:id="@+id/deny"
-                android:layout_width="0.0dip"
+                android:id="@+id/go_to_menu"
+                android:layout_width="0.0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="1.0"
-                android:text="Go to menu" />
+                android:text="@string/go_to_menu" />
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:id="@+id/TextView01"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:gravity="center_horizontal"
-            android:padding="10dip"
-            android:text="@+id/SomeText" />
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/player_winner_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nobody"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="is winner"
+                android:paddingLeft="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout1"
@@ -52,10 +62,11 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/TextView01"
             android:orientation="vertical"
-            android:paddingTop="10dp" >
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp" >
 
             <ProgressBar
-                android:id="@+id/progressBar1"
+                android:id="@+id/red_player_progress"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -64,10 +75,10 @@
                 android:progressDrawable="@drawable/red_progress" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/red_player_points"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="25 Points"
+                android:text="0 Points"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
@@ -78,10 +89,11 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/linearLayout1"
             android:orientation="vertical"
-            android:paddingTop="10dp" >
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp" >
 
             <ProgressBar
-                android:id="@+id/ProgressBar01"
+                android:id="@+id/blue_player_progress"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -90,10 +102,10 @@
                 android:progressDrawable="@drawable/blue_progress" />
 
             <TextView
-                android:id="@+id/TextView02"
+                android:id="@+id/blue_player_points"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="50 Points"
+                android:text="0 Points"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
@@ -104,10 +116,11 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/linearLayout2"
             android:orientation="vertical"
-            android:paddingTop="10dp" >
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp" >
 
             <ProgressBar
-                android:id="@+id/ProgressBar02"
+                android:id="@+id/green_player_progress"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -116,10 +129,10 @@
                 android:progressDrawable="@drawable/greed_progress" />
 
             <TextView
-                android:id="@+id/TextView03"
+                android:id="@+id/green_player_points"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="75 Points"
+                android:text="0 Points"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
@@ -129,23 +142,24 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/linearLayout3"
             android:orientation="vertical"
-            android:paddingTop="10dp" >
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp" >
 
             <ProgressBar
-                android:id="@+id/ProgressBar03"
+                android:id="@+id/yellow_player_progress"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:max="200"
-                android:progress="100" />
+                android:progress="100"
+                android:progressDrawable="@drawable/yellow_progress" />
 
             <TextView
-                android:id="@+id/TextView04"
+                android:id="@+id/yellow_player_points"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="100 Points"
+                android:text="0 Points"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
-    </RelativeLayout>
 
-</LinearLayout>
+    </RelativeLayout>

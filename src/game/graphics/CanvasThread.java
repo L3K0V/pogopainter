@@ -11,6 +11,7 @@ public class CanvasThread extends Thread {
 	public CanvasThread(SurfaceHolder holder, Panel panel) {
 		_surfaceHolder = holder;
 		_panel = panel;
+		setName("CanvasThread");
 	}
 	
 	public void setRunning(boolean run) {

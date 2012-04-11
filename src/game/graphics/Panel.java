@@ -1,9 +1,10 @@
 package game.graphics;
 
+import java.io.BufferedInputStream;
+
 import game.bonuses.Arrow;
 import game.bonuses.BonusObject;
 import game.bonuses.Bonuses;
-import game.gametypes.ClassicGame;
 import game.gametypes.Game;
 import game.gametypes.GameThread;
 import game.player.Player;
@@ -11,6 +12,7 @@ import game.pogopainter.R;
 import game.system.Cell;
 import game.system.Direction;
 import game.system.Metrics;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,6 +20,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -27,6 +30,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	protected CanvasThread _panelThread;
 	protected GameThread _gameThread;
 	protected Game game;
+	protected boolean gamePaused = false;
 
 	protected int cellNumber;
 	protected int cellSize;
@@ -44,9 +48,11 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	protected Rect counterRect;
 	protected int screenWidth;
 	protected int screenHeigth;
+	protected Activity holder;
 
-	public Panel(Context context) {
+	public Panel(Context context, Activity owner) {
 		super(context);
+		holder = owner;
 		getHolder().addCallback(this);
 		_panelThread = new CanvasThread(getHolder(), this);
 		_gameThread = new GameThread(this);
@@ -54,14 +60,19 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		initFields();
 	}
 	
+	public Activity getOwner() {
+		return holder;
+	}
+
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 	}
 
 	public void surfaceCreated(SurfaceHolder holder) {
-		_panelThread.setRunning(true);
-		_panelThread.start();
-		_gameThread.setRunning(true);
-		_gameThread.start();
+		if (!_panelThread.isAlive() || !gamePaused) {
+			startThreads();
+		} else {
+			resumeThreads();
+		}
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
@@ -70,31 +81,32 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		}
 	}
 
-	public void stopThreads() {
-		boolean retry = true;
+	public void pauseThreads() {
+		_panelThread.setRunning(false);
+		_gameThread.setRunning(false);
+		gamePaused = true;
+	}
 
+	public void startThreads() {
+		_panelThread = new CanvasThread(getHolder(), this);
+		_gameThread = new GameThread(this);
+		resumeThreads();
+		_panelThread.start();
+		_gameThread.start();
+	}
+
+	public void resumeThreads() {
+		_panelThread.setRunning(true);
+		_gameThread.setRunning(true);
+	}
+
+	public void stopThreads() {
 		_panelThread.setRunning(false);
 		_panelThread.interrupt();
-		while(retry){
-			try {
-				_panelThread.join();
-				retry = false;
-			} catch(InterruptedException e) {
-			}
-		}
-		retry = true;
-
 		_gameThread.setRunning(false);
 		_gameThread.interrupt();
-		while(retry){
-			try {
-				_gameThread.join();
-				retry = false;
-			} catch(InterruptedException e) {
-			}
-		}		
 	}
-	
+
 	protected void initFields() {
 		Metrics m = new Metrics();
 		screenWidth = m.getScreenWidth();
@@ -190,6 +202,10 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		drawPointCounters(canvas);
 		drawControls(canvas);
 		drawDirection(canvas);
+	}
+	
+	public void clreadCanvas(Canvas canvas) {
+		canvas.drawColor(0,PorterDuff.Mode.CLEAR);
 	}
 
 	protected void drawDirection(Canvas canvas) {
@@ -291,10 +307,10 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 			int width = (ai.getX() * cellSize) + boardStartX;
 			int height = ai.getY() * cellSize;
 			int color = ai.getColor();
-	
+
 			Rect rect = new Rect(width, height, width + cellSize, height + cellSize);
 			Bitmap bitmap = getPlayerColor(color);
-	
+
 			canvas.drawBitmap(bitmap, null, rect, null);
 		}
 	}
@@ -303,20 +319,20 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		Paint paint = new Paint();
 		for (int y = 0; y < cellNumber; y++) {
 			for (int x = 0; x < cellNumber; x++) {
-	
+
 				Cell cell = game.getBoard().getCellAt(x, y);
 				int color  = cell.getColor();
 				int width = (cell.getX() * cellSize ) + boardStartX;
 				int height = cell.getY() * cellSize;
-	
+
 				Rect rect = new Rect(width, height, width + cellSize, height + cellSize);
 				Bitmap bitmap = getCellColor(color);
 				canvas.drawBitmap(bitmap, null, rect, null);
-				
+
 				paint.setStyle(Paint.Style.STROKE);
 				paint.setColor(Color.WHITE);
 				canvas.drawRect(rect, paint);
-	
+
 				if (cell.getBonus() != null) {
 					drawBonus(canvas, rect, cell.getBonus());
 				}
@@ -416,7 +432,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		}
 		return bitmap;
 	}
-	
+
 	protected Bitmap getCellColor(int color) {
 		Bitmap bitmap = null;
 		switch (color) {
@@ -429,7 +445,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		case Color.YELLOW:
 			bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cell_yellow); break;
 		default : 
-			bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cell_empty); break;
+			bitmap = BitmapFactory.decodeStream(new BufferedInputStream(getResources().openRawResource(R.drawable.cell_empty))); break;
 		}
 		return bitmap;
 	}

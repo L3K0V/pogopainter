@@ -28,7 +28,7 @@ public class ClassicGame extends Game {
 		int classicCellNumber = m.getClassicCellNumber();
 		int playerColor = m.getPlayerColor();
 		b = new Board(classicCellNumber);
-		time = m.getClassicGameTime();
+		time = 30;//m.getClassicGameTime();
 
 		initPlayerColors(classicCellNumber, playerColor);
 		for (Player ai: AI) {
