@@ -295,3 +295,9 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 0.11.3(20120411)
 + Now cachening all bitmap
 + Prevent lag and everything now moves smooth
+
+0.11.4(20120412)
++ Fixed showing who is winner (player with most points)
++ Added GameOverTeams activity that extends GameOver (Refactoring)
++ Fixed when 2,3,4 players flush
++ GameOver cosmetics (layout & class)
