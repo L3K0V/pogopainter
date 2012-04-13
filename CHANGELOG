@@ -305,3 +305,10 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 0.11.5(20120414)
 + Some methods for AI improvements
 + Some cosmetics
+
+0.11.6(20120414)
++ Another set of methods for AI improvements
++ Again cosmetics
+- AI suck, have logical & code issues 
+	(no getting properly direction if theres no bonuses on board and more...)
+- AI need to be refreshed or fully rewrite
