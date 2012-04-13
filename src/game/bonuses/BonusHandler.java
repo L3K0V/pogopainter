@@ -18,7 +18,7 @@ public class BonusHandler {
 	private List<Checkpoint> CHECKPOINTS;
 	private List<Arrow> ARROWS;
 
-	private int checkpointLimit = 5;
+	private int checkpointLimit = 3;
 	private int otherBonusLimit = 3;
 
 	private int bonusRandomNumber;
@@ -68,7 +68,7 @@ public class BonusHandler {
 		Random rnd = new Random();
 		int bonusChance = 0;
 		if (ifCheckpoints) {
-			checkChance = rnd.nextInt(checkpointLimit) + 1;
+			checkChance = rnd.nextInt(5) + 1;
 			if (checkChance == chance && CHECKPOINTS.size() < checkpointLimit) {
 				while (true) {
 	
@@ -102,6 +102,31 @@ public class BonusHandler {
 				}
 			}
 		}
+	}
+	
+	public boolean checkPlayerOnBonus(Player player, BonusObject bonus) {
+		boolean sure = false;
+		if (player.getX() == bonus.getX() && player.getY() == bonus.getY()) {
+			sure = true;
+		}
+		return sure;
+	}
+	
+	public boolean checkArrowForGivingPoints(Arrow arrow) {
+		boolean sure = true;
+		int x = arrow.getX();
+		int y = arrow.getY();
+		switch (arrow.state) {
+		case 1:
+			if (x == 7) {sure = false;}break;
+		case 2:
+			if (y == 7) {sure = false;}break;
+		case 3:
+			if (x == 0) {sure = false;}break;
+		case 4:
+			if (y == 0) {sure = false;}break;
+		}
+		return sure;	
 	}
 
 	public List<Checkpoint> getCheckpoints() {

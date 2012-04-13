@@ -301,3 +301,7 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Added GameOverTeams activity that extends GameOver (Refactoring)
 + Fixed when 2,3,4 players flush
 + GameOver cosmetics (layout & class)
+
+0.11.5(20120414)
++ Some methods for AI improvements
++ Some cosmetics

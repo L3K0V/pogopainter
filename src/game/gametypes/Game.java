@@ -97,22 +97,22 @@ public abstract class Game {
 		boardSize --;
 		switch(dir) {
 		case RIGHT:
-			if (player.getX() < boardSize && checkIfPlayer(player.getX() + 1, player.getY())) {
+			if (player.getX() < boardSize && !checkIfPlayer(player.getX() + 1, player.getY())) {
 				res = true;
 			}
 			break;
 		case UP:
-			if(player.getY() > 0 && checkIfPlayer(player.getX(), player.getY() - 1)) {
+			if(player.getY() > 0 && !checkIfPlayer(player.getX(), player.getY() - 1)) {
 				res = true;
 			}
 			break;
 		case LEFT:
-			if (player.getX() > 0 && checkIfPlayer(player.getX() - 1, player.getY())) {
+			if (player.getX() > 0 && !checkIfPlayer(player.getX() - 1, player.getY())) {
 				res = true;
 			}
 			break;
 		case DOWN:
-			if (player.getY() < boardSize && checkIfPlayer(player.getX(), player.getY() + 1)) {
+			if (player.getY() < boardSize && !checkIfPlayer(player.getX(), player.getY() + 1)) {
 				res = true;
 			}
 			break;
@@ -121,10 +121,10 @@ public abstract class Game {
 	}
 
 	private boolean checkIfPlayer(int x, int y) {
-		boolean res = true;
+		boolean res = false;
 		for (Player pl : movedPlayers) {
 			if (pl.getX() == x && pl.getY() == y) {
-				res = false;
+				res = true;
 				break;
 			}
 		}	
@@ -132,19 +132,19 @@ public abstract class Game {
 	}
 
 	public boolean checkForBonus(Player p, Board b) {
-		boolean res = false;
+		boolean res = true;
 		Cell thisCell = b.getCellAt(p.getX(), p.getY());
 
 		if (thisCell.getBonus() != null) {
 			p.setBonus(thisCell.getBonus());
-			res = true;
+			res = false;
 		}
 
 		return res;
 	}
 
 	public void applyBonusEffect(Player p, Board b) {
-		if (checkForBonus(p, b)) {
+		if (!checkForBonus(p, b)) {
 			p.getBonus().setBonusEffect(p, b);
 			clearBonus(p, b);
 			for (Checkpoint cp : bHandler.getCheckpoints()) {
