@@ -10,7 +10,7 @@ import game.player.Player;
 
 public class Actions {
 
-	private int checkpointLimit = 5;
+	private int checkpointLimit = 3;
 	private int arrowsLimit = 3;
 	private List<Checkpoint> checkpoints;
 	private List<Arrow> arrows;
@@ -121,7 +121,7 @@ public class Actions {
 		Random rnd = new Random();
 		int bonusChance = 0;
 
-		checkChance = rnd.nextInt(checkpointLimit)+1;
+		checkChance = rnd.nextInt(5)+1;
 
 		if (checkChance == chance && checkpoints.size() < checkpointLimit) {
 			while(true) {
