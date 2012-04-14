@@ -4,7 +4,7 @@ import game.bonuses.Arrow;
 import game.bonuses.BonusHandler;
 import game.bonuses.Checkpoint;
 import game.graphics.Panel;
-import game.player.AIBehaviour;
+import game.player.AIBehavior;
 import game.player.Difficulty;
 import game.player.Player;
 import game.pogopainter.CanvasActivity;
@@ -31,33 +31,33 @@ public abstract class Game {
 		switch (playerColor) {
 		case Color.RED:
 			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
-			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehaviour(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, new AIBehaviour(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehaviour(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this)));
 			break;
 		case Color.BLUE:
 			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
-			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new AIBehaviour(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, new AIBehaviour(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehaviour(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this)));
 			break;
 		case Color.GREEN:
 			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, null));
-			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new AIBehaviour(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehaviour(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehaviour(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this)));
 			break;
 		case Color.YELLOW:
 			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
-			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new AIBehaviour(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehaviour(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, new AIBehaviour(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, new AIBehavior(Difficulty.EASY, this)));
 			break;
 		default:
 			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
-			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehaviour(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, new AIBehaviour(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehaviour(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this)));
 			break;
 		}
 	}
@@ -125,7 +125,6 @@ public abstract class Game {
 		for (Player pl : movedPlayers) {
 			if (pl.getX() == x && pl.getY() == y) {
 				res = true;
-				break;
 			}
 		}	
 		return res;

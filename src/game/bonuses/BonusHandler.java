@@ -8,9 +8,9 @@ import game.system.Board;
 
 public class BonusHandler {
 	private boolean ifCheckpoints = false;
-	private boolean ifArrows = false;
-	private boolean ifSpeedUps = false;
-	private boolean ifShoots = false;
+	private boolean ifArrows      = false;
+	private boolean ifSpeedUps    = false;
+	private boolean ifShoots 	  = false;
 
 	private Board board;
 	private List<Player> players;
@@ -36,11 +36,11 @@ public class BonusHandler {
 			switch (bon[i]) {
 			case CHECKPOINT:
 				ifCheckpoints = true;
-				CHECKPOINTS = new ArrayList<Checkpoint>();
+				CHECKPOINTS   = new ArrayList<Checkpoint>();
 				break;
 			case ARROW:
 				ifArrows = true;
-				ARROWS = new ArrayList<Arrow>();
+				ARROWS   = new ArrayList<Arrow>();
 				break;
 			case SPEEDUP:
 				ifSpeedUps = true;
@@ -71,31 +71,36 @@ public class BonusHandler {
 			checkChance = rnd.nextInt(5) + 1;
 			if (checkChance == chance && CHECKPOINTS.size() < checkpointLimit) {
 				while (true) {
-	
+
 					x = rnd.nextInt(b.getBoardSize());
 					y = rnd.nextInt(b.getBoardSize());
-	
+
 					if (b.getCellAt(x, y).getBonus() == null) {
-						Checkpoint bonus = new Checkpoint();
-						b.getCellAt(x, y).setBonus(bonus);
-						CHECKPOINTS.add(bonus);
+						if (checkCurrentPosition(x, y)) {
+							Checkpoint bonus = new Checkpoint();
+							b.getCellAt(x, y).setBonus(bonus);
+							CHECKPOINTS.add(bonus);
+						}
 						break;
 					}
 				}
 			} else if (ifArrows){
 				checkChance = rnd.nextInt(5) + 1;
 				bonusChance = rnd.nextInt(5) + 1;
-	
+
 				if (checkChance == bonusChance && ARROWS.size() < otherBonusLimit) {
 					while (true) {
-	
+
 						x = rnd.nextInt(b.getBoardSize());
 						y = rnd.nextInt(b.getBoardSize());
-	
+
 						if (b.getCellAt(x, y).getBonus() == null) {
-							BonusObject bonus = new Arrow();
-							b.getCellAt(x, y).setBonus(bonus);
-							ARROWS.add((Arrow) bonus);
+							if (checkCurrentPosition(x, y)) {
+								BonusObject bonus = new Arrow();
+								b.getCellAt(x, y).setBonus(bonus);
+								ARROWS.add((Arrow) bonus);
+							}
+
 							break;
 						}
 					}
@@ -103,7 +108,17 @@ public class BonusHandler {
 			}
 		}
 	}
-	
+
+	private boolean checkCurrentPosition(int x, int y) {
+		boolean canPutBonus = true;
+		for (Player p : players) {
+			if (p.getX() == x && p.getY() == y) {
+				canPutBonus = false;
+			}
+		}
+		return canPutBonus;
+	}
+
 	public boolean checkPlayerOnBonus(Player player, BonusObject bonus) {
 		boolean sure = false;
 		if (player.getX() == bonus.getX() && player.getY() == bonus.getY()) {
@@ -111,7 +126,7 @@ public class BonusHandler {
 		}
 		return sure;
 	}
-	
+
 	public boolean checkArrowForGivingPoints(Arrow arrow) {
 		boolean sure = true;
 		int x = arrow.getX();

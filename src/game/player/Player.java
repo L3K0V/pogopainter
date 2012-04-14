@@ -8,10 +8,10 @@ public class Player {
 	private int color;
 	private BonusObject bonus;
 	private int speed;
-	private Behaviour behaviour;
+	private Behavior behaviour;
 	private int points;
 	
-	public Player(int x, int y, int color,int points, Behaviour control) {
+	public Player(int x, int y, int color,int points, Behavior control) {
 		this.x = x;
 		this.y = y;
 		this.color = color;
@@ -64,7 +64,7 @@ public class Player {
 		return bonus;
 	}
 	
-	public AIBehaviour getBehaviour() {
-		return (AIBehaviour) behaviour;
+	public AIBehavior getBehaviour() {
+		return (AIBehavior) behaviour;
 	}
 }
