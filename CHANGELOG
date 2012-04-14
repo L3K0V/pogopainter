@@ -312,3 +312,14 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 - AI suck, have logical & code issues 
 	(no getting properly direction if theres no bonuses on board and more...)
 - AI need to be refreshed or fully rewrite
+
+0.11.7(20120414)
++ Fixed that bonuses now spawned under players
++ Code cosmetics, some refactoring
++ Javadoc init on AIbehavior class
++ Added Javadoc to project (for testing & review)
++ AI Improvements:
+	= Now bots will go to checkpoint only when they have more than 5 cells owned
+	= If one of other AIs are closer to check point, AI change checkpoint (if theres more than 1 on board)
+	= Bots are going now to closest Arrow bonus
+	= Also they get arrow bonus only if will get cells (but they can be already owned by players (cells))

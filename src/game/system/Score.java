@@ -7,7 +7,6 @@ import java.util.List;
 
 import android.graphics.Color;
 
-
 public class Score {
 
 	private Board field;
@@ -28,12 +27,12 @@ public class Score {
 	public int Calculate() {
 		int cells = field.getBoardSize();
 
-		int colScore = 0;
-		int col = 0;
+		int colScore    = 0;
+		int col         = 0;
 		boolean fullCol = false;
 
-		int rowScore = 0;
-		int row = 0;
+		int rowScore    = 0;
+		int row         = 0;
 		boolean fullRow = false;
 
 		for (int y = 0; y < cells; y++) {

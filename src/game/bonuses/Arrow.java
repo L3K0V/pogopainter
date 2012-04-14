@@ -18,26 +18,22 @@ public class Arrow extends BonusObject {
 		int bSize = b.getBoardSize();
 
 		switch (state) {
-		case 1:
-			//RIGHT
+		case 1: //RIGHT
 			for (; playerX < bSize; playerX++) {
 				b.getCellAt(playerX, playerY).setColor(p.getColor());
 			}
 			break;
-		case 2:
-			//DOWN
+		case 2: //DOWN
 			for (; playerY < bSize; playerY++) {
 				b.getCellAt(playerX, playerY).setColor(p.getColor());
 			}
 			break;
-		case 3:
-			//LEFT
+		case 3: //LEFT
 			for (; playerX >= 0; playerX--) {
 				b.getCellAt(playerX, playerY).setColor(p.getColor());
 			}
 			break;
-		case 4:
-			//UP
+		case 4: //UP
 			for (; playerY >= 0; playerY--) {
 				b.getCellAt(playerX, playerY).setColor(p.getColor());
 			}
@@ -47,9 +43,7 @@ public class Arrow extends BonusObject {
 
 	public void changeState() {
 		this.state++;
-		if (state == 5) {
-			state = 1;
-		}
+		if (state == 5) state = 1;
 	}
 
 	public int getState() {
