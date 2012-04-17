@@ -7,6 +7,7 @@ import game.graphics.Panel;
 import game.player.AIBehavior;
 import game.player.Difficulty;
 import game.player.Player;
+import game.player.UserBehavior;
 import game.pogopainter.CanvasActivity;
 import game.system.Board;
 import game.system.Cell;
@@ -17,7 +18,6 @@ import android.graphics.Color;
 
 public abstract class Game {
 	protected Board b;
-	protected int aiNumber;
 	protected Panel _panel;
 	protected int time = 1000;
 	protected BonusHandler bHandler;
@@ -30,31 +30,31 @@ public abstract class Game {
 	protected void initPlayerColors(int classicCellNumber, int playerColor) {
 		switch (playerColor) {
 		case Color.RED:
-			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
+			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new UserBehavior(_panel)));
 			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehavior(Difficulty.EASY, this)));
 			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, new AIBehavior(Difficulty.EASY, this)));
 			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this)));
 			break;
 		case Color.BLUE:
-			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, null));
+			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new UserBehavior(_panel)));
 			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new AIBehavior(Difficulty.EASY, this)));
 			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, new AIBehavior(Difficulty.EASY, this)));
 			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this)));
 			break;
 		case Color.GREEN:
-			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, null));
+			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, new UserBehavior(_panel)));
 			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new AIBehavior(Difficulty.EASY, this)));
 			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehavior(Difficulty.EASY, this)));
 			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this)));
 			break;
 		case Color.YELLOW:
-			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, null));
+			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new UserBehavior(_panel)));
 			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new AIBehavior(Difficulty.EASY, this)));
 			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehavior(Difficulty.EASY, this)));
 			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, new AIBehavior(Difficulty.EASY, this)));
 			break;
 		default:
-			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, null));
+			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new UserBehavior(_panel)));
 			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehavior(Difficulty.EASY, this)));
 			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, new AIBehavior(Difficulty.EASY, this)));
 			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this)));
@@ -196,12 +196,8 @@ public abstract class Game {
 		if (time == 0) {
 			finishGame();
 		} else {
-			Direction dir = _panel.getDirection();
-			move(b, PLAYERS.get(0), dir);
-			for (Player AI: getAIs()) {
-				AI.getBehaviour().easy(b, AI, aiNumber);
-				Direction ai = AI.getBehaviour().getDirection();
-				move(b, AI, ai);
+			for (Player pl: PLAYERS) {
+				move(b, pl, pl.getBehaviour().getNextDirection());
 			}
 			movedPlayers.clear();
 			bHandler.update();

@@ -7,7 +7,6 @@ import game.player.Player;
 import game.system.Board;
 import game.system.Metrics;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class ClassicGame extends Game {
 
@@ -30,8 +29,6 @@ public class ClassicGame extends Game {
 		for (Player players: PLAYERS) {
 			b.setPlayerColorOnCell(players);
 		}
-		Random rnd = new Random();
-		aiNumber = rnd.nextInt(2)+1;
 		bHandler = new BonusHandler(b, PLAYERS);
 		Bonuses[] bon = {Bonuses.CHECKPOINT, Bonuses.ARROW};
 		bHandler.seedBonuses(bon);

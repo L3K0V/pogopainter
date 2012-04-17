@@ -18,6 +18,7 @@ public class Player {
 		this.speed = 1;
 		this.behaviour = control;
 		this.points = points;
+		behaviour.setPlayer(this);
 	}
 	
 	public void setX(int x) {
@@ -64,7 +65,7 @@ public class Player {
 		return bonus;
 	}
 	
-	public AIBehavior getBehaviour() {
-		return (AIBehavior) behaviour;
+	public Behavior getBehaviour() {
+		return behaviour;
 	}
 }

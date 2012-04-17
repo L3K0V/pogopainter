@@ -36,17 +36,22 @@ public class AIBehavior implements Behavior {
 	private Random rnd = new Random();
 	private boolean following = false;
 	private Score score       = null;
+	private Player AI;
 	
 	/**
 	 * Use {@link #AIBehavior(Difficulty, Game)} to attach behavior to AI
 	 * 
 	 * @param AIdifficult behavior difficulty (easy, normal, hard)
-	 * @param actions game that provides access to all game components such players, bonuses, board e.g.
+	 * @param game game that provides access to all game components such players, bonuses, board e.g.
 	 */
 
-	public AIBehavior(Difficulty AIdifficult, Game actions) {
+	public AIBehavior(Difficulty AIdifficult, Game game) {
 		this.AIdifficult = AIdifficult;
-		this.actions = actions;
+		this.actions = game;
+	}
+	
+	public void setPlayer(Player pl) {
+		this.AI = pl;
 	}
 	
 	/**
@@ -121,10 +126,6 @@ public class AIBehavior implements Behavior {
 
 	private void setDirection(Direction dir) {
 		lastDir = dir;
-	}
-
-	public Direction getDirection() {
-		return lastDir;
 	}
 
 	/**
@@ -267,5 +268,10 @@ public class AIBehavior implements Behavior {
 		}
 
 		return nextDirection;
+	}
+
+	public Direction getNextDirection() {
+		easy(actions.getBoard(), AI, rnd.nextInt(2) + 1);
+		return lastDir;
 	}
 }
