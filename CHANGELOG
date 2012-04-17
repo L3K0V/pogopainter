@@ -323,3 +323,6 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 	= If one of other AIs are closer to check point, AI change checkpoint (if theres more than 1 on board)
 	= Bots are going now to closest Arrow bonus
 	= Also they get arrow bonus only if will get cells (but they can be already owned by players (cells))
+	
+0.11.8(20120415)
++ New multiplayer menu (still buggy)
