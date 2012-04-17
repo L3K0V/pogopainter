@@ -68,24 +68,9 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 			startActivity(Single);
 			break;
 		case R.id.multiPlayer_button:
-			BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-			if (mBluetoothAdapter == null) {
-				Log.d(tag, "BluetoothAlert");
-				new AlertDialog.Builder( this )
-				.setTitle(getString(R.string.ops))
-				.setMessage(getString(R.string.bluetooth_miss))
-				.setIcon(android.R.drawable.ic_dialog_alert)
-				.setNegativeButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						Log.d(tag, "BluetoothAlert - Positive" );
-					}
-				} )
-				.show();
-			} else {
-				Log.d(tag, "Multiplayer");
-				Intent Multiplayer = new Intent(this, MultiplayerActivity.class);
-				startActivity(Multiplayer);
-			}
+			Log.d(tag, "Multiplayer");
+			Intent Multiplayer = new Intent(this, MultiplayerSlotActivity.class);
+			startActivity(Multiplayer);
 			break;
 		case R.id.options_button:
 			Log.d(tag, "Preferences");
