@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="game.pogopainter"
+    android:versionCode="0"
+    android:versionName="0.11.10" >
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-sdk
+        android:maxSdkVersion="13"
+        android:minSdkVersion="7"
+        android:targetSdkVersion="7" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        <activity
+            android:name=".PogoPainterActivity"
+            android:configChanges="locale|keyboard|keyboardHidden|orientation"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AboutUs"
+            android:label="@string/about_title"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name=".AboutPogo"
+            android:label="@string/about_title"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name=".AboutTabActivity"
+            android:label="@string/about_title" >
+        </activity>
+        <activity
+            android:name=".GameOver"
+            android:label="Game Over"
+            android:noHistory="true" >
+        </activity>
+        <activity
+            android:name=".MultiplayerActivity"
+            android:label="@string/multiplayer_title" >
+        </activity>
+        <activity
+            android:name=".ClassicHelp"
+            android:label="@string/classic_help_title" >
+        </activity>
+        <activity
+            android:name=".ClassicHelpTab"
+            android:label="@string/about_title" >
+        </activity>
+        <activity
+            android:name=".CoopHelp"
+            android:label="@string/coop_help_title" >
+        </activity>
+        <activity
+            android:name=".CoopHelpTab"
+            android:label="@string/coop_help_title" >
+        </activity>
+        <activity
+            android:name=".DeathmatchHelp"
+            android:label="@string/deathmatch_help_title" >
+        </activity>
+        <activity
+            android:name=".DeathmatchHelpTab"
+            android:label="@string/deathmatch_help_title" >
+        </activity>
+        <activity
+            android:name=".PreferencesActivity"
+            android:label="@string/settings_title" >
+            <intent-filter>
+                <action android:name="game.pogopainter.preferences" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ScoreSystem"
+            android:label="Score system"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name=".CanvasActivity"
+            android:label="Canvas"
+            android:screenOrientation="landscape" >
+        </activity>
+    </application>
+
+</manifest>

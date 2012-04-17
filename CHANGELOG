@@ -1,0 +1,329 @@
+28.02
++ fixed: spell mistakes :D
++ fixed: version number 0.mouth.date
++ changed: main menu wallpaper (still not ready)
+
+0.2.3(20120229)
++ fixed: AlertDialog icons
++ changed: Bluetooth alert text
++ Added: coop options
++ fixed: Classic & Deathmatch options in options menu
++ changed: About screen
++ added: App version button which shows current version
++ added: Exit confirmation dialog
+
+0.2.4(20120229)
++ fixed: versions
++ changed: maxSDK to version 13 Android 3.2
+
+0.3.0(20120229)
++ edited: about text
++ added: about us text
++ added: about us & about game in About menu layout
++ changed: "App version" to "Check application version"
++ changed: margin-top of Check application version button
++ added: Score system help
++ added: Score system button in WHAT? menus
++ change: WHAT? layouts
+
+0.3.1(20120229)
++ fix minor type error in strings
+
+0.3.2(20120306)
++ changed way for versioning
++ Added: preference toast (need to be fixed)
++ Added: some log debugs
+
+0.3.3(20120307)
++ changed: oriantation of application to Portrait
++ fixed: preference toast
++ fixed: debug logs
++ added: debug logs all Activities
++ changed: help button position in main menu
++ Layouts minor changes in padding
++ Cosmetic changes & indention in strings.xml
+
+
+0.3.4(20120308)
++ fixed: version check multiplayer`s option menu
++ added: version check in option menu
++ added: resetSettings entry in option menu
++ working reset preference button
++ fixed: score system now is not clickable
++ fixed: list help sections in game modes now are not clickable
+
+0.3.4(20120309)
++ changed: preferences debug will now show changed value
+from: "Change GAME_SOUNDS" 
+to: "Change GAME_SOUNDS to true"
++ added: option for controls position
+
+0.3.5(20120313)
++ added: Lang options
++ added: Initial bulgarian translate
+- bug: need to restart app to change completely lang
+
+0.4.0(20120313)
++ added: system package
++ added: player package
++ added: graphics package
++ added: Canvas init
+
+0.4.1(20120313)
++ fixed: bug when change language
++ fixed: bug - application shutdown when open a physical keyboard
++ fixed: bug in application version check from main menu
++ fixed: bug - no default value for language
++ added: Contact us button that opens send mail to us in About us window
++ reducing redundancy for version check
++ added: class activity extras for functions
++ changed: some cosmetics on about screen
++ changed: about to 2 tabs (about us & about pogo)
++ reduced strings redundancy (70% left)
+
+0.4.2(20120314)
++ Canvas init (20%)
++ Getting options from preferences
++ added: Context menu in about
++ reduced many lines of code
+
+0.4.3(20120316)
++ Canvas init (50%)
++ Fixed: Getting all options from preferences
++ Fixed: When reset setting and click on single player crash & enter in endless loop
++ Fixed: Getters methods, wrong return values
++ Strings refractoring (40%)
+- Lang bugs when change it...
++ Added: bulgarian init translate (have bugs)
+
+0.5.0(20120318)
++ Canvas init (70%)
++ Added game type classes
+
+0.5.1(20120318)
++ Added: layer for right controls
+- Missed layer for left
++ Changed: controls option from list to check button
++ fixed: bug in controls position selection
++ added: some assets
++ added: joystick
++ added: score list for players with indicatior icons
+
+0.5.2(20120319)
++ Fixed: left & right controls layouts
+
+0.5.3(20120319)
++ Refactored some code in Panel
++ Now drawing Players too
++ Make user to be List too because of multiplayer option
++ Refactored some code in ClassicGameType
+
+0.5.4(20120320)
++ main & multiplayer layouts cosmetics
++ change: joystick buttons to toggle buttons
++ added: joystick toggle buttons behavior
++ allowed landscape mode
+- need optimize for menus in landscape mode
++ Directions Arrow init
+- Removed colors.xml (not needed)
+
+0.5.5(20120320)
++ Canvas init (90%)
++ Fixed Arrows
++ CanvasThread manipulation(still very buggy)
+
+0.5.6(20120320)
++ Canvas init (100%)
++ Fixed CanvasThread manipulation
++ Set game loop logic
+
+0.5.7(20120322)
++ Canvas full screen
++ Draw point counters for players
++ Added: joystick drawables
++ Changed: method that creates rotated drawables
++ Draw static joystick
++ Left Control option added
+
+0.6.0(20120324)
++ Fixed Canvas for low resolutions
++ Change Score display representation
++ Draw Current Direction
++ Implements onTouchEvents
++ User moves now
++ Fix a bug with left control position not drawing properly
+
+0.6.1(20120326)
++ Added GameThread
++ Thread not functuning correctly yet
+
+0.6.2(20120327)
++ Thread comunication fixed
++ Now drawing normaly
++ Fix timing lag with drawing
+
+0.7.0(20120327)
++ BonusObject implementation
++ Created: Checkpoint bonus
++ Created: bonus drawing on canvas
++ Created: Bonuses enum
++ Working in part score system
+
+0.7.1(20120327)
++ Fix showing score in counters
++ Fix cell color after a reset from checkpoint
++ Fix allocating score to player properly
+
+0.7.2(20120328)
++ Re-writed score system
+
+0.8.0(20120329)
++ Added: Some random algorithm for spawn checkpoint bonuses
++ Changed: Classic, Coop, Deathmatch help & Score systems
++ Implement EASY AI
+
+0.8.1(20120329)
++ Draw Game Timer
++ Stop game at 0 time left
++ Refactoring
++ Move Actions from player package to system package
+
+0.8.2(20120329)
++ Added: Bugtracking system BugSense
++ Fixed: some minor bugs
+	= On small screen Metrics class gets error
+	= Null point exceptions in AIs init
++ Added: BugSense lib
+
+0.8.3(20120330)
++ Changed preferences
++ Added some new preferences
++ Fixed Metrics for new preferences
++ Fixed some cosmetics bugs on help activity tabs
+	(now landscape mode is more user friendly)
++ Fixed rules for missing 36 cells board size option
++ Some little code refactoring and cleaning
++ Deleted: some useless drawables
+
+0.9.0(20120330)
++ Refactored some code in Panel
++ Change formulas for controls and counters
++ Fix timer
++ Fix drawing on different resolutions
+
+0.9.1(20120331)
+SAVE THE PROJECT FROM TOTAL BREAKDOWN
++ Limit on checkpoint
++ Changed checkpoint chance
++ Actions optimization
+
+0.9.2(20120401)
++ Created smarter AI behavior
+	= Every bot follow random checkpoint
+	= If checkpoints is one all bots follow it
+	= When theres no checkpoints bots walk randomly
+	
+0.9.3(20120402)
++ Arrow bonus implementation
+	= Arrow limit is now 3
++ Added: new players drawables
++ Added: new cells drawables
+- Arrow rotate but still buggy
+
+0.9.4(20120402)
++ Now drawing bitmaps for cells instead of normal draw
++ Fix changing direction of arrow
+
+0.9.5(20120403)
++ Changed: drawable for joystick
++ Fixed: Arrow now removed from list & now spawn bug after 3
++ Added: GameOver layout
+	= Progress bars in players color
+	= Need to be attached to game (for now no idea how)
++ Added: Tile background for game (changed ugly black)
++ Fixed: Bonus seed after player input, now bonus seed before players input...
+
+0.9.6(20120405)
++ Changed: Checkpoint drawable
++ Chenged: Arrow bonus drawable
++ Changed: In-game background
++ Optimized background drawing
++ AI Improvements (still buggy):
+	= Bots now go and take arrows bonuses, chance 50%
+	= 50% chance Bot to go to checkpoint
+- Game stop at 1 sec
+
+0.10.0(20120405)
++ Changed the arhitecture of Panel and Game classes
++ Refactored some code in panel and game
++ now CanvasActivity doest use xml usage of panel
+
+0.10.1(20120410-20120411)
++ No more crash when someone calls you...
+	= CanvasActivity -> onPause() & onResume() working
+	= Panel -> surfaceCreated() fixed
+- Removed Coop & Deathmatch gametypes - needs to be rewrited for new game structure
++ Now Game & Canvas threads are named. (Easy debugging)
++ Showing stats when finish game (still now finished yet)
++ Fixed: Yellow progress bar on game stats
++ Added: New team game stats layout
++ Working score system at game`s end.
++ Smooth Incrementing points on stats screen
++ Working game stats buttons
++ Fixed: Game Stats bugs when launch second, third game e.g.
++ Fixed: Game Stats "go to menu" button
+- Pause init bugs, threads not pause when close game (home, incoming call e.g.)...
+- Pause init bugs onBackPressed...
+
+0.11.0 (20120411)
++ BonusHandler now working
++ Refactored code in Panel
++ Now using only 1 List for players instead of 2
+
+0.11.1(20120411)
++ Fixed threads start, stop, resume, pause e.g.
++ Some little changes on smooth increment
++ Pause dialog init (needs cosmetic changes)
+FIXED: 	Pause init bugs, threads not pause when close game (home, incoming call e.g.)...
+FIXED: 	Pause init bugs onBackPressed...
+BUG:   	When press home and then launch again, cant pause game...
+BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
+
+0.11.2(20120411)
++ Now more than 1 player can't be on 1 cell
+
+0.11.3(20120411)
++ Now cachening all bitmap
++ Prevent lag and everything now moves smooth
+
+0.11.4(20120412)
++ Fixed showing who is winner (player with most points)
++ Added GameOverTeams activity that extends GameOver (Refactoring)
++ Fixed when 2,3,4 players flush
++ GameOver cosmetics (layout & class)
+
+0.11.5(20120414)
++ Some methods for AI improvements
++ Some cosmetics
+
+0.11.6(20120414)
++ Another set of methods for AI improvements
++ Again cosmetics
+- AI suck, have logical & code issues 
+	(no getting properly direction if theres no bonuses on board and more...)
+- AI need to be refreshed or fully rewrite
+
+0.11.7(20120414)
++ Fixed that bonuses now spawned under players
++ Code cosmetics, some refactoring
++ Javadoc init on AIbehavior class
++ Added Javadoc to project (for testing & review)
++ AI Improvements:
+	= Now bots will go to checkpoint only when they have more than 5 cells owned
+	= If one of other AIs are closer to check point, AI change checkpoint (if theres more than 1 on board)
+	= Bots are going now to closest Arrow bonus
+	= Also they get arrow bonus only if will get cells (but they can be already owned by players (cells))
+	
+0.11.10(20120417)
++ Now User have User behaviour
++ Make more readably code in update so that every player have same methods for gettinh directions;
