@@ -57,6 +57,11 @@
             android:label="@string/multiplayer_title" >
         </activity>
         <activity
+            android:name=".PogoSlots"
+            android:label="Play"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name=".ClassicHelp"
             android:label="@string/classic_help_title" >
         </activity>
