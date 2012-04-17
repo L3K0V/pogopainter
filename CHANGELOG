@@ -338,3 +338,5 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 0.11.10(20120417)
 + Now User have User behaviour
 + Make more readably code in update so that every player have same methods for gettinh directions;
++ Fix game pause menu
++ Increase speed of smooth incremention of bars in game over

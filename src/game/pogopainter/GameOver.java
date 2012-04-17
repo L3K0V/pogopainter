@@ -75,9 +75,7 @@ public class GameOver extends Activity implements OnClickListener {
 		yellow = gameIntent.getIntExtra("YELLOW_PLAYER_POINTS", 0);
 
 		Thread updateProgress =new Thread(new Runnable() {
-
 			public void run() {
-
 				try {
 					int max = gameIntent.getIntExtra("ALL_PLAYERS_POINTS", 0);
 					for (int i=0;i<max && incrementRunning;i++) {
@@ -94,25 +92,21 @@ public class GameOver extends Activity implements OnClickListener {
 							yellowPlayer.setProgress(i);
 						}
 						if (max < 50) {
-							Thread.sleep(250);
+							Thread.sleep(125);
 						} else if (max > 50 && max < 100) {
-							Thread.sleep(100);
-						} else {
 							Thread.sleep(50);
+						} else {
+							Thread.sleep(25);
 						}
 
 					}
-
 				}
-
 				catch (Throwable t) {
-
 				}     
 			}     
 		});
 		incrementRunning = true;
 		updateProgress.start();
-
 	}
 
 	public void onStop() {
