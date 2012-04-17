@@ -44,16 +44,16 @@ public class CanvasActivity extends Activity {
 	public void onBackPressed() {
 		panel.stopThreads();
 		dialog = new AlertDialog.Builder(this)
-		.setTitle(getString(R.string.exit))
-		.setMessage(getString(R.string.exit_question))
+		.setTitle("Pause Game")
+		.setMessage("The Game is Paused. Do you wanna Resume or return to main menu ?")
 		.setIcon(android.R.drawable.ic_dialog_alert)
-		.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+		.setNegativeButton("Resume", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				panel.startThreads();
 				dialog.dismiss();
 			}
 		})
-		.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+		.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				panel.surfaceDestroyed(panel.getHolder());
 				finish();
