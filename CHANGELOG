@@ -326,3 +326,10 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 	
 0.11.8(20120415)
 + New multiplayer menu (still buggy)
+
+0.11.9(20120417)
++ Changed: Single & Multi menus (now are in one button "Play")
++ New Game chooser design (slots)
++ Added notification
++ Preferences cosmetic changes
++ Remove color option, now player choose color when "creating" game

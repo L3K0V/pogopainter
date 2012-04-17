@@ -10,7 +10,9 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -32,6 +34,10 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		settings.registerOnSharedPreferenceChangeListener(this);
+		
+		ListPreference color = (ListPreference) findPreference("PLAYER_COLOR");
+		PreferenceCategory general = (PreferenceCategory) findPreference("GENERAL");
+		general.removePreference(color);
 	}
 
 	@Override

@@ -91,17 +91,15 @@
     </PreferenceCategory>
     <PreferenceCategory
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:title="@string/general" >
+        android:title="@string/general"
+        android:key="GENERAL" >
 
         <!-- General -->
         <ListPreference
             android:defaultValue="red"
-            android:dialogTitle="Choose your color"
             android:entries="@array/player_color"
             android:entryValues="@array/player_color_values"
-            android:key="PLAYER_COLOR"
-            android:summary="Choose your color in-game"
-            android:title="Your color" />
+            android:key="PLAYER_COLOR"/>
 
         <CheckBoxPreference
             android:defaultValue="true"
