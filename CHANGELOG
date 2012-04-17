@@ -324,6 +324,17 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 	= Bots are going now to closest Arrow bonus
 	= Also they get arrow bonus only if will get cells (but they can be already owned by players (cells))
 	
+0.11.8(20120415)
++ New multiplayer menu (still buggy)
+
+0.11.9(20120417)
++ Changed: Single & Multi menus (now are in one button "Play")
++ New Game chooser design (slots)
++ Added notification
++ Preferences cosmetic changes
++ Remove color option, now player choose color when "creating" game
+	= Also they get arrow bonus only if will get cells (but they can be already owned by players (cells))
+	
 0.11.10(20120417)
 + Now User have User behaviour
 + Make more readably code in update so that every player have same methods for gettinh directions;
