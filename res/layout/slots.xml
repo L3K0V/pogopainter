@@ -34,22 +34,25 @@
         android:layout_alignParentLeft="true"
         android:background="@android:drawable/title_bar" >
 
-        <Button
+        <ToggleButton
             android:id="@+id/lockIn"
             android:layout_width="0dp"
+            android:textOn="Unlock"
+            android:textOff="Lock"
+            android:background="@drawable/toggle_button"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:enabled="false"
-            android:text="Lock in" />
+            android:enabled="false"/>
 
         <Button
+            android:background="@drawable/toggle_button"
             android:id="@+id/startGame"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:enabled="false"
-            android:text="GO!" />
+            android:text="Go!" />
     </LinearLayout>
 
     <LinearLayout
@@ -68,6 +71,7 @@
 
             <TextView
                 android:id="@+id/textView2"
+                android:paddingRight="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -75,11 +79,12 @@
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/gameType_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="Medium Text"
+                android:textStyle="italic"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
 
@@ -90,6 +95,7 @@
 
             <TextView
                 android:id="@+id/textView2"
+                android:paddingRight="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -97,11 +103,12 @@
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/purpose_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="Medium Text"
+                android:textStyle="italic"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
 
@@ -112,6 +119,7 @@
 
             <TextView
                 android:id="@+id/textView2"
+                android:paddingRight="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -119,11 +127,12 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/players_num_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="Medium Text"
+                android:textStyle="italic"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
 
@@ -135,6 +144,7 @@
 
             <TextView
                 android:id="@+id/textView2"
+                android:paddingRight="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -142,33 +152,36 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/red_player_teams"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:src="@drawable/player_red" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/yellow_player_teams"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
+                android:paddingRight="2dp"
                 android:src="@drawable/player_yellow" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/teams_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="VS."
+                android:textStyle="italic"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/blue_player_teams"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
+                android:paddingLeft="2dp"
                 android:src="@drawable/player_blue" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/green_player_teams"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:src="@drawable/player_green" />

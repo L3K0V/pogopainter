@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="game.pogopainter"
     android:versionCode="0"
-    android:versionName="0.11.8" >
+    android:versionName="0.11.9" >
 
     <supports-screens
         android:anyDensity="true"
@@ -57,8 +57,8 @@
             android:label="@string/multiplayer_title" >
         </activity>
         <activity
-            android:name=".MultiplayerSlotActivity"
-            android:label="@string/multiplayer_title"
+            android:name=".PogoSlots"
+            android:label="Play"
             android:screenOrientation="portrait" >
         </activity>
         <activity

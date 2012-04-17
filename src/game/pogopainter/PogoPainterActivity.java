@@ -27,7 +27,7 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
-		setContentView(R.layout.main);
+		setContentView(R.layout.main_slots);
 
 		BugSenseHandler.setup(this, "318415b5");
 
@@ -36,10 +36,7 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 		View aboutButton = findViewById(R.id.about_button);
 		aboutButton.setOnClickListener(this);
 
-		View multiPlayerButton = findViewById(R.id.multiPlayer_button);
-		multiPlayerButton.setOnClickListener(this);
-
-		View singlePlayerButton = findViewById(R.id.singlePlayer_button);
+		View singlePlayerButton = findViewById(R.id.play_button);
 		singlePlayerButton.setOnClickListener(this);
 
 		View optionsButton = findViewById(R.id.options_button);
@@ -62,15 +59,10 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 			Intent About = new Intent(this, AboutTabActivity.class);
 			startActivity(About);
 			break;
-		case R.id.singlePlayer_button:
-			Log.d( tag, "Singleplayer");
-			Intent Single = new Intent(this, CanvasActivity.class);
+		case R.id.play_button:
+			Log.d( tag, "Play");
+			Intent Single = new Intent(this, PogoSlots.class);
 			startActivity(Single);
-			break;
-		case R.id.multiPlayer_button:
-			Log.d(tag, "Multiplayer");
-			Intent Multiplayer = new Intent(this, MultiplayerSlotActivity.class);
-			startActivity(Multiplayer);
 			break;
 		case R.id.options_button:
 			Log.d(tag, "Preferences");
