@@ -68,7 +68,7 @@ public class PogoSlots extends Activity implements OnClickListener {
 		
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		
-		showHind("Choose you starting position", Toast.LENGTH_LONG);
+		showHind("Choose your starting position", Toast.LENGTH_LONG);
 	}
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -140,7 +140,7 @@ public class PogoSlots extends Activity implements OnClickListener {
 			if (lockIn.isEnabled()) {
 				if (lockIn.isChecked()) {
 					disableSlots();
-					showHind("If you ready, go ahead by pressing Go!", Toast.LENGTH_LONG);
+					showHind("If you are ready, go ahead by pressing Go!", Toast.LENGTH_LONG);
 					go.setEnabled(true);
 					
 				} else {
