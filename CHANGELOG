@@ -340,3 +340,7 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Make more readably code in update so that every player have same methods for gettinh directions;
 + Fix game pause menu
 + Increase speed of smooth incremention of bars in game over
+
+0.11.11(20120419)
++ Now filtering bitmaps for better view for high resolution
++ Fix some spelling errors

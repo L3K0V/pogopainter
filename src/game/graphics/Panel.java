@@ -48,6 +48,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	protected int screenHeigth;
 	protected Activity holder;
 	protected Map<Integer, Bitmap> _bitmapCache;
+	protected Paint bPaint;
 
 	public Panel(Context context, Activity owner) {
 		super(context);
@@ -132,6 +133,9 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 					screenWidth - padding / 2, (screenHeigth / 2) - padding / 2);
 		}
 		defineTouchRect();
+		bPaint = new Paint();
+		bPaint.setAntiAlias(false);
+		bPaint.setFilterBitmap(true);
 	}
 	
 	protected void fillBitmapCache() {
@@ -222,7 +226,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	protected void drawDirection(Canvas canvas) {
 		if (getDirection() != Direction.NONE) {
 			Bitmap clicked = getRotatedBitmap(getDirection(), R.drawable.joystick_clicked);
-			canvas.drawBitmap(clicked, null, controlRect, null);
+			canvas.drawBitmap(clicked, null, controlRect, bPaint);
 		}
 	}
 
@@ -242,7 +246,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setColor(Color.MAGENTA);
 		Bitmap controls = getRotatedBitmap(Direction.RIGHT, R.drawable.joystick);
-		canvas.drawBitmap(controls, null, controlRect, null);
+		canvas.drawBitmap(controls, null, controlRect, bPaint);
 	}
 
 	protected void drawPointCounters(Canvas canvas) {
@@ -265,7 +269,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		Rect rect = new Rect(bitmapStartX , counterY, 
 				bitmapStartX  + counterPadding, counterY + counterPadding);
 
-		canvas.drawBitmap(bitmap, null, rect, null);
+		canvas.drawBitmap(bitmap, null, rect, bPaint);
 		canvas.drawText(spoints, rect.right + padding * 2, counterY + counterPadding - padding, paint);
 		counterY += counterPadding;
 	}
@@ -279,7 +283,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 			Rect rect = new Rect(width, height, width + cellSize, height + cellSize);
 			Bitmap bitmap = getPlayerColor(color);
 
-			canvas.drawBitmap(bitmap, null, rect, null);
+			canvas.drawBitmap(bitmap, null, rect, bPaint);
 		}
 	}
 
@@ -336,7 +340,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		case NONE:
 			break;
 		}
-		canvas.drawBitmap(bitmap, null, rect, null);	
+		canvas.drawBitmap(bitmap, null, rect, bPaint);	
 	}
 
 	protected void drawNav(Canvas canvas) {
@@ -382,7 +386,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		}
 
 		Rect rect = new Rect(width, height, width + cellSize, height + cellSize);
-		canvas.drawBitmap(arrow, null, rect, null);
+		canvas.drawBitmap(arrow, null, rect, bPaint);
 
 	}
 
