@@ -353,3 +353,6 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 - Not working when get teleport bonus, canvas to draw joystick_actions
 - Teleport cannot be use at this moment
 - Needs to be fixed teleport spawn chance, for now is high for testing
++ Fixed: Not working when get teleport bonus, canvas to draw joystick_actions
++ Now action when clicking on the board
++ Fix onTouchEvent now only handling it if it is ACTION_DOWN

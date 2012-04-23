@@ -21,6 +21,8 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.provider.ContactsContract.CommonDataKinds.Event;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -41,6 +43,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	protected Rect down;
 	protected Rect left;
 	protected Rect right;
+	protected Rect board;
 	protected Direction currentDir = Direction.NONE;
 	protected int padding;
 	protected Rect counterRect;
@@ -123,6 +126,8 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 			fixControlRect(control);
 			counterRect = new Rect(controlStartX + padding / 2, padding / 2,
 					boardStartX - padding / 2, screenHeigth / 2 - padding / 2);
+			
+			board = new Rect(boardStartX + padding / 2, 0, screenWidth, screenHeigth);
 		} else {
 			controlStartX = cellNumber * cellSize;
 			boardStartX = 0;
@@ -131,6 +136,8 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 			fixControlRect(control);
 			counterRect = new Rect(controlStartX + padding / 2, padding / 2,
 					screenWidth - padding / 2, (screenHeigth / 2) - padding / 2);
+			
+			board = new Rect(boardStartX, 0, controlStartX - padding / 2, screenHeigth);
 		}
 		defineTouchRect();
 		bPaint = new Paint();
@@ -191,15 +198,19 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	}
 
 	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		int x = (int) event.getX();
-		int y = (int) event.getY();
-		checkControls(x, y);
+	public boolean onTouchEvent(MotionEvent event) { 
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			int x = (int) event.getX();
+			int y = (int) event.getY();
+			checkControls(x, y);
+		}
 		return true;
 	}
 
 	protected void checkControls(int x, int y) {
-		if (up.contains(x, y)) {
+		if (board.contains(x, y)) {
+			//TODO: use bonus if any;
+		} else if (up.contains(x, y)) {
 			currentDir = Direction.UP;
 		} else if (right.contains(x, y)) {
 			currentDir = Direction.RIGHT;
@@ -223,6 +234,10 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		drawPointCounters(canvas);
 		drawControls(canvas);
 		drawDirection(canvas);
+		Paint p = new Paint();
+		p.setColor(Color.MAGENTA);
+		p.setStyle(Paint.Style.STROKE);
+		canvas.drawRect(board, p);
 	}
 
 	protected void drawDirection(Canvas canvas) {

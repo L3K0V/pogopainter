@@ -2,7 +2,6 @@ package game.gametypes;
 
 import game.bonuses.Arrow;
 import game.bonuses.BonusHandler;
-import game.bonuses.Bonuses;
 import game.bonuses.Checkpoint;
 import game.bonuses.Teleport;
 import game.graphics.Panel;
@@ -17,7 +16,6 @@ import game.system.Direction;
 import java.util.ArrayList;
 import java.util.List;
 import android.graphics.Color;
-import android.util.Log;
 
 public abstract class Game {
 	protected Board b;
@@ -142,10 +140,6 @@ public abstract class Game {
 			p.setBonus(thisCell.getBonus());
 			res = false;
 		}
-		if (p.getBonus() != null && p.getBonus().getType() == Bonuses.TELEPORT) {
-			Log.d("player.getBonus()", "TELEPORT");
-		}
-		
 		return res;
 	}
 
@@ -153,6 +147,7 @@ public abstract class Game {
 		if (!checkForBonus(p, b)) {
 			p.getBonus().setBonusEffect(p, b);
 			clearBonus(p, b);
+			p.setBonus(null);
 			for (Checkpoint cp : bHandler.getCheckpoints()) {
 				if (p.getX() == cp.getX() && p.getY() == cp.getY()) {
 					bHandler.getCheckpoints().remove(cp);
@@ -170,10 +165,10 @@ public abstract class Game {
 	
 	public void attachBonus2Player(Player p, Board b) {
 		if (!checkForBonus(p, b)) {
+			clearBonus(p, b);
 			for (Teleport tp : bHandler.getTeleports()) {
 				if (p.getX() == tp.getX() && p.getY() == tp.getY()) {
 					bHandler.getTeleports().remove(tp);
-					p.setBonus(tp);
 					break;
 				}
 			}
@@ -181,7 +176,6 @@ public abstract class Game {
 	}
 
 	protected void clearBonus(Player p, Board b) {
-		p.setBonus(null);
 		b.getCellAt(p.getX(), p.getY()).clearBonus();
 	}
 	
