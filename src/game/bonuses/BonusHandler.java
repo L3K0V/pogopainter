@@ -86,7 +86,9 @@ public class BonusHandler {
 						break;
 					}
 				}
-			} else if (ifArrows) {
+			}
+			
+			if (ifArrows) {
 				checkChance = rnd.nextInt(5) + 1;
 				bonusChance = rnd.nextInt(5) + 1;
 
