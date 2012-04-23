@@ -248,7 +248,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setColor(Color.MAGENTA);
 		Bitmap controls;
-		if (game.getUser().getBonus() != null && game.getUser().getBonus().getType() == Bonuses.TELEPORT) {
+		if (game.getUser().getBonus() != null) {
 			controls = getRotatedBitmap(Direction.RIGHT, R.drawable.joystick_action);
 		} else {
 			controls = getRotatedBitmap(Direction.RIGHT, R.drawable.joystick);
