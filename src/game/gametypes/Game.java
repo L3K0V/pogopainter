@@ -2,7 +2,9 @@ package game.gametypes;
 
 import game.bonuses.Arrow;
 import game.bonuses.BonusHandler;
+import game.bonuses.Bonuses;
 import game.bonuses.Checkpoint;
+import game.bonuses.Teleport;
 import game.graphics.Panel;
 import game.player.AIBehavior;
 import game.player.Difficulty;
@@ -15,6 +17,7 @@ import game.system.Direction;
 import java.util.ArrayList;
 import java.util.List;
 import android.graphics.Color;
+import android.util.Log;
 
 public abstract class Game {
 	protected Board b;
@@ -88,7 +91,8 @@ public abstract class Game {
 			break;
 		}
 		b.setPlayerColorOnCell(player);
-		applyBonusEffect(player, b);
+		attachBonus2Player(player, b);
+		applyInstantBonusEffect(player, b);
 		movedPlayers.add(player);
 	}
 	
@@ -138,11 +142,14 @@ public abstract class Game {
 			p.setBonus(thisCell.getBonus());
 			res = false;
 		}
-
+		if (p.getBonus() != null && p.getBonus().getType() == Bonuses.TELEPORT) {
+			Log.d("player.getBonus()", "TELEPORT");
+		}
+		
 		return res;
 	}
 
-	public void applyBonusEffect(Player p, Board b) {
+	public void applyInstantBonusEffect(Player p, Board b) {
 		if (!checkForBonus(p, b)) {
 			p.getBonus().setBonusEffect(p, b);
 			clearBonus(p, b);
@@ -155,6 +162,18 @@ public abstract class Game {
 			for (Arrow aw : bHandler.getArrows()) {
 				if (p.getX() == aw.getX() && p.getY() == aw.getY()) {
 					bHandler.getArrows().remove(aw);
+					break;
+				}
+			}
+		}
+	}
+	
+	public void attachBonus2Player(Player p, Board b) {
+		if (!checkForBonus(p, b)) {
+			for (Teleport tp : bHandler.getTeleports()) {
+				if (p.getX() == tp.getX() && p.getY() == tp.getY()) {
+					bHandler.getTeleports().remove(tp);
+					p.setBonus(tp);
 					break;
 				}
 			}

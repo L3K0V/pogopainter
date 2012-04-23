@@ -30,7 +30,7 @@ public class ClassicGame extends Game {
 			b.setPlayerColorOnCell(players);
 		}
 		bHandler = new BonusHandler(b, PLAYERS);
-		Bonuses[] bon = {Bonuses.CHECKPOINT, Bonuses.ARROW};
+		Bonuses[] bon = {Bonuses.CHECKPOINT, Bonuses.ARROW, Bonuses.TELEPORT};
 		bHandler.seedBonuses(bon);
 	}
 }

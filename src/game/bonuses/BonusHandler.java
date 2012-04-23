@@ -9,16 +9,19 @@ import game.system.Board;
 public class BonusHandler {
 	private boolean ifCheckpoints = false;
 	private boolean ifArrows      = false;
-	private boolean ifSpeedUps    = false;
-	private boolean ifShoots 	  = false;
+	//private boolean ifSpeedUps  = false;
+	//private boolean ifShoots 	  = false;
+	private boolean ifTeleport    = false;
 
 	private Board board;
 	private List<Player> players;
 
 	private List<Checkpoint> CHECKPOINTS;
-	private List<Arrow> ARROWS;
+	private List<Arrow>      ARROWS;
+	private List<Teleport>   TELEPORTS;
 
 	private int checkpointLimit = 3;
+	private int teleportsLimit  = 2;
 	private int otherBonusLimit = 3;
 
 	private int bonusRandomNumber;
@@ -39,16 +42,12 @@ public class BonusHandler {
 				CHECKPOINTS   = new ArrayList<Checkpoint>();
 				break;
 			case ARROW:
-				ifArrows = true;
-				ARROWS   = new ArrayList<Arrow>();
+				ifArrows      = true;
+				ARROWS        = new ArrayList<Arrow>();
 				break;
-			case SPEEDUP:
-				ifSpeedUps = true;
-				// need to init array
-				break;
-			case SHOOT:
-				ifShoots = true;
-				// need to init array
+			case TELEPORT:
+				ifTeleport    = true;
+				TELEPORTS     = new ArrayList<Teleport>();
 				break;
 			}
 		}
@@ -63,10 +62,13 @@ public class BonusHandler {
 
 	public void putBonus(Board b, int chance) {
 		int checkChance = 0;
+		int bonusChance = 0;
+		
 		int x;
 		int y;
+		
 		Random rnd = new Random();
-		int bonusChance = 0;
+
 		if (ifCheckpoints) {
 			checkChance = rnd.nextInt(5) + 1;
 			if (checkChance == chance && CHECKPOINTS.size() < checkpointLimit) {
@@ -84,7 +86,7 @@ public class BonusHandler {
 						break;
 					}
 				}
-			} else if (ifArrows){
+			} else if (ifArrows) {
 				checkChance = rnd.nextInt(5) + 1;
 				bonusChance = rnd.nextInt(5) + 1;
 
@@ -100,7 +102,28 @@ public class BonusHandler {
 								b.getCellAt(x, y).setBonus(bonus);
 								ARROWS.add((Arrow) bonus);
 							}
-
+							break;
+						}
+					}
+				}
+			}
+			
+			if (ifTeleport) {
+				checkChance = rnd.nextInt(2) + 1;
+				bonusChance = rnd.nextInt(2) + 1;
+				
+				if (checkChance == bonusChance && TELEPORTS.size() < teleportsLimit) {
+					while (true) {
+						
+						x = rnd.nextInt(b.getBoardSize());
+						y = rnd.nextInt(b.getBoardSize());
+						
+						if (b.getCellAt(x, y).getBonus() == null) {
+							if (checkCurrentPosition(x, y)) {
+								BonusObject bonus = new Teleport();
+								b.getCellAt(x, y).setBonus(bonus);
+								TELEPORTS.add((Teleport) bonus);
+							}
 							break;
 						}
 					}
@@ -150,5 +173,9 @@ public class BonusHandler {
 
 	public List<Arrow> getArrows() {
 		return ARROWS;
+	}
+	
+	public List<Teleport> getTeleports() {
+		return TELEPORTS;
 	}
 }

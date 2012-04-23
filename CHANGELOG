@@ -344,3 +344,11 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 0.11.11(20120419)
 + Now filtering bitmaps for better view for high resolution
 + Fix some spelling errors
+
+0.12.0(20120423)
++ Added: Teleport bonus (it`s attached ot player, must press screen to use but not work now)
++ Teleport drawable
++ New Joystick drawable when player have bonus
+- Not working when get teleport bonus, canvas to draw joystick_actions
+- Teleport cannot be use at this moment
+- Needs to be fixed teleport spawn chance, for now is high for testing
