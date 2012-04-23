@@ -59,7 +59,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		setFocusable(true);
 		initFields();
 	}
-	
+
 	public Activity getOwner() {
 		return holder;
 	}
@@ -112,8 +112,8 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		cellNumber = game.getBoard().getBoardSize();
 		cellSize = (screenHeigth / cellNumber ) - 1;	
 		padding = cellSize / 5;
-		 _bitmapCache = new HashMap<Integer, Bitmap>();
-		 fillBitmapCache();
+		_bitmapCache = new HashMap<Integer, Bitmap>();
+		fillBitmapCache();
 		if (leftControlns) {
 			controlStartX = 0;
 			boardStartX = (screenWidth - (cellNumber * cellSize)) - 1;
@@ -137,23 +137,25 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		bPaint.setAntiAlias(false);
 		bPaint.setFilterBitmap(true);
 	}
-	
+
 	protected void fillBitmapCache() {
-        _bitmapCache.put(R.drawable.cell_blue, BitmapFactory.decodeResource(getResources(), R.drawable.cell_blue));
-        _bitmapCache.put(R.drawable.cell_empty, BitmapFactory.decodeResource(getResources(), R.drawable.cell_empty));
-        _bitmapCache.put(R.drawable.cell_yellow, BitmapFactory.decodeResource(getResources(), R.drawable.cell_yellow));
-        _bitmapCache.put(R.drawable.cell_green, BitmapFactory.decodeResource(getResources(), R.drawable.cell_green));
-        _bitmapCache.put(R.drawable.cell_red, BitmapFactory.decodeResource(getResources(), R.drawable.cell_red));
-        _bitmapCache.put(R.drawable.player_blue, BitmapFactory.decodeResource(getResources(), R.drawable.player_blue));
-        _bitmapCache.put(R.drawable.player_yellow, BitmapFactory.decodeResource(getResources(), R.drawable.player_yellow));
-        _bitmapCache.put(R.drawable.player_red, BitmapFactory.decodeResource(getResources(), R.drawable.player_red));
-        _bitmapCache.put(R.drawable.player_green, BitmapFactory.decodeResource(getResources(), R.drawable.player_green));
-        _bitmapCache.put(R.drawable.background, BitmapFactory.decodeResource(getResources(), R.drawable.background));
-        _bitmapCache.put(R.drawable.bonus_arrow, BitmapFactory.decodeResource(getResources(), R.drawable.bonus_arrow));
-        _bitmapCache.put(R.drawable.bonus_checkpoint, BitmapFactory.decodeResource(getResources(), R.drawable.bonus_checkpoint));
-        _bitmapCache.put(R.drawable.joystick, BitmapFactory.decodeResource(getResources(), R.drawable.joystick));
-        _bitmapCache.put(R.drawable.joystick_clicked, BitmapFactory.decodeResource(getResources(), R.drawable.joystick_clicked));
-        _bitmapCache.put(R.drawable.arrow, BitmapFactory.decodeResource(getResources(), R.drawable.arrow));
+		_bitmapCache.put(R.drawable.cell_blue,        BitmapFactory.decodeResource(getResources(), R.drawable.cell_blue));
+		_bitmapCache.put(R.drawable.cell_empty,       BitmapFactory.decodeResource(getResources(), R.drawable.cell_empty));
+		_bitmapCache.put(R.drawable.cell_yellow,      BitmapFactory.decodeResource(getResources(), R.drawable.cell_yellow));
+		_bitmapCache.put(R.drawable.cell_green,       BitmapFactory.decodeResource(getResources(), R.drawable.cell_green));
+		_bitmapCache.put(R.drawable.cell_red,         BitmapFactory.decodeResource(getResources(), R.drawable.cell_red));
+		_bitmapCache.put(R.drawable.player_blue,      BitmapFactory.decodeResource(getResources(), R.drawable.player_blue));
+		_bitmapCache.put(R.drawable.player_yellow,    BitmapFactory.decodeResource(getResources(), R.drawable.player_yellow));
+		_bitmapCache.put(R.drawable.player_red,       BitmapFactory.decodeResource(getResources(), R.drawable.player_red));
+		_bitmapCache.put(R.drawable.player_green,     BitmapFactory.decodeResource(getResources(), R.drawable.player_green));
+		_bitmapCache.put(R.drawable.background,       BitmapFactory.decodeResource(getResources(), R.drawable.background));
+		_bitmapCache.put(R.drawable.bonus_arrow,      BitmapFactory.decodeResource(getResources(), R.drawable.bonus_arrow));
+		_bitmapCache.put(R.drawable.bonus_teleport,   BitmapFactory.decodeResource(getResources(), R.drawable.bonus_teleport));
+		_bitmapCache.put(R.drawable.bonus_checkpoint, BitmapFactory.decodeResource(getResources(), R.drawable.bonus_checkpoint));
+		_bitmapCache.put(R.drawable.joystick,         BitmapFactory.decodeResource(getResources(), R.drawable.joystick));
+		_bitmapCache.put(R.drawable.joystick_clicked, BitmapFactory.decodeResource(getResources(), R.drawable.joystick_clicked));
+		_bitmapCache.put(R.drawable.joystick_action,  BitmapFactory.decodeResource(getResources(), R.drawable.joystick_action));
+		_bitmapCache.put(R.drawable.arrow,            BitmapFactory.decodeResource(getResources(), R.drawable.arrow));
 	}
 
 	protected void fixControlRect(Rect control) {
@@ -245,7 +247,12 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setColor(Color.MAGENTA);
-		Bitmap controls = getRotatedBitmap(Direction.RIGHT, R.drawable.joystick);
+		Bitmap controls;
+		if (game.getUser().getBonus() != null && game.getUser().getBonus().getType() == Bonuses.TELEPORT) {
+			controls = getRotatedBitmap(Direction.RIGHT, R.drawable.joystick_action);
+		} else {
+			controls = getRotatedBitmap(Direction.RIGHT, R.drawable.joystick);
+		}
 		canvas.drawBitmap(controls, null, controlRect, bPaint);
 	}
 
@@ -321,6 +328,9 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		switch (type) {
 		case CHECKPOINT:
 			bitmap = getRotatedBitmap(Direction.RIGHT, R.drawable.bonus_checkpoint);
+			break;
+		case TELEPORT:
+			bitmap = getRotatedBitmap(Direction.RIGHT, R.drawable.bonus_teleport);
 			break;
 		case ARROW:
 			switch (((Arrow) bonus).getState()) {
