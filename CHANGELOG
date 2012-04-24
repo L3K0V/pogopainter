@@ -364,3 +364,4 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + New algorithm for bonuses
 + Tempest packages
 + Change: Teleport spawn chance
++ Fixed: When get checkpoint not set player`s color on player`s cell 

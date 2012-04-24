@@ -19,6 +19,7 @@ public class Checkpoint extends BonusObject {
 		checkpointScore = score.Calculate();
 		p.changeScore(checkpointScore);
 		score.reset();
+		b.setPlayerColorOnCell(p);
 	}
 
 	public int getScoreFromCheckpoint() {
