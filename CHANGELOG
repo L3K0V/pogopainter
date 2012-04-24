@@ -361,4 +361,6 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Fix bug with not getting bonuses properly
 + Fix Teleport bonus 
 + Bonus attachment fixed
-+ New algorithm for bonuses 
++ New algorithm for bonuses
++ Tempest packages
++ Change: Teleport spawn chance
