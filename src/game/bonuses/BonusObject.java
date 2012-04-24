@@ -29,5 +29,4 @@ public abstract class BonusObject {
 	}
 	
 	public abstract void setBonusEffect(Player p, Board b);
-	
 }

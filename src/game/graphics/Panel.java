@@ -209,7 +209,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 
 	protected void checkControls(int x, int y) {
 		if (board.contains(x, y)) {
-			//TODO: use bonus if any;
+			game.triggerBonus(game.getUser(), game.getUser().getBonus());
 		} else if (up.contains(x, y)) {
 			currentDir = Direction.UP;
 		} else if (right.contains(x, y)) {

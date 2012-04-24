@@ -359,3 +359,6 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 
 0.12.1(20120424)
 + Fix bug with not getting bonuses properly
++ Fix Teleport bonus 
++ Bonus attachment fixed
++ New algorithm for bonuses 
