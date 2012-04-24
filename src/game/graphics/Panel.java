@@ -234,10 +234,6 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		drawPointCounters(canvas);
 		drawControls(canvas);
 		drawDirection(canvas);
-		Paint p = new Paint();
-		p.setColor(Color.MAGENTA);
-		p.setStyle(Paint.Style.STROKE);
-		canvas.drawRect(board, p);
 	}
 
 	protected void drawDirection(Canvas canvas) {

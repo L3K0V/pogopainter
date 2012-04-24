@@ -356,3 +356,6 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Fixed: Not working when get teleport bonus, canvas to draw joystick_actions
 + Now action when clicking on the board
 + Fix onTouchEvent now only handling it if it is ACTION_DOWN
+
+0.12.1(20120424)
++ Fix bug with not getting bonuses properly
