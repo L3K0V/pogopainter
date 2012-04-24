@@ -2,6 +2,7 @@ package game.gametypes;
 
 import game.bonuses.Arrow;
 import game.bonuses.BonusHandler;
+import game.bonuses.BonusObject;
 import game.bonuses.Bonuses;
 import game.bonuses.Checkpoint;
 import game.bonuses.Teleport;
@@ -16,6 +17,8 @@ import game.system.Cell;
 import game.system.Direction;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import android.graphics.Color;
 
 public abstract class Game {
@@ -132,24 +135,21 @@ public abstract class Game {
 		return res;
 	}
 
-	public boolean checkForBonus(Player p, Board b) {
-		boolean res = true;
+	public BonusObject checkForBonus(Player p, Board b) {
+		BonusObject res;
 		Cell thisCell = b.getCellAt(p.getX(), p.getY());
-
-		if (thisCell.getBonus() != null) {
-			p.setBonus(thisCell.getBonus());
-			res = false;
-		}
+		res = thisCell.getBonus();
 		return res;
 	}
 
 	public void applyBonusEffect(Player p, Board b) {
-		if (!checkForBonus(p, b)) {
-			if (p.getBonus().getType() == Bonuses.TELEPORT) {
+		BonusObject bonus;
+		if ((bonus = checkForBonus(p, b)) != null) {
+			if (!(bonus.getType() == Bonuses.TELEPORT)) {
+				triggerBonus(p, bonus);
 			} else {
-				p.getBonus().setBonusEffect(p, b);
-				p.setBonus(null);
-			}	
+				p.setBonus(bonus);
+			}
 			clearBonus(p, b);
 			for (Checkpoint cp : bHandler.getCheckpoints()) {
 				if (p.getX() == cp.getX() && p.getY() == cp.getY()) {
@@ -171,6 +171,26 @@ public abstract class Game {
 					break;
 				}
 			}
+		}
+	}
+
+	public void triggerBonus(Player player, BonusObject bonus) {
+		if (bonus == null) {
+			return;
+		}
+		if (bonus.getType() == Bonuses.TELEPORT) {
+			Random rnd = new Random();
+			Checkpoint cp;
+			List<Checkpoint> checkpoints = bHandler.getCheckpoints();
+			if (checkpoints.size() > 0) {
+				cp = checkpoints.get(rnd.nextInt(checkpoints.size()));
+				Teleport tp = (Teleport) bonus;
+				tp.setBonusEffect(player, b, cp);
+				checkpoints.remove(cp);
+				player.setBonus(null);
+			}
+		} else {
+			bonus.setBonusEffect(player, b);
 		}
 	}
 
