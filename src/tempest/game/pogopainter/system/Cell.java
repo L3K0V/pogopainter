@@ -1,6 +1,6 @@
 package tempest.game.pogopainter.system;
 
-import tempeset.game.pogopainter.bonuses.BonusObject;
+import tempest.game.pogopainter.bonuses.BonusObject;
 import android.graphics.Color;
 
 public class Cell {

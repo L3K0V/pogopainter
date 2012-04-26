@@ -4,10 +4,10 @@ package tempest.game.pogopainter.player;
 import java.util.List;
 import java.util.Random;
 
-import tempeset.game.pogopainter.bonuses.Arrow;
-import tempeset.game.pogopainter.bonuses.BonusObject;
-import tempeset.game.pogopainter.bonuses.Checkpoint;
-import tempeset.game.pogopainter.bonuses.Teleport;
+import tempest.game.pogopainter.bonuses.Arrow;
+import tempest.game.pogopainter.bonuses.BonusObject;
+import tempest.game.pogopainter.bonuses.Checkpoint;
+import tempest.game.pogopainter.bonuses.Teleport;
 import tempest.game.pogopainter.gametypes.Game;
 import tempest.game.pogopainter.system.Board;
 import tempest.game.pogopainter.system.Cell;

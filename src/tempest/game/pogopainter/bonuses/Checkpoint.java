@@ -1,4 +1,4 @@
-package tempeset.game.pogopainter.bonuses;
+package tempest.game.pogopainter.bonuses;
 
 import tempest.game.pogopainter.player.Player;
 import tempest.game.pogopainter.system.Board;
