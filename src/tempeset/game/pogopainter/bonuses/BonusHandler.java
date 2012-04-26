@@ -112,8 +112,8 @@ public class BonusHandler {
 			}
 			
 			if (ifTeleport) {
-				checkChance = rnd.nextInt(10) + 1;
-				bonusChance = rnd.nextInt(10) + 1;
+				checkChance = rnd.nextInt(12) + 1;
+				bonusChance = rnd.nextInt(12) + 1;
 				
 				if (checkChance == bonusChance && TELEPORTS.size() < teleportsLimit) {
 					while (true) {
