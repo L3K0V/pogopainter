@@ -38,7 +38,7 @@ public class AIBehavior implements Behavior {
 	private boolean following = false;
 	private Score score       = null;
 	private Player AI;
-	
+
 	/**
 	 * Use {@link #AIBehavior(Difficulty, Game)} to attach behavior to AI
 	 * 
@@ -50,11 +50,11 @@ public class AIBehavior implements Behavior {
 		this.AIdifficult = AIdifficult;
 		this.actions = game;
 	}
-	
+
 	public void setPlayer(Player pl) {
 		this.AI = pl;
 	}
-	
+
 	/**
 	 * Use {@link #easy(Board, Player, int)} to define attached behavior to EASY
 	 * 
@@ -62,13 +62,13 @@ public class AIBehavior implements Behavior {
 	 * @param AI player
 	 * @param randomNumber random number, chance to take some bonuses
 	 */
-	
+
 	public void easy(Board b,Player AI, int randomNumber) {
 		Direction nextDir = Direction.NONE;
 		score = new Score(b, AI);
 
-//		int check = rnd.nextInt(2)+1;
-//		int goTo  = rnd.nextInt(2)+1;
+		//		int check = rnd.nextInt(2)+1;
+		//		int goTo  = rnd.nextInt(2)+1;
 
 		int pointsToFollow = 5;
 
@@ -91,6 +91,7 @@ public class AIBehavior implements Behavior {
 		if (random != null && actions.getBonusHandler().checkPlayerOnBonus(AI, random)) {
 			following = false;
 		}
+		
 		// CHECKPOINTS
 		if (checkpoints.size() > 1 && !following && score.Calculate() >= pointsToFollow) {
 			for (Player p : actions.getPlayers()) {
@@ -103,8 +104,19 @@ public class AIBehavior implements Behavior {
 			}
 			nextDir = getNextDirectionToBonus(AI, random);
 		} else if (checkpoints.size() > 0 && !actions.getBonusHandler().checkPlayerOnBonus(AI, random) && score.Calculate() >= pointsToFollow) {
+			boolean teleport2cp = false;
+			for (Player p : actions.getPlayers()) {
+				if (calcDistance(p, random.getX(), random.getY()) < calcDistance(AI, random.getX(), random.getY())) {
+					teleport2cp = true;
+				}
+			}
+			if (teleport2cp && AI.getBonus() != null && score.Calculate() >= 10) {
+				actions.triggerBonus(AI, AI.getBonus());
+				nextDir = getNewFreshDirection(b, AI, nextDir);
+			}
 			nextDir = getNextDirectionToBonus(AI, random);
 			following  = true;
+			
 		// ARROWS
 		} else if (arrows.size() > 1) {
 			for (Arrow arrow : arrows) {
@@ -137,7 +149,7 @@ public class AIBehavior implements Behavior {
 	 * @param arrow which arrow bonus will be taken
 	 * @return true if player when get Arrow bonus will take new cells, otherwise false
 	 */
-	
+
 	private boolean shouldAIGetArrow(Player AI, Arrow arrow) {
 		boolean isReached = false;
 		for (Direction dir : Direction.values()) {
@@ -168,7 +180,7 @@ public class AIBehavior implements Behavior {
 	 * @param l Last direction of palyer
 	 * @return new direction different from last & available
 	 */
-	
+
 	private Direction getNewFreshDirection(Board b, Player p, Direction l) {
 		Direction newDir = Direction.NONE;
 		while(!actions.checkDir(l, p, b.getBoardSize()) && (l == newDir || newDir == Direction.NONE)) {
@@ -195,7 +207,7 @@ public class AIBehavior implements Behavior {
 				Math.pow((y - destination.getY()), 2));
 		return distance;
 	}
-	
+
 	/**
 	 * @author Asen Lekov <asenlekoff@gmai.com>
 	 * @version 1
@@ -208,14 +220,14 @@ public class AIBehavior implements Behavior {
 	 * @param y  Target y cord
 	 * @return A* distance from player to target cell
 	 */
-	
+
 	private double calcDistance(Player AI, int x, int y) {
 		double distance = Math.sqrt(Math.pow((AI.getX() - x), 2) + 
 				Math.pow((AI.getY() - y), 2));
 		return distance;
 	}
-	
-	
+
+
 	/**
 	 * @author Asen Lekov <asenlekoff@gmai.com>
 	 * @version 1
