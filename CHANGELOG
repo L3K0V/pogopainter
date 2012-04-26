@@ -376,3 +376,5 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 	= Now Teleport bonus is with higher priority that CP, but...
 	if theres player closer to TP bonus, player go to CP or Arrow bonus
 + Added: Mass stun bonus drawable (bonus not yet implemented)
++ libs
++ ProGuard enabled
