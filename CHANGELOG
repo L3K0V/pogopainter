@@ -365,5 +365,13 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Tempest packages
 + Change: Teleport spawn chance
 + Fixed: When get checkpoint not set player`s color on player`s cell 
+
+0.12.2(20120426)
 + Change: Teleport swapn chance, again
-+ When AI have teleport && on board there is one CP -> AI use teleport to reach before othres
++ AI Improvements:
+	= When AI have teleport && on board there is one CP -> 
+	AI use teleport to reach before othres
+	(AI must have >= 10 cells in his color)
+	
+	= Now Teleport bonus is with higher priority that CP, but...
+	if theres player closer to TP bonus, player go to CP or Arrow bonus
