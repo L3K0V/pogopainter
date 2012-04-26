@@ -7,6 +7,7 @@ import java.util.Random;
 import tempeset.game.pogopainter.bonuses.Arrow;
 import tempeset.game.pogopainter.bonuses.BonusObject;
 import tempeset.game.pogopainter.bonuses.Checkpoint;
+import tempeset.game.pogopainter.bonuses.Teleport;
 import tempest.game.pogopainter.gametypes.Game;
 import tempest.game.pogopainter.system.Board;
 import tempest.game.pogopainter.system.Cell;
@@ -32,12 +33,14 @@ public class AIBehavior implements Behavior {
 	private Direction lastDir    = Direction.NONE;
 	private Checkpoint random    = null;
 	private Arrow arrow          = null;
+	private Teleport tp          = null;
 	private BonusObject followCP = null;
 
 	private Random rnd = new Random();
 	private boolean following = false;
 	private Score score       = null;
 	private Player AI;
+	
 
 	/**
 	 * Use {@link #AIBehavior(Difficulty, Game)} to attach behavior to AI
@@ -74,6 +77,7 @@ public class AIBehavior implements Behavior {
 
 		List<Checkpoint> checkpoints = actions.getBonusHandler().getCheckpoints();
 		List<Arrow> arrows = actions.getBonusHandler().getArrows();
+		List<Teleport> teleports = actions.getBonusHandler().getTeleports();
 
 		if (checkpoints.size() > 0 && !checkpoints.contains(random)) {
 			random = checkpoints.get(rnd.nextInt(checkpoints.size()));
@@ -81,6 +85,9 @@ public class AIBehavior implements Behavior {
 		}
 		if (arrows.size() > 0 && !arrows.contains(arrow)) {
 			arrow = arrows.get(rnd.nextInt(arrows.size()));
+		}
+		if (teleports.size() > 0 && !teleports.contains(tp)) {
+			tp = teleports.get(rnd.nextInt(teleports.size()));
 		}
 
 		nextDir = Direction.values()[rnd.nextInt(4)+1];
@@ -91,6 +98,14 @@ public class AIBehavior implements Behavior {
 		if (random != null && actions.getBonusHandler().checkPlayerOnBonus(AI, random)) {
 			following = false;
 		}
+
+		if (teleports.size() > 0 && tp != null && AI.getBonus() == null) {
+			for (Player p : actions.getPlayers()) {
+				if (calcDistance(AI, tp.getX(), tp.getY()) < calcDistance(p, tp.getX(), tp.getY())) {
+					nextDir = getNextDirectionToBonus(AI, tp);
+				}
+			}
+		} else 
 		
 		// CHECKPOINTS
 		if (checkpoints.size() > 1 && !following && score.Calculate() >= pointsToFollow) {
