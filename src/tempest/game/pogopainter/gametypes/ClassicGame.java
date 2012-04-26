@@ -2,8 +2,8 @@ package tempest.game.pogopainter.gametypes;
 
 import java.util.ArrayList;
 
-import tempeset.game.pogopainter.bonuses.BonusHandler;
-import tempeset.game.pogopainter.bonuses.Bonuses;
+import tempest.game.pogopainter.bonuses.BonusHandler;
+import tempest.game.pogopainter.bonuses.Bonuses;
 import tempest.game.pogopainter.graphics.Panel;
 import tempest.game.pogopainter.player.Player;
 import tempest.game.pogopainter.system.Board;

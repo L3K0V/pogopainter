@@ -1,4 +1,4 @@
-package tempeset.game.pogopainter.bonuses;
+package tempest.game.pogopainter.bonuses;
 
 import java.util.ArrayList;
 import java.util.List;

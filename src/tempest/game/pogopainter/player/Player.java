@@ -1,6 +1,6 @@
 package tempest.game.pogopainter.player;
 
-import tempeset.game.pogopainter.bonuses.BonusObject;
+import tempest.game.pogopainter.bonuses.BonusObject;
 
 public class Player {
 	private int x;

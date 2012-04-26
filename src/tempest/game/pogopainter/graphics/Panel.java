@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import tempeset.game.pogopainter.R;
-import tempeset.game.pogopainter.bonuses.Arrow;
-import tempeset.game.pogopainter.bonuses.BonusObject;
-import tempeset.game.pogopainter.bonuses.Bonuses;
+import tempest.game.pogopainter.bonuses.Arrow;
+import tempest.game.pogopainter.bonuses.BonusObject;
+import tempest.game.pogopainter.bonuses.Bonuses;
 import tempest.game.pogopainter.gametypes.Game;
 import tempest.game.pogopainter.gametypes.GameThread;
 import tempest.game.pogopainter.player.Player;
