@@ -10,6 +10,7 @@ public class Checkpoint extends BonusObject {
 	
 	public Checkpoint() {
 		type = Bonuses.CHECKPOINT;
+		time = 4;
 	}
 
 	@Override

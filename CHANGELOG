@@ -378,3 +378,10 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Added: Mass stun bonus drawable (bonus not yet implemented)
 + libs
 + ProGuard enabled
+
+0.13.0 (20120428)
++ Sound enabled
++ still only 1 sound available
++ Change entire logic behind spawning bonuses
++ Bonus spawning still buggy
++ Sound seems to create lag need to find better way for playing sounds

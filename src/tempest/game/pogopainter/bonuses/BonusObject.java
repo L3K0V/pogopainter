@@ -6,26 +6,35 @@ import tempest.game.pogopainter.system.Board;
 public abstract class BonusObject {
 	protected int x;
 	protected int y;
+	protected int time;
 	protected Bonuses type;
 
-	public int getX() {
+	public final int getX() {
 		return x;
 	}
 
-	public void setX(int x) {
+	public final void setX(int x) {
 		this.x = x;
 	}
 
-	public int getY() {
+	public final int getY() {
 		return y;
 	}
 
-	public void setY(int y) {
+	public final void setY(int y) {
 		this.y = y;
 	}
 
-	public Bonuses getType() {
+	public final Bonuses getType() {
 		return type;
+	}
+	
+	public final int getTime() {
+		return time;
+	}
+	
+	public final void decreaseTime() {
+		time--;
 	}
 	
 	public abstract void setBonusEffect(Player p, Board b);

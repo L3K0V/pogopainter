@@ -22,6 +22,8 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -50,7 +52,11 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	protected int screenHeigth;
 	protected Activity holder;
 	protected Map<Integer, Bitmap> _bitmapCache;
+	protected Map<Integer, Integer> _soundCache;
 	protected Paint bPaint;
+	
+	protected SoundPool _pool;
+	protected int _playbackFile = 0;
 
 	public Panel(Context context, Activity owner) {
 		super(context);
@@ -59,6 +65,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		_panelThread = new CanvasThread(getHolder(), this);
 		_gameThread = new GameThread(this);
 		setFocusable(true);
+		_pool = new SoundPool(16, AudioManager.STREAM_MUSIC, 100);
 		initFields();
 	}
 
@@ -81,6 +88,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		if (_panelThread.isAlive()) {
 			stopThreads();
 		}
+		_pool.release();
 	}
 
 	public void pauseThreads() {
@@ -115,7 +123,9 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		cellSize = (screenHeigth / cellNumber ) - 1;	
 		padding = cellSize / 5;
 		_bitmapCache = new HashMap<Integer, Bitmap>();
+		_soundCache = new HashMap<Integer, Integer>();
 		fillBitmapCache();
+		fillSoundCache();
 		if (leftControlns) {
 			controlStartX = 0;
 			boardStartX = (screenWidth - (cellNumber * cellSize)) - 1;
@@ -142,6 +152,11 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		bPaint = new Paint();
 		bPaint.setAntiAlias(false);
 		bPaint.setFilterBitmap(true);
+	}
+
+	protected void fillSoundCache() {
+		Context context = getContext();
+		_soundCache.put(R.raw.drum, _pool.load(context, R.raw.drum, 0));
 	}
 
 	protected void fillBitmapCache() {
@@ -202,6 +217,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 			int x = (int) event.getX();
 			int y = (int) event.getY();
 			checkControls(x, y);
+			playSound(R.raw.drum);
 		}
 		return true;
 	}
@@ -218,6 +234,10 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		} else if (left.contains(x, y)) {
 			currentDir = Direction.LEFT;
 		}
+	}
+	
+	public void playSound(int id) {
+		_pool.play(_soundCache.get(id), 1, 1, 0, 0, 1);
 	}
 
 	@Override
