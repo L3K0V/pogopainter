@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import tempeset.game.pogopainter.R;
 import tempest.game.pogopainter.activities.CanvasActivity;
 import tempest.game.pogopainter.bonuses.Arrow;
 import tempest.game.pogopainter.bonuses.BonusHandler;
@@ -154,21 +155,14 @@ public abstract class Game {
 			clearBonus(p, b);
 			for (Checkpoint cp : bHandler.getCheckpoints()) {
 				if (p.getX() == cp.getX() && p.getY() == cp.getY()) {
-					bHandler.getCheckpoints().remove(cp);
+					bHandler.removeBonus(true, cp);
 					break;
 				}
 			}
 			
-			for (Arrow aw : bHandler.getArrows()) {
-				if (p.getX() == aw.getX() && p.getY() == aw.getY()) {
-					bHandler.getArrows().remove(aw);
-					break;
-				}
-			}
-			
-			for (Teleport tp : bHandler.getTeleports()) {
-				if (p.getX() == tp.getX() && p.getY() == tp.getY()) {
-					bHandler.getTeleports().remove(tp);
+			for (BonusObject other : bHandler.getOtherBonuses()) {
+				if (p.getX() == other.getX() && p.getY() == other.getY()) {
+					bHandler.removeBonus(false, other);
 					break;
 				}
 			}
