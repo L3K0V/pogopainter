@@ -9,7 +9,6 @@ public class Arrow extends BonusObject {
 	public Arrow() {
 		changeState();
 		type = Bonuses.ARROW;
-		time = 4;
 	}
 
 	@Override

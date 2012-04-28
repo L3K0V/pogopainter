@@ -173,6 +173,7 @@ public abstract class Game {
 		if (bonus == null) {
 			return;
 		}
+		playMusic(bonus);
 		if (bonus.getType() == Bonuses.TELEPORT) {
 			Random rnd = new Random();
 			Checkpoint cp;
@@ -186,6 +187,20 @@ public abstract class Game {
 			}
 		} else {
 			bonus.setBonusEffect(player, b);
+		}
+	}
+
+	private void playMusic(BonusObject bonus) {
+		switch(bonus.getType()) {
+		case TELEPORT :
+			_panel.playSound(R.raw.teleport);
+			break;
+		case ARROW :
+			_panel.playSound(R.raw.arrow);
+			break;
+		case CHECKPOINT :
+			_panel.playSound(R.raw.checkpoint);
+			break;
 		}
 	}
 

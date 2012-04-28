@@ -7,7 +7,6 @@ public class Teleport extends BonusObject {
 
 	public Teleport() {
 		type = Bonuses.TELEPORT;
-		time = 4;
 	}
 	
 	@Override

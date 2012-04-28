@@ -30,6 +30,7 @@ public class CanvasActivity extends Activity {
 	@Override
 	protected void onPause() {
 		panel.pauseThreads();
+		panel.pauseMusic();
 		onBackPressed();
 		dialog.dismiss();
 		super.onPause();
@@ -38,6 +39,7 @@ public class CanvasActivity extends Activity {
 	@Override
 	protected void onResume() {
 		panel.resumeThreads();
+		panel.playMusic();
 		super.onResume();
 	}
 
@@ -82,7 +84,8 @@ public class CanvasActivity extends Activity {
 			this.startActivity(gameover);
 			showResults = false;
 		}
-		panel.stopThreads();	
+		panel.stopThreads();
+		panel.releaseSounds();
 	}
 
 	private void collectPlayersPoints(List<Player> players) {

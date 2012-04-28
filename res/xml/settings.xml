@@ -102,17 +102,17 @@
             android:key="PLAYER_COLOR"/>
 
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:enabled="true"
             android:key="CONTROLS"
             android:selectable="true"
             android:summary="@string/controls_sum"
             android:title="@string/controls" />
         <CheckBoxPreference
-            android:defaultValue="false"
-            android:enabled="false"
+            android:defaultValue="true"
+            android:enabled="true"
             android:key="GAME_SOUNDS"
-            android:selectable="false"
+            android:selectable="true"
             android:summary="@string/game_sounds_sum"
             android:title="@string/game_sounds" />
     </PreferenceCategory>

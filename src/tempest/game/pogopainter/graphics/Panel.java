@@ -23,7 +23,9 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.text.style.BackgroundColorSpan;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -55,8 +57,9 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	protected Map<Integer, Integer> _soundCache;
 	protected Paint bPaint;
 	
+	protected boolean ifSounds;
 	protected SoundPool _pool;
-	protected int _playbackFile = 0;
+	protected MediaPlayer backgroundMusic;
 
 	public Panel(Context context, Activity owner) {
 		super(context);
@@ -65,7 +68,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		_panelThread = new CanvasThread(getHolder(), this);
 		_gameThread = new GameThread(this);
 		setFocusable(true);
-		_pool = new SoundPool(16, AudioManager.STREAM_MUSIC, 100);
+		_pool = new SoundPool(4, AudioManager.STREAM_MUSIC, 100);
 		initFields();
 	}
 
@@ -88,7 +91,12 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		if (_panelThread.isAlive()) {
 			stopThreads();
 		}
+	}
+	
+	public void releaseSounds() {
 		_pool.release();
+		backgroundMusic.stop();
+		backgroundMusic.release();
 	}
 
 	public void pauseThreads() {
@@ -116,6 +124,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 
 	protected void initFields() {
 		Metrics m = new Metrics();
+		ifSounds = m.isSounds();
 		screenWidth = m.getScreenWidth();
 		screenHeigth = m.getScreenHeight();
 		leftControlns = m.isLeftControls();
@@ -156,7 +165,10 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 
 	protected void fillSoundCache() {
 		Context context = getContext();
-		_soundCache.put(R.raw.drum, _pool.load(context, R.raw.drum, 0));
+		_soundCache.put(R.raw.arrow, _pool.load(context, R.raw.arrow, 0));
+		_soundCache.put(R.raw.checkpoint, _pool.load(context, R.raw.arrow, 0));
+		_soundCache.put(R.raw.teleport, _pool.load(context, R.raw.teleport, 0));
+		backgroundMusic = MediaPlayer.create(context, R.raw.background);
 	}
 
 	protected void fillBitmapCache() {
@@ -217,7 +229,6 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 			int x = (int) event.getX();
 			int y = (int) event.getY();
 			checkControls(x, y);
-			playSound(R.raw.drum);
 		}
 		return true;
 	}
@@ -237,7 +248,33 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	}
 	
 	public void playSound(int id) {
-		_pool.play(_soundCache.get(id), 1, 1, 0, 0, 1);
+		if (!ifSounds) {
+			return;
+		}
+		AudioManager mgr = (AudioManager)getContext().getSystemService(Context.AUDIO_SERVICE);
+		float streamVolumeCurrent = mgr.getStreamVolume(AudioManager.STREAM_MUSIC);
+		float streamVolumeMax = mgr.getStreamMaxVolume(AudioManager.STREAM_MUSIC);    
+		float volume = streamVolumeCurrent / streamVolumeMax;
+		_pool.play(_soundCache.get(id), volume, volume, 1, 0, 1f);
+	}
+	
+	public void playMusic() {
+		if (!ifSounds) {
+			return;
+		}
+	    if (!backgroundMusic.isPlaying()) {
+		    backgroundMusic.seekTo(0);
+		    backgroundMusic.start();
+	    }
+	}
+	
+	public void pauseMusic() {
+		if (!ifSounds) {
+			return;
+		}
+		if (backgroundMusic.isPlaying()) {
+			backgroundMusic.pause();
+		}
 	}
 
 	@Override
