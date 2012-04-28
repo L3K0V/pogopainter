@@ -1,11 +1,12 @@
 package tempest.game.pogopainter.player;
 
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import tempest.game.pogopainter.bonuses.Arrow;
 import tempest.game.pogopainter.bonuses.BonusObject;
+import tempest.game.pogopainter.bonuses.Bonuses;
 import tempest.game.pogopainter.bonuses.Checkpoint;
 import tempest.game.pogopainter.bonuses.Teleport;
 import tempest.game.pogopainter.gametypes.Game;
@@ -40,6 +41,9 @@ public class AIBehavior implements Behavior {
 	private boolean following = false;
 	private Score score       = null;
 	private Player AI;
+	
+	private List<Arrow> arrows;
+	private List<Teleport> teleports;
 	
 
 	/**
@@ -76,8 +80,16 @@ public class AIBehavior implements Behavior {
 		int pointsToFollow = 5;
 
 		List<Checkpoint> checkpoints = actions.getBonusHandler().getCheckpoints();
-		List<Arrow> arrows = actions.getBonusHandler().getArrows();
-		List<Teleport> teleports = actions.getBonusHandler().getTeleports();
+		arrows = new ArrayList<Arrow>();
+		teleports = new ArrayList<Teleport>();
+		
+		for (BonusObject bo : actions.getBonusHandler().getOtherBonuses()) {
+			if (bo.getType() == Bonuses.ARROW) {
+				arrows.add((Arrow) bo);
+			} else if (bo.getType() == Bonuses.TELEPORT) {
+				teleports.add((Teleport) bo);
+			}
+		}
 
 		if (checkpoints.size() > 0 && !checkpoints.contains(random)) {
 			random = checkpoints.get(rnd.nextInt(checkpoints.size()));

@@ -6,7 +6,6 @@ import java.util.Random;
 
 import tempeset.game.pogopainter.R;
 import tempest.game.pogopainter.activities.CanvasActivity;
-import tempest.game.pogopainter.bonuses.Arrow;
 import tempest.game.pogopainter.bonuses.BonusHandler;
 import tempest.game.pogopainter.bonuses.BonusObject;
 import tempest.game.pogopainter.bonuses.Bonuses;
