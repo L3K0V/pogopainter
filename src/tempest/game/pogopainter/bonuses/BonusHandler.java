@@ -13,8 +13,6 @@ public class BonusHandler {
 
 	private BonusQueues queues;
     private List<Checkpoint> CHECKPOINTS;
-    private List<Arrow>      ARROWS;
-    private List<Teleport>   TELEPORTS;
     private List<BonusObject> OTHERBONUSES;
 	
 	private int bonusRandomNumber;
@@ -74,11 +72,9 @@ public class BonusHandler {
 				 CHECKPOINTS   = new ArrayList<Checkpoint>();
 				break;
 			case ARROW:
-				ARROWS        = new ArrayList<Arrow>();
 				numberOfBonuses++;
 				break;
 			case TELEPORT:
-				TELEPORTS     = new ArrayList<Teleport>();
 				numberOfBonuses++;
 				break;
 			}
@@ -92,8 +88,11 @@ public class BonusHandler {
 	public void update() {
 		putBonus();
 		fillQueues();
-		for (Arrow aw : ARROWS) {
-			aw.changeState();
+		for (BonusObject bo : OTHERBONUSES) {
+			if (bo.getType() == Bonuses.ARROW) {
+				Arrow aw = (Arrow) bo;
+				aw.changeState();
+			}
 		}
 	}
 	
@@ -118,11 +117,6 @@ public class BonusHandler {
 					BonusObject bonus = queues.pop(OtherQueue);
 					board.getCellAt(x, y).setBonus(bonus);
 					OTHERBONUSES.add(bonus);
-					if (bonus.getType() == Bonuses.ARROW) {
-						ARROWS.add((Arrow) bonus);
-					} else {
-						TELEPORTS.add((Teleport) bonus);
-					}
 					break;
 				}
 			}
@@ -159,11 +153,6 @@ public class BonusHandler {
 						BonusObject bonus = queues.pop(OtherQueue);
 						board.getCellAt(x, y).setBonus(bonus);
 						OTHERBONUSES.add(bonus);
-						if (bonus.getType() == Bonuses.ARROW) {
-							ARROWS.add((Arrow) bonus);
-						} else {
-							TELEPORTS.add((Teleport) bonus);
-						}
 						break;
 					}
 				}
@@ -210,13 +199,6 @@ public class BonusHandler {
 		return CHECKPOINTS;
 	}
 
-	public List<Arrow> getArrows() {
-		return ARROWS;
-	}
-	
-	public List<Teleport> getTeleports() {
-		return TELEPORTS;
-	}
 	public List<BonusObject> getOtherBonuses() {
 		return OTHERBONUSES;
 	}
@@ -236,11 +218,6 @@ public class BonusHandler {
 				queues.increaseTime(4);
 			}
 			OTHERBONUSES.remove(bonus);
-			if (bonus.getType() == Bonuses.ARROW) {
-				ARROWS.remove(bonus);
-			} else {
-				TELEPORTS.remove(bonus);
-			}
 		}
 	}
 }

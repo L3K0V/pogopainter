@@ -396,3 +396,7 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Now making initial spawing of bonuses
 + TODO: need to make random bonuses implementation: logic in comments in the method
 + Need better sounds
+
+0.13.2(20120428)
++ Working AI with new bonus spawn system
++ Cleaning BonusHandler from AI shits
