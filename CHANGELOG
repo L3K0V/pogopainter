@@ -385,3 +385,14 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Change entire logic behind spawning bonuses
 + Bonus spawning still buggy
 + Sound seems to create lag need to find better way for playing sounds
+
+0.13.1(20120428)
++ Set default value fot LeftControls to false
++ enabled sound option
++ Fix sounds for bonus
++ Set background music
++ Fixed bonuses now spawning correctly 
++ Fix a bug when bonuses stop spawning
++ Now making initial spawing of bonuses
++ TODO: need to make random bonuses implementation: logic in comments in the method
++ Need better sounds

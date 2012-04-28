@@ -31,6 +31,8 @@ public class Metrics {
 	private int playerColor;
 
 	private boolean LeftControls;
+	
+	private boolean sounds;
 
 	public Metrics() {
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -67,7 +69,8 @@ public class Metrics {
 			Log.d(tag + "player color ", color);
 		}
 
-		LeftControls = pref.getBoolean("CONTROLS", true);
+		LeftControls = pref.getBoolean("CONTROLS", false);
+		sounds = pref.getBoolean("GAME_SOUNDS", true);
 	}
 
 	private void deathmatch(SharedPreferences pref) {
@@ -160,5 +163,9 @@ public class Metrics {
 
 	public boolean isLeftControls() {
 		return LeftControls;
+	}
+	
+	public boolean isSounds() {
+		return sounds;
 	}
 }

@@ -4,18 +4,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-
-import android.text.GetChars;
 import tempest.game.pogopainter.player.Player;
 import tempest.game.pogopainter.system.Board;
 
 public class BonusHandler {
-	private boolean ifCheckpoints = false;
-	private boolean ifArrows      = false;
-	//private boolean ifSpeedUps  = false;
-	//private boolean ifShoots 	  = false;
-	private boolean ifTeleport    = false;
-
 	private Board board;
 	private List<Player> players;
 
@@ -30,6 +22,9 @@ public class BonusHandler {
 	
     private int checkpointLimit;
     private int otherBonusLimit;
+    
+    private final boolean CheckQueue = true;
+    private final boolean OtherQueue = false;
 
 	public BonusHandler(Board b, List<Player> pl, int cpLimit, int otherBLimit) {
 		this.board = b;
@@ -40,15 +35,22 @@ public class BonusHandler {
 	}
 
 	private void fillQueues() {
-		while (!queues.full(true)) {
-			queues.push(true, new Checkpoint());
+		while (!queues.full(CheckQueue)) {
+			queues.push(CheckQueue, new Checkpoint());
 		}
-		while (!queues.full(false)) {
-			queues.push(false, getRandomBonus());
+		while (!queues.full(OtherQueue)) {
+			queues.push(OtherQueue, getRandomBonus());
 		}
 	}
 
 	private BonusObject getRandomBonus() {
+		/*
+		 * random number form 1 to 10
+		 * bonus with least chance activates only from 1 number
+		 * bonus with second least chance activates only from 2 numbers
+		 * bonus with second highest chance activates only from 3 numbers
+		 * bonus with highest chance activates only from 4 numbers
+		 */
 		BonusObject res = null;
 		if (bonusRandomNumber != 0) {
 			int ran = rnd.nextInt(bonusRandomNumber);
@@ -69,16 +71,13 @@ public class BonusHandler {
 		for (int i = 0; i < bon.length; i++) {
 			switch (bon[i]) {
 			case CHECKPOINT:
-				ifCheckpoints = true;
 				 CHECKPOINTS   = new ArrayList<Checkpoint>();
 				break;
 			case ARROW:
-				ifArrows      = true;
 				ARROWS        = new ArrayList<Arrow>();
 				numberOfBonuses++;
 				break;
 			case TELEPORT:
-				ifTeleport    = true;
 				TELEPORTS     = new ArrayList<Teleport>();
 				numberOfBonuses++;
 				break;
@@ -91,65 +90,83 @@ public class BonusHandler {
 	}
 
 	public void update() {
-		putBonus(board);
+		putBonus();
 		fillQueues();
 		for (Arrow aw : ARROWS) {
 			aw.changeState();
 		}
 	}
+	
+	public void initialBonuses() {
+		while ((CHECKPOINTS.size() != checkpointLimit) && (OTHERBONUSES.size() != otherBonusLimit)) {
+			while (true) {
+				int x = rnd.nextInt(board.getBoardSize());
+				int y = rnd.nextInt(board.getBoardSize());
 
-	public void putBonus(Board b) {
+				if ((board.getCellAt(x, y).getBonus() == null) && checkCurrentPosition(x, y)) {
+					Checkpoint bonus = (Checkpoint) queues.pop(CheckQueue);
+					board.getCellAt(x, y).setBonus(bonus);
+					CHECKPOINTS.add(bonus);
+					break;
+				}
+			}
+			while (true) {
+				int x = rnd.nextInt(board.getBoardSize());
+				int y = rnd.nextInt(board.getBoardSize());
+
+				if ((board.getCellAt(x, y).getBonus() == null) && checkCurrentPosition(x, y)) {
+					BonusObject bonus = queues.pop(OtherQueue);
+					board.getCellAt(x, y).setBonus(bonus);
+					OTHERBONUSES.add(bonus);
+					if (bonus.getType() == Bonuses.ARROW) {
+						ARROWS.add((Arrow) bonus);
+					} else {
+						TELEPORTS.add((Teleport) bonus);
+					}
+					break;
+				}
+			}
+		}
+	}
+
+	public void putBonus() {
 		int x;
 		int y;
 		
-		if (ifCheckpoints) {
-			if (!(CHECKPOINTS.size() == checkpointLimit)) {
-				if (queues.getCheckpoints().getFirst().getTime() == 0) {
-					while (true) {
-						x = rnd.nextInt(b.getBoardSize());
-						y = rnd.nextInt(b.getBoardSize());
-		
-						if ((b.getCellAt(x, y).getBonus() == null) && checkCurrentPosition(x, y)) {
-							Checkpoint bonus = (Checkpoint) queues.pop(true);
-							b.getCellAt(x, y).setBonus(bonus);
-							CHECKPOINTS.add(bonus);
-							break;
-						}
+		if (!(CHECKPOINTS.size() == checkpointLimit)) {
+			if (queues.canTakeBonus(CheckQueue)) {
+				while (true) {
+					x = rnd.nextInt(board.getBoardSize());
+					y = rnd.nextInt(board.getBoardSize());
+	
+					if ((board.getCellAt(x, y).getBonus() == null) && checkCurrentPosition(x, y)) {
+						Checkpoint bonus = (Checkpoint) queues.pop(CheckQueue);
+						board.getCellAt(x, y).setBonus(bonus);
+						CHECKPOINTS.add(bonus);
+						break;
 					}
-				} else {
-					queues.getCheckpoints().getFirst().decreaseTime();
 				}
-			}
-			if (queues.getCheckpoints().getLast().getTime() != 4) {
-				queues.getCheckpoints().getLast().decreaseTime();
 			}
 		}
 			
-		if (bonusRandomNumber != 0) {
-			if (!(OTHERBONUSES.size() == otherBonusLimit)) {
-				if (queues.getOtherBonuses().getFirst().getTime() == 0) {
-					while (true) {
-						x = rnd.nextInt(b.getBoardSize());
-						y = rnd.nextInt(b.getBoardSize());
-	
-						if ((b.getCellAt(x, y).getBonus() == null) && checkCurrentPosition(x, y)) {
-							BonusObject bonus = queues.pop(false);
-							b.getCellAt(x, y).setBonus(bonus);
-							OTHERBONUSES.add(bonus);
-							if (bonus.getType() == Bonuses.ARROW) {
-								ARROWS.add((Arrow) bonus);
-							} else {
-								TELEPORTS.add((Teleport) bonus);
-							}
-							break;
+		if (!(OTHERBONUSES.size() == otherBonusLimit)) {
+			if (queues.canTakeBonus(OtherQueue)) {
+				while (true) {
+					x = rnd.nextInt(board.getBoardSize());
+					y = rnd.nextInt(board.getBoardSize());
+
+					if ((board.getCellAt(x, y).getBonus() == null) && checkCurrentPosition(x, y)) {
+						BonusObject bonus = queues.pop(OtherQueue);
+						board.getCellAt(x, y).setBonus(bonus);
+						OTHERBONUSES.add(bonus);
+						if (bonus.getType() == Bonuses.ARROW) {
+							ARROWS.add((Arrow) bonus);
+						} else {
+							TELEPORTS.add((Teleport) bonus);
 						}
+						break;
 					}
-				} else {
-					queues.getOtherBonuses().getFirst().decreaseTime();
 				}
-			}
-			if (queues.getOtherBonuses().getLast().getTime() != 4) {
-				queues.getOtherBonuses().getLast().decreaseTime();
 			}
 		}
 	}
@@ -206,19 +223,19 @@ public class BonusHandler {
 	
 	public void removeBonus(boolean ifCP, BonusObject bonus) {
 		if (ifCP) {
+			if (CHECKPOINTS.size() == checkpointLimit) {
+				queues.increaseTime(1);
+			} else if (CHECKPOINTS.size() == (checkpointLimit - 1)){
+				queues.increaseTime(2);
+			}
 			CHECKPOINTS.remove(bonus);
-			if (queues.getCheckpoints().getFirst().getTime() == 4) {
-				queues.getCheckpoints().getFirst().decreaseTime();
-			} else if(queues.getCheckpoints().getLast().getTime() == 4){
-				queues.getCheckpoints().getLast().decreaseTime();
-			}
 		} else {
-			OTHERBONUSES.remove(bonus);
-			if (queues.getOtherBonuses().getFirst().getTime() == 4) {
-				queues.getOtherBonuses().getFirst().decreaseTime();
-			} else if(queues.getOtherBonuses().getLast().getTime() == 4){
-				queues.getOtherBonuses().getLast().decreaseTime();
+			if (OTHERBONUSES.size() == otherBonusLimit) {
+				queues.increaseTime(3);
+			} else if (OTHERBONUSES.size() == (otherBonusLimit - 1)){
+				queues.increaseTime(4);
 			}
+			OTHERBONUSES.remove(bonus);
 			if (bonus.getType() == Bonuses.ARROW) {
 				ARROWS.remove(bonus);
 			} else {
@@ -234,6 +251,12 @@ class BonusQueues {
 	
 	private int checkpointsLimit;
 	private int otherBonusesLimit;
+	
+	private int canTakeCp1 = 0;
+	private int canTakeCp2 = 0;
+	private int canTakeOth1 = 0;
+	private int canTakeOth2 = 0;
+	private final int timeDelay = 4;
 	
 	public BonusQueues(int cpLimit, int otherLimit) {
 		CHECKPOINTS = new LinkedList<Checkpoint>();
@@ -272,6 +295,39 @@ class BonusQueues {
 			}
 		}
 		return res;
+	}
+	
+	public boolean canTakeBonus(boolean ifCP) {
+		boolean res = false;
+		if (ifCP) {
+			canTakeCp1 ++;
+			if (canTakeCp1 == timeDelay) {
+				res = true;
+				canTakeCp1 = canTakeCp2;
+				canTakeCp2 = 0;
+			}
+		} else {
+			canTakeOth1 ++;
+			if (canTakeOth1 == timeDelay) {
+				res = true;
+				canTakeOth1 = canTakeOth2;
+				canTakeOth2 = 0;
+			}
+		}
+		return res;
+	}
+	
+	public void increaseTime(int bonus) {
+		switch (bonus) {
+		case 1:
+			if (canTakeCp1 != timeDelay) { canTakeCp1++; } break;
+		case 2:
+			if (canTakeCp2 != timeDelay) { canTakeCp2++; } break;
+		case 3:
+			if (canTakeOth1 != timeDelay) { canTakeOth1++; } break;
+		case 4:
+			if (canTakeOth2 != timeDelay) { canTakeOth2++; } break;
+		}
 	}
 	
 	public LinkedList<Checkpoint> getCheckpoints() {

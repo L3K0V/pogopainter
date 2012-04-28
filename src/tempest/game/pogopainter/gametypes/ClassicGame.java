@@ -33,5 +33,6 @@ public class ClassicGame extends Game {
 		bHandler = new BonusHandler(b, PLAYERS, 2, 2);
 		Bonuses[] bon = {Bonuses.CHECKPOINT, Bonuses.ARROW, Bonuses.TELEPORT};
 		bHandler.seedBonuses(bon);
+		bHandler.initialBonuses();
 	}
 }
