@@ -400,3 +400,7 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 0.13.2(20120428)
 + Working AI with new bonus spawn system
 + Cleaning BonusHandler from AI shits
+
+0.13.3(20120430)
++ Bonus show up animation
++ Changed background sound for fast testing

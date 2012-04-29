@@ -386,37 +386,41 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	}
 
 	protected void drawBonus(Canvas canvas, Rect rect, BonusObject bonus) {
-		Bitmap bitmap = null;
 		Bonuses type = Bonuses.NONE;
 		if (bonus != null) {
 			type = bonus.getType();
 		}
 		switch (type) {
 		case CHECKPOINT:
-			bitmap = getRotatedBitmap(Direction.RIGHT, R.drawable.bonus_checkpoint);
+			if (!bonus.ifBitmap()) {
+				bonus.setBitmap(getRotatedBitmap(Direction.RIGHT, R.drawable.bonus_checkpoint));
+			}
 			break;
 		case TELEPORT:
-			bitmap = getRotatedBitmap(Direction.RIGHT, R.drawable.bonus_teleport);
+			if (!bonus.ifBitmap()) {
+				bonus.setBitmap(getRotatedBitmap(Direction.RIGHT, R.drawable.bonus_teleport));
+			}
 			break;
 		case ARROW:
 			switch (((Arrow) bonus).getState()) {
 			case 1:
-				bitmap = getRotatedBitmap(Direction.RIGHT, R.drawable.bonus_arrow);
+				bonus.setBitmap(getRotatedBitmap(Direction.RIGHT, R.drawable.bonus_arrow));
 				break;
 			case 2:
-				bitmap = getRotatedBitmap(Direction.DOWN, R.drawable.bonus_arrow);
+				bonus.setBitmap(getRotatedBitmap(Direction.DOWN, R.drawable.bonus_arrow));
 				break;
 			case 3:
-				bitmap = getRotatedBitmap(Direction.LEFT, R.drawable.bonus_arrow);
+				bonus.setBitmap(getRotatedBitmap(Direction.LEFT, R.drawable.bonus_arrow));
 				break;
 			case 4:
-				bitmap = getRotatedBitmap(Direction.UP, R.drawable.bonus_arrow);
+				bonus.setBitmap(getRotatedBitmap(Direction.UP, R.drawable.bonus_arrow));
 				break;
 			}
 		case NONE:
 			break;
 		}
-		canvas.drawBitmap(bitmap, null, rect, bPaint);	
+		
+		bonus.draw(canvas, bPaint, rect);
 	}
 
 	protected void drawNav(Canvas canvas) {
