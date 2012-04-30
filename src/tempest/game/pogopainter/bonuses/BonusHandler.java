@@ -14,8 +14,7 @@ public class BonusHandler {
 	private BonusQueues queues;
     private List<Checkpoint> CHECKPOINTS;
     private List<BonusObject> OTHERBONUSES;
-	
-	private int bonusRandomNumber;
+    
 	private Random rnd;
 	
     private int checkpointLimit;
@@ -50,36 +49,20 @@ public class BonusHandler {
 		 * bonus with highest chance activates only from 4 numbers
 		 */
 		BonusObject res = null;
-		if (bonusRandomNumber != 0) {
-			int ran = rnd.nextInt(bonusRandomNumber);
-			switch (ran) {
-			case 0:
-				res = new Arrow();
-				break;
-			case 1:
-				res = new Teleport();
-				break;
-			}
+		int ran = rnd.nextInt(5);
+		switch (ran) {
+		case 0: case 1: case 2:
+			res = new Arrow();
+			break;
+		case 3: case 4:
+			res = new Teleport();
+			break;
 		}
 		return res;
 	}
 
 	public void seedBonuses(Bonuses[] bon) {
-		int numberOfBonuses = 0;
-		for (int i = 0; i < bon.length; i++) {
-			switch (bon[i]) {
-			case CHECKPOINT:
-				 CHECKPOINTS   = new ArrayList<Checkpoint>();
-				break;
-			case ARROW:
-				numberOfBonuses++;
-				break;
-			case TELEPORT:
-				numberOfBonuses++;
-				break;
-			}
-		}
-		bonusRandomNumber = numberOfBonuses;
+		CHECKPOINTS   = new ArrayList<Checkpoint>();
 		OTHERBONUSES = new ArrayList<BonusObject>();
 		this.queues = new BonusQueues(checkpointLimit, otherBonusLimit);
 		fillQueues();
@@ -182,7 +165,7 @@ public class BonusHandler {
 		boolean sure = true;
 		int x = arrow.getX();
 		int y = arrow.getY();
-		switch (arrow.state) {
+		switch (arrow.getState()) {
 		case 1:
 			if (x == 7) {sure = false;}break;
 		case 2:

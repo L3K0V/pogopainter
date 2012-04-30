@@ -2,9 +2,7 @@ package tempest.game.pogopainter.graphics;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import tempeset.game.pogopainter.R;
-import tempest.game.pogopainter.bonuses.Arrow;
 import tempest.game.pogopainter.bonuses.BonusObject;
 import tempest.game.pogopainter.bonuses.Bonuses;
 import tempest.game.pogopainter.gametypes.Game;
@@ -393,29 +391,16 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		switch (type) {
 		case CHECKPOINT:
 			if (!bonus.ifBitmap()) {
-				bonus.setBitmap(getRotatedBitmap(Direction.RIGHT, R.drawable.bonus_checkpoint));
+				bonus.setBitmap(_bitmapCache.get(R.drawable.bonus_checkpoint));
 			}
 			break;
 		case TELEPORT:
 			if (!bonus.ifBitmap()) {
-				bonus.setBitmap(getRotatedBitmap(Direction.RIGHT, R.drawable.bonus_teleport));
+				bonus.setBitmap(_bitmapCache.get(R.drawable.bonus_teleport));
 			}
 			break;
 		case ARROW:
-			switch (((Arrow) bonus).getState()) {
-			case 1:
-				bonus.setBitmap(getRotatedBitmap(Direction.RIGHT, R.drawable.bonus_arrow));
-				break;
-			case 2:
-				bonus.setBitmap(getRotatedBitmap(Direction.DOWN, R.drawable.bonus_arrow));
-				break;
-			case 3:
-				bonus.setBitmap(getRotatedBitmap(Direction.LEFT, R.drawable.bonus_arrow));
-				break;
-			case 4:
-				bonus.setBitmap(getRotatedBitmap(Direction.UP, R.drawable.bonus_arrow));
-				break;
-			}
+			bonus.setBitmap(_bitmapCache.get(R.drawable.bonus_arrow));
 		case NONE:
 			break;
 		}

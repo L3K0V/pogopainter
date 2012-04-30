@@ -14,8 +14,8 @@ public abstract class BonusObject {
 	protected Bonuses type;
 	protected Bitmap bonusBitmap = null;
 
-	private float scaleX = 0.1f;
-	private float scaleY = 0.1f;
+	protected float scaleX = 0.1f;
+	protected float scaleY = 0.1f;
 
 	public final int getX() {
 		return x;
@@ -60,9 +60,9 @@ public abstract class BonusObject {
 		int right  = bonusRectangle.centerX()+(bitmap.getWidth()/2);
 		
 		if(left < bonusRectangle.left) {
-			left = bonusRectangle.left;
-			top = bonusRectangle.top;
-			right = bonusRectangle.right;
+			left   = bonusRectangle.left;
+			top    = bonusRectangle.top;
+			right  = bonusRectangle.right;
 			bottom = bonusRectangle.bottom;
 		}
 		scaledRect = new Rect(left, top, right, bottom);
