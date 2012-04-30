@@ -15,8 +15,7 @@ public abstract class BonusObject {
 	protected Bitmap bonusBitmap = null;
 	protected boolean ifScaled = false;
 
-	protected float scaleX = 0.1f;
-	protected float scaleY = 0.1f;
+	protected float scaleSize = 0.1f;
 
 	public final int getX() {
 		return x;
@@ -49,17 +48,16 @@ public abstract class BonusObject {
 			// Bitmap is a square so we need only the size of the walls
 			float fullScaledSize = ((float) bonusRectangle.width()) / bonusBitmap.getWidth();
 			
-			mat.postScale(scaleX, scaleY);
+			mat.postScale(scaleSize, scaleSize);
 			
-			float left = bonusRectangle.exactCenterX() - ((scaleX * bonusBitmap.getWidth()) / 2);
-			float top = bonusRectangle.exactCenterY() - ((scaleY * bonusBitmap.getHeight()) / 2);
+			float left = bonusRectangle.exactCenterX() - ((scaleSize * bonusBitmap.getWidth()) / 2);
+			float top = bonusRectangle.exactCenterY() - ((scaleSize * bonusBitmap.getHeight()) / 2);
 			mat.postTranslate(left, top);
 			
 			canvas.drawBitmap(bonusBitmap, mat, paint);
 			
-			if (scaleX < fullScaledSize) {
-				scaleX += 0.05f;
-				scaleY += 0.05f;
+			if (scaleSize < fullScaledSize) {
+				scaleSize += 0.05f;
 			} else {
 				ifScaled = true;
 			}
