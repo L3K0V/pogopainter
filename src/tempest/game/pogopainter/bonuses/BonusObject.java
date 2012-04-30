@@ -13,6 +13,7 @@ public abstract class BonusObject {
 	protected int y;
 	protected Bonuses type;
 	protected Bitmap bonusBitmap = null;
+	protected boolean ifScaled = false;
 
 	protected float scaleX = 0.1f;
 	protected float scaleY = 0.1f;
@@ -42,31 +43,29 @@ public abstract class BonusObject {
 	}
 
 	public void draw(Canvas canvas, Paint paint, Rect bonusRectangle) {
-		Matrix m = new Matrix();
-		Bitmap bitmap = null;
-		Rect scaledRect = null;
-		
-		m.postScale(scaleX, scaleY);
-
-		if (scaleX <= 1.0f) {
-			scaleX += 0.05f;
-			scaleY += 0.05f;
+		if (!ifScaled) {
+			Matrix mat = new Matrix();
+			
+			// Bitmap is a square so we need only the size of the walls
+			float fullScaledSize = ((float) bonusRectangle.width()) / bonusBitmap.getWidth();
+			
+			mat.postScale(scaleX, scaleY);
+			
+			float left = bonusRectangle.exactCenterX() - ((scaleX * bonusBitmap.getWidth()) / 2);
+			float top = bonusRectangle.exactCenterY() - ((scaleY * bonusBitmap.getHeight()) / 2);
+			mat.postTranslate(left, top);
+			
+			canvas.drawBitmap(bonusBitmap, mat, paint);
+			
+			if (scaleX < fullScaledSize) {
+				scaleX += 0.05f;
+				scaleY += 0.05f;
+			} else {
+				ifScaled = true;
+			}
+		} else {
+			canvas.drawBitmap(bonusBitmap, null, bonusRectangle, paint);
 		}
-		bitmap = Bitmap.createBitmap(bonusBitmap, 0, 0, bonusBitmap.getWidth(), bonusBitmap.getHeight(), m, true);
-		
-		int top    = bonusRectangle.centerY()-(bitmap.getHeight()/2);
-		int left   = bonusRectangle.centerX()-(bitmap.getWidth()/2);
-		int bottom = bonusRectangle.centerY()+(bitmap.getHeight()/2);
-		int right  = bonusRectangle.centerX()+(bitmap.getWidth()/2);
-		
-		if(left < bonusRectangle.left) {
-			left   = bonusRectangle.left;
-			top    = bonusRectangle.top;
-			right  = bonusRectangle.right;
-			bottom = bonusRectangle.bottom;
-		}
-		scaledRect = new Rect(left, top, right, bottom);
-		canvas.drawBitmap(bitmap, null, scaledRect, paint);
 	}
 
 	public boolean ifBitmap() {

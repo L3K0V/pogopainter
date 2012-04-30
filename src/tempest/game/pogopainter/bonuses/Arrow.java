@@ -51,6 +51,7 @@ public class Arrow extends BonusObject {
 	
 	@Override
 	public void draw(Canvas canvas, Paint paint, Rect bonusRectangle) {
+		// Needs to be rewriten with better bitmap
 		Matrix mat = new Matrix();
 		Rect scaledRect = null;
 		
