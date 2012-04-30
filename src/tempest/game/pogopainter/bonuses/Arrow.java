@@ -51,21 +51,24 @@ public class Arrow extends BonusObject {
 	
 	@Override
 	public void draw(Canvas canvas, Paint paint, Rect bonusRectangle) {
-		// Needs to be rewriten with better bitmap
 		Matrix mat = new Matrix();
-		Rect scaledRect = null;
 		
-		mat.postScale(scaleX, scaleY);
-
-		if (scaleX <= 1.0f) {
-			scaleX += 0.05f;
-			scaleY += 0.05f;
+		// Bitmap is a square so we need only the size of the walls
+		float fullScaledSize = ((float) bonusRectangle.width()) / bonusBitmap.getWidth();	
+		float left = bonusRectangle.exactCenterX() - ((scaleSize * bonusBitmap.getWidth()) / 2);
+		float top = bonusRectangle.exactCenterY() - ((scaleSize * bonusBitmap.getHeight()) / 2);
+	
+		if (scaleSize < fullScaledSize) {
+			scaleSize += 0.05f;
+		} else {
+			ifScaled = true;
 		}
-		
+	
 		int degree = (state - 1) * 90;
 		if (degree == 0) {
 			degree = 360;
 		}
+		
 		if (!rotated) {
 			if (rotationDeg != degree) {
 				rotationDeg += 30;
@@ -74,24 +77,11 @@ public class Arrow extends BonusObject {
 			rotationDeg = degree;
 		}
 		
-		mat.postRotate(rotationDeg);
-		Bitmap bitmap = Bitmap.createBitmap(bonusBitmap, 0, 0, 
-				bonusBitmap.getWidth(), bonusBitmap.getHeight(), mat, true);
+		mat.preRotate(rotationDeg, bonusBitmap.getWidth() / 2, bonusBitmap.getHeight() / 2);
+		mat.postScale(scaleSize, scaleSize);
+		mat.postTranslate(left, top);
 		
-		int top    = bonusRectangle.centerY()-(bitmap.getHeight()/2);
-		int left   = bonusRectangle.centerX()-(bitmap.getWidth()/2);
-		int bottom = bonusRectangle.centerY()+(bitmap.getHeight()/2);
-		int right  = bonusRectangle.centerX()+(bitmap.getWidth()/2);
-		
-		if(left < bonusRectangle.left) {
-			left   = bonusRectangle.left;
-			top    = bonusRectangle.top;
-			right  = bonusRectangle.right;
-			bottom = bonusRectangle.bottom;
-		}
-		scaledRect = new Rect(left, top, right, bottom);
-		
-		canvas.drawBitmap(bitmap, null, scaledRect, paint);
+		canvas.drawBitmap(bonusBitmap, mat, paint);
 	};
 
 	public void changeState() {

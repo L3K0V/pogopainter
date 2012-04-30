@@ -412,3 +412,6 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Fix spawning chance for bonuses
 + Made some optimization on BonusObject drawing now not creating newBitmap only using matrix properly
 + Arrow drawing need to be rewriten with better bitmap
+
+0.13.5(20120430)
++ Now arrow drawing fixed and moving correctly
