@@ -96,6 +96,7 @@ public abstract class Game {
 		b.setPlayerColorOnCell(player);
 		applyBonusEffect(player, b);
 		movedPlayers.add(player);
+		player.isMoved(false);
 	}
 	
 	public boolean checkDir(Direction dir, Player player, int boardSize) {

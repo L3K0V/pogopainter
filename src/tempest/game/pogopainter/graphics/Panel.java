@@ -158,6 +158,9 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		bPaint = new Paint();
 		bPaint.setAntiAlias(false);
 		bPaint.setFilterBitmap(true);
+		for (Player p : game.getPlayers()) {
+			p.setBitmap(getPlayerColor(p.getColor()));
+		}
 	}
 
 	protected void fillSoundCache() {
@@ -352,9 +355,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 			int color = user.getColor();
 
 			Rect rect = new Rect(width, height, width + cellSize, height + cellSize);
-			Bitmap bitmap = getPlayerColor(color);
-
-			canvas.drawBitmap(bitmap, null, rect, bPaint);
+			user.draw(canvas, bPaint, rect);
 		}
 	}
 

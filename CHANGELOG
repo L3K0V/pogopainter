@@ -415,3 +415,6 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 
 0.13.5(20120430)
 + Now arrow drawing fixed and moving correctly
+
+0.13.6(20120501)
++ Player movement animation (SOOO BUGGY!)

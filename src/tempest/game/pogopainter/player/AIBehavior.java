@@ -31,6 +31,7 @@ import tempest.game.pogopainter.system.Score;
 public class AIBehavior implements Behavior {
 	private Difficulty AIdifficult;
 	private Game actions;
+	private Direction currentDir = Direction.NONE;
 	private Direction lastDir    = Direction.NONE;
 	private Checkpoint random    = null;
 	private Arrow arrow          = null;
@@ -165,7 +166,7 @@ public class AIBehavior implements Behavior {
 	}
 
 	private void setDirection(Direction dir) {
-		lastDir = dir;
+		currentDir = dir;
 	}
 
 	/**
@@ -311,7 +312,12 @@ public class AIBehavior implements Behavior {
 	}
 
 	public Direction getNextDirection() {
+		lastDir = currentDir;
 		easy(actions.getBoard(), AI, rnd.nextInt(2) + 1);
+		return currentDir;
+	}
+
+	public Direction getPreviousDirection() {
 		return lastDir;
 	}
 }
