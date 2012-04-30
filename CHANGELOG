@@ -404,3 +404,9 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 0.13.3(20120430)
 + Bonus show up animation
 + Changed background sound for fast testing
+
+0.13.4(20120430)
++ Now arrow changing direction animation working
++ Little laggy need optimization
++ Refactored some code in Panel , Bonus Handler
++ Fix spawning chance for bonuses
