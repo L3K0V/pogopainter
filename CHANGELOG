@@ -418,3 +418,11 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 
 0.13.6(20120501)
 + Player movement animation (SOOO BUGGY!)
+
+0.14.0(20120501)
++ Player movement animation fixed
++ All animation ready
++ Canvas need little optimization to reduce the lag
++ Navigation Arrow now drawing only when movement animation is finished
++ Refactored some code
++ Delete some unused method and field

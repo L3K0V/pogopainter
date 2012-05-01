@@ -32,7 +32,6 @@ public class AIBehavior implements Behavior {
 	private Difficulty AIdifficult;
 	private Game actions;
 	private Direction currentDir = Direction.NONE;
-	private Direction lastDir    = Direction.NONE;
 	private Checkpoint random    = null;
 	private Arrow arrow          = null;
 	private Teleport tp          = null;
@@ -105,7 +104,7 @@ public class AIBehavior implements Behavior {
 
 		nextDir = Direction.values()[rnd.nextInt(4)+1];
 
-		if (!actions.checkDir(nextDir, AI, 8) && !following) {
+		if (!actions.checkDir(nextDir, AI) && !following) {
 			getNewFreshDirection(b, AI, nextDir);
 		}
 		if (random != null && actions.getBonusHandler().checkPlayerOnBonus(AI, random)) {
@@ -181,7 +180,7 @@ public class AIBehavior implements Behavior {
 	private boolean shouldAIGetArrow(Player AI, Arrow arrow) {
 		boolean isReached = false;
 		for (Direction dir : Direction.values()) {
-			boolean checkDir = actions.checkDir(dir, AI, 8);
+			boolean checkDir = actions.checkDir(dir, AI);
 			switch (dir) {
 			case LEFT:
 				if (checkDir && actions.getBonusHandler().checkArrowForGivingPoints(arrow)) {isReached = true;}
@@ -211,7 +210,7 @@ public class AIBehavior implements Behavior {
 
 	private Direction getNewFreshDirection(Board b, Player p, Direction l) {
 		Direction newDir = Direction.NONE;
-		while(!actions.checkDir(l, p, b.getBoardSize()) && (l == newDir || newDir == Direction.NONE)) {
+		while(!actions.checkDir(l, p) && (l == newDir || newDir == Direction.NONE)) {
 			newDir = Direction.values()[rnd.nextInt(4)+1];
 			setDirection(newDir);
 		}
@@ -278,7 +277,7 @@ public class AIBehavior implements Behavior {
 		double distance = calcDistance(x,y , destination);
 
 		for (Direction dir : Direction.values()) {
-			boolean checkDir = actions.checkDir(dir, AI, 8);
+			boolean checkDir = actions.checkDir(dir, AI);
 
 			switch (dir) {
 			case LEFT:
@@ -312,12 +311,7 @@ public class AIBehavior implements Behavior {
 	}
 
 	public Direction getNextDirection() {
-		lastDir = currentDir;
 		easy(actions.getBoard(), AI, rnd.nextInt(2) + 1);
 		return currentDir;
-	}
-
-	public Direction getPreviousDirection() {
-		return lastDir;
 	}
 }
