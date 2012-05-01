@@ -69,26 +69,28 @@ public abstract class Game {
 	}
 	
 	public void move(Board b, Player player, Direction dir) {
-		int boardSize = b.getBoardSize();
-
 		switch (dir) {
 		case RIGHT:
-			if (checkDir(dir, player, boardSize)) {
+			if (checkDir(dir, player)) {
+				player.startMoving(dir);
 				player.setX(player.getX() + 1);
 			}
 			break;
 		case UP:
-			if (checkDir(dir, player, boardSize)) {
+			if (checkDir(dir, player)) {
+				player.startMoving(dir);
 				player.setY(player.getY() -1);
 			}
 			break;
 		case LEFT:
-			if (checkDir(dir, player, boardSize)) {
+			if (checkDir(dir, player)) {
+				player.startMoving(dir);
 				player.setX(player.getX() -1);
 			}
 			break;
 		case DOWN:
-			if (checkDir(dir, player, boardSize)) {
+			if (checkDir(dir, player)) {
+				player.startMoving(dir);
 				player.setY(player.getY() +1);	
 			}
 			break;
@@ -96,11 +98,11 @@ public abstract class Game {
 		b.setPlayerColorOnCell(player);
 		applyBonusEffect(player, b);
 		movedPlayers.add(player);
-		player.isMoved(false);
 	}
 	
-	public boolean checkDir(Direction dir, Player player, int boardSize) {
+	public boolean checkDir(Direction dir, Player player) {
 		boolean res = false;
+		int boardSize = b.getBoardSize();
 		boardSize --;
 		switch(dir) {
 		case RIGHT:

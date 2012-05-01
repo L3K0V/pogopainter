@@ -349,13 +349,16 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	}
 
 	protected void drawUsers(Canvas canvas) {
-		for (Player user: game.getPlayers()) {
-			int width = (user.getX() * cellSize) + boardStartX;
-			int height = user.getY() * cellSize;
-			int color = user.getColor();
+		for (Player player: game.getPlayers()) {
+			int width = (player.getX() * cellSize) + boardStartX;
+			int height = player.getY() * cellSize;
 
 			Rect rect = new Rect(width, height, width + cellSize, height + cellSize);
-			user.draw(canvas, bPaint, rect);
+			if (!player.getAnimation().getMoving()) {
+				player.draw(canvas, bPaint, rect);
+			} else {
+				player.draw(canvas, bPaint, player.getAnimation().getCurrentPosition(rect));
+			}
 		}
 	}
 
@@ -410,22 +413,23 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	}
 
 	protected void drawNav(Canvas canvas) {
-		if (game.checkDir(Direction.RIGHT, game.getUser(), game.getBoard().getBoardSize())) {
-			drawArrow(Direction.RIGHT, canvas);
+		if (!game.getUser().getAnimation().getMoving()) {
+			if (game.checkDir(Direction.RIGHT, game.getUser())) {
+				drawArrow(Direction.RIGHT, canvas);
+			}
+	
+			if (game.checkDir(Direction.LEFT, game.getUser())) {
+				drawArrow(Direction.LEFT, canvas);
+			}
+	
+			if (game.checkDir(Direction.UP, game.getUser())) {
+				drawArrow(Direction.UP, canvas);
+			}
+	
+			if (game.checkDir(Direction.DOWN, game.getUser())) {
+				drawArrow(Direction.DOWN, canvas);
+			}
 		}
-
-		if (game.checkDir(Direction.LEFT, game.getUser(), game.getBoard().getBoardSize())) {
-			drawArrow(Direction.LEFT, canvas);
-		}
-
-		if (game.checkDir(Direction.UP, game.getUser(), game.getBoard().getBoardSize())) {
-			drawArrow(Direction.UP, canvas);
-		}
-
-		if (game.checkDir(Direction.DOWN, game.getUser(), game.getBoard().getBoardSize())) {
-			drawArrow(Direction.DOWN, canvas);
-		}
-
 	}
 
 	protected void drawArrow(Direction dir, Canvas canvas) {
