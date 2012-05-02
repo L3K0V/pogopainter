@@ -53,7 +53,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	protected Map<Integer, Bitmap> _bitmapCache;
 	protected Map<Integer, Integer> _soundCache;
 	protected Paint bPaint;
-	
+
 	protected boolean ifSounds;
 	protected SoundPool _pool;
 	protected MediaPlayer backgroundMusic;
@@ -89,7 +89,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 			stopThreads();
 		}
 	}
-	
+
 	public void releaseSounds() {
 		_pool.release();
 		backgroundMusic.stop();
@@ -141,7 +141,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 			fixControlRect(control);
 			counterRect = new Rect(controlStartX + padding / 2, padding / 2,
 					boardStartX - padding / 2, screenHeigth / 2 - padding / 2);
-			
+
 			board = new Rect(boardStartX + padding / 2, 0, screenWidth, screenHeigth);
 		} else {
 			controlStartX = cellNumber * cellSize;
@@ -151,7 +151,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 			fixControlRect(control);
 			counterRect = new Rect(controlStartX + padding / 2, padding / 2,
 					screenWidth - padding / 2, (screenHeigth / 2) - padding / 2);
-			
+
 			board = new Rect(boardStartX, 0, controlStartX - padding / 2, screenHeigth);
 		}
 		defineTouchRect();
@@ -189,6 +189,17 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		_bitmapCache.put(R.drawable.joystick_clicked, BitmapFactory.decodeResource(getResources(), R.drawable.joystick_clicked));
 		_bitmapCache.put(R.drawable.joystick_action,  BitmapFactory.decodeResource(getResources(), R.drawable.joystick_action));
 		_bitmapCache.put(R.drawable.arrow,            BitmapFactory.decodeResource(getResources(), R.drawable.arrow));
+	}
+
+	public void clearMemory() {
+		for (Bitmap b : _bitmapCache.values()) {
+			b.recycle();
+		}
+		_bitmapCache.clear();
+		_bitmapCache = null;
+		releaseSounds();
+		_soundCache.clear();
+		System.gc();
 	}
 
 	protected void fixControlRect(Rect control) {
@@ -246,7 +257,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 			currentDir = Direction.LEFT;
 		}
 	}
-	
+
 	public void playSound(int id) {
 		if (!ifSounds) {
 			return;
@@ -257,17 +268,17 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		float volume = streamVolumeCurrent / streamVolumeMax;
 		_pool.play(_soundCache.get(id), volume, volume, 1, 0, 1f);
 	}
-	
+
 	public void playMusic() {
 		if (!ifSounds) {
 			return;
 		}
-	    if (!backgroundMusic.isPlaying()) {
-		    backgroundMusic.seekTo(0);
-		    backgroundMusic.start();
-	    }
+		if (!backgroundMusic.isPlaying()) {
+			backgroundMusic.seekTo(0);
+			backgroundMusic.start();
+		}
 	}
-	
+
 	public void pauseMusic() {
 		if (!ifSounds) {
 			return;
@@ -408,7 +419,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		case NONE:
 			break;
 		}
-		
+
 		bonus.draw(canvas, bPaint, rect);
 	}
 
@@ -417,15 +428,15 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 			if (game.checkDir(Direction.RIGHT, game.getUser())) {
 				drawArrow(Direction.RIGHT, canvas);
 			}
-	
+
 			if (game.checkDir(Direction.LEFT, game.getUser())) {
 				drawArrow(Direction.LEFT, canvas);
 			}
-	
+
 			if (game.checkDir(Direction.UP, game.getUser())) {
 				drawArrow(Direction.UP, canvas);
 			}
-	
+
 			if (game.checkDir(Direction.DOWN, game.getUser())) {
 				drawArrow(Direction.DOWN, canvas);
 			}
