@@ -30,7 +30,7 @@ public class CanvasActivity extends Activity {
 	@Override
 	protected void onPause() {
 		panel.pauseThreads();
-		panel.pauseMusic();
+		panel.getGame().getMusic().pauseMusic();
 		onBackPressed();
 		dialog.dismiss();
 		super.onPause();
@@ -39,7 +39,7 @@ public class CanvasActivity extends Activity {
 	@Override
 	protected void onResume() {
 		panel.resumeThreads();
-		panel.playMusic();
+		panel.getGame().getMusic().playMusic();
 		super.onResume();
 	}
 

@@ -6,7 +6,6 @@ import tempeset.game.pogopainter.R;
 import tempest.game.pogopainter.bonuses.BonusObject;
 import tempest.game.pogopainter.bonuses.Bonuses;
 import tempest.game.pogopainter.gametypes.Game;
-import tempest.game.pogopainter.gametypes.GameThread;
 import tempest.game.pogopainter.player.Player;
 import tempest.game.pogopainter.system.Cell;
 import tempest.game.pogopainter.system.Direction;
@@ -20,16 +19,12 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.SoundPool;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public abstract class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	protected CanvasThread _panelThread;
-	protected GameThread _gameThread;
 	protected Game game;
 
 	protected int cellNumber;
@@ -51,21 +46,14 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	protected int screenHeigth;
 	protected Activity holder;
 	protected Map<Integer, Bitmap> _bitmapCache;
-	protected Map<Integer, Integer> _soundCache;
 	protected Paint bPaint;
-
-	protected boolean ifSounds;
-	protected SoundPool _pool;
-	protected MediaPlayer backgroundMusic;
 
 	public Panel(Context context, Activity owner) {
 		super(context);
 		holder = owner;
 		getHolder().addCallback(this);
 		_panelThread = new CanvasThread(getHolder(), this);
-		_gameThread = new GameThread(this);
 		setFocusable(true);
-		_pool = new SoundPool(4, AudioManager.STREAM_MUSIC, 100);
 		initFields();
 	}
 
@@ -90,38 +78,26 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		}
 	}
 
-	public void releaseSounds() {
-		_pool.release();
-		backgroundMusic.stop();
-		backgroundMusic.release();
-	}
-
 	public void pauseThreads() {
 		_panelThread.setRunning(false);
-		_gameThread.setRunning(false);
 	}
 
 	public void startThreads() {
 		_panelThread = new CanvasThread(getHolder(), this);
-		_gameThread = new GameThread(this);
 		resumeThreads();
 		_panelThread.start();
-		_gameThread.start();
 	}
 
 	public void resumeThreads() {
 		_panelThread.setRunning(true);
-		_gameThread.setRunning(true);
 	}
 
 	public void stopThreads() {
 		_panelThread.stopThisShit();
-		_gameThread.stopThisShit();
 	}
 
 	protected void initFields() {
 		Metrics m = new Metrics();
-		ifSounds = m.isSounds();
 		screenWidth = m.getScreenWidth();
 		screenHeigth = m.getScreenHeight();
 		leftControlns = m.isLeftControls();
@@ -129,13 +105,12 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		cellSize = (screenHeigth / cellNumber ) - 1;	
 		padding = cellSize / 5;
 		_bitmapCache = new HashMap<Integer, Bitmap>();
-		_soundCache = new HashMap<Integer, Integer>();
 		fillBitmapCache();
-		fillSoundCache();
+		Rect control = null;
 		if (leftControlns) {
 			controlStartX = 0;
 			boardStartX = (screenWidth - (cellNumber * cellSize)) - 1;
-			Rect control = new Rect(controlStartX + padding / 2, (screenHeigth / 2),
+			control = new Rect(controlStartX + padding / 2, (screenHeigth / 2),
 					boardStartX - padding / 2, screenHeigth - padding / 2);
 
 			fixControlRect(control);
@@ -146,7 +121,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		} else {
 			controlStartX = cellNumber * cellSize;
 			boardStartX = 0;
-			Rect control = new Rect(controlStartX + padding / 2 , (screenHeigth / 2),
+			control = new Rect(controlStartX + padding / 2 , (screenHeigth / 2),
 					screenWidth - padding / 2 , screenHeigth - padding / 2);
 			fixControlRect(control);
 			counterRect = new Rect(controlStartX + padding / 2, padding / 2,
@@ -154,21 +129,13 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 
 			board = new Rect(boardStartX, 0, controlStartX - padding / 2, screenHeigth);
 		}
-		defineTouchRect();
+		defineTouchRect(control);
 		bPaint = new Paint();
 		bPaint.setAntiAlias(false);
 		bPaint.setFilterBitmap(true);
 		for (Player p : game.getPlayers()) {
 			p.setBitmap(getPlayerColor(p.getColor()));
 		}
-	}
-
-	protected void fillSoundCache() {
-		Context context = getContext();
-		_soundCache.put(R.raw.arrow, _pool.load(context, R.raw.arrow, 0));
-		_soundCache.put(R.raw.checkpoint, _pool.load(context, R.raw.arrow, 0));
-		_soundCache.put(R.raw.teleport, _pool.load(context, R.raw.teleport, 0));
-		backgroundMusic = MediaPlayer.create(context, R.raw.background);
 	}
 
 	protected void fillBitmapCache() {
@@ -197,8 +164,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		}
 		_bitmapCache.clear();
 		_bitmapCache = null;
-		releaseSounds();
-		_soundCache.clear();
+		game.getMusic().releaseSounds();
 		System.gc();
 	}
 
@@ -214,10 +180,10 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 				control.centerX() + square/2, control.centerY() + square/2);
 	}
 
-	protected void defineTouchRect() {
+	protected void defineTouchRect(Rect masterControls) {
 		int centerX = controlRect.centerX();
 		int centerY = controlRect.centerY();
-		int width = controlRect.height();
+		int width = controlRect.width();
 		int height = controlRect.height();
 		int paddingForTouchRect = padding * 3 + padding / 2;
 
@@ -227,11 +193,11 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		up = new Rect(centerX - (width / 4), controlRect.top,
 				centerX + (width / 4), centerY - paddingForTouchRect);
 
-		left = new Rect(controlRect.left, centerY - (height / 4),
+		left = new Rect(masterControls.left, centerY - (height / 4),
 				centerX - paddingForTouchRect, centerY + (height / 4));
 
 		right = new Rect(centerX + paddingForTouchRect, centerY - (height / 4),
-				controlRect.right, centerY + (height / 4));
+				masterControls.right, centerY + (height / 4));
 	}
 
 	@Override
@@ -255,36 +221,6 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 			currentDir = Direction.DOWN;
 		} else if (left.contains(x, y)) {
 			currentDir = Direction.LEFT;
-		}
-	}
-
-	public void playSound(int id) {
-		if (!ifSounds) {
-			return;
-		}
-		AudioManager mgr = (AudioManager)getContext().getSystemService(Context.AUDIO_SERVICE);
-		float streamVolumeCurrent = mgr.getStreamVolume(AudioManager.STREAM_MUSIC);
-		float streamVolumeMax = mgr.getStreamMaxVolume(AudioManager.STREAM_MUSIC);    
-		float volume = streamVolumeCurrent / streamVolumeMax;
-		_pool.play(_soundCache.get(id), volume, volume, 1, 0, 1f);
-	}
-
-	public void playMusic() {
-		if (!ifSounds) {
-			return;
-		}
-		if (!backgroundMusic.isPlaying()) {
-			backgroundMusic.seekTo(0);
-			backgroundMusic.start();
-		}
-	}
-
-	public void pauseMusic() {
-		if (!ifSounds) {
-			return;
-		}
-		if (backgroundMusic.isPlaying()) {
-			backgroundMusic.pause();
 		}
 	}
 

@@ -8,6 +8,7 @@ import tempest.game.pogopainter.graphics.Panel;
 import tempest.game.pogopainter.player.Player;
 import tempest.game.pogopainter.system.Board;
 import tempest.game.pogopainter.system.Metrics;
+import tempest.game.pogopainter.system.Music;
 
 public class ClassicGame extends Game {
 
@@ -23,6 +24,9 @@ public class ClassicGame extends Game {
 		Metrics m = new Metrics();
 		int classicCellNumber = m.getClassicCellNumber();
 		int playerColor = m.getPlayerColor();
+		ifSounds = m.isSounds();
+		//ifBackground = m.isBackground(); need to make under true to ifBackground
+		music = new Music(true, ifSounds);
 		b = new Board(classicCellNumber);
 		time = m.getClassicGameTime();
 

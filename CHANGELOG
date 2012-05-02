@@ -432,3 +432,9 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Class: AIBehavior refactoring & cosmetics
 + Added: New Cleaner bonus drawable (bonus needs to be implement)
 + Added: New SpeedUp bonus drawable (bonus needs to be implement)
+
+0.14.2(20120502)
++ Merge threads now using only one thread
++ Extended left and right rectangles of the joystick so it is easier to 
+    touch them in bigger resolutions
++ Extracted all music releated stuff in new class Music

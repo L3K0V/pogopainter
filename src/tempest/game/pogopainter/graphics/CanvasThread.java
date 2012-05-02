@@ -7,26 +7,29 @@ public class CanvasThread extends Thread {
 	private SurfaceHolder _surfaceHolder;
 	private Panel _panel;
 	private boolean _run = false;
+	private final static int FRAME;
+	private long startTime;
+	private long timeBeforeUpdate;
 
+	static {
+		FRAME = 1000;
+	}
 	public CanvasThread(SurfaceHolder holder, Panel panel) {
 		_surfaceHolder = holder;
 		_panel = panel;
 		setName("CanvasThread");
+		timeBeforeUpdate = FRAME;
 	}
 	
 	public void setRunning(boolean run) {
 		_run = run;
+		if (run == false) {
+			timeBeforeUpdate = FRAME;
+		}
 	}
 	
 	public void stopThisShit() {
-//		boolean retry = true;
-//		while (retry) {
-//			try {
-				setRunning(false);
-//				Thread.currentThread().join();
-//				retry = false;
-//			} catch (InterruptedException e) {}
-//		}
+		setRunning(false);
 		Thread.currentThread().interrupt();
 	}
 	
@@ -34,14 +37,17 @@ public class CanvasThread extends Thread {
 	public void run() {
 		Canvas canvas;
 		while(_run) {
+			startTime = System.nanoTime();
 			canvas = null;
 			try {
 				canvas = _surfaceHolder.lockCanvas(null);
 				synchronized (_surfaceHolder) {
-					_panel.onDraw(canvas);
-					synchronized (_panel) {
-						_panel.notify();
+					if (timeBeforeUpdate <= 0 ) {
+						timeBeforeUpdate = FRAME;
+						_panel.getGame().update();
 					}
+					_panel.onDraw(canvas);
+					timeBeforeUpdate -= ((System.nanoTime()-startTime)/1000000L);
 				}
 			} finally {
 				if (canvas != null) {

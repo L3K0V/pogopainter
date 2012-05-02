@@ -19,6 +19,7 @@ import tempest.game.pogopainter.player.UserBehavior;
 import tempest.game.pogopainter.system.Board;
 import tempest.game.pogopainter.system.Cell;
 import tempest.game.pogopainter.system.Direction;
+import tempest.game.pogopainter.system.Music;
 
 import android.graphics.Color;
 
@@ -27,10 +28,11 @@ public abstract class Game {
 	protected Panel _panel;
 	protected int time = 1000;
 	protected BonusHandler bHandler;
-	
+	protected Music	music;
 	protected List<Player> PLAYERS;
 	protected List<Player> movedPlayers;
-	
+	protected boolean ifSounds;
+	protected boolean ifBackground;
 	protected abstract void initFields();
 	
 	protected void initPlayerColors(int classicCellNumber, int playerColor) {
@@ -195,13 +197,13 @@ public abstract class Game {
 	private void playMusic(BonusObject bonus) {
 		switch(bonus.getType()) {
 		case TELEPORT :
-			_panel.playSound(R.raw.teleport);
+			music.playSound(R.raw.teleport);
 			break;
 		case ARROW :
-			_panel.playSound(R.raw.arrow);
+			music.playSound(R.raw.arrow);
 			break;
 		case CHECKPOINT :
-			_panel.playSound(R.raw.checkpoint);
+			music.playSound(R.raw.checkpoint);
 			break;
 		}
 	}
@@ -255,5 +257,9 @@ public abstract class Game {
 		_panel.clearFocus();
 		CanvasActivity.showResults = true;
 		_panel.getOwner().finish();
+	}
+	
+	public Music getMusic() {
+		return music;
 	}
 }
