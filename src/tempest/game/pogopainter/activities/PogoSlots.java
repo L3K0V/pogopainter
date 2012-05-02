@@ -20,7 +20,6 @@ public class PogoSlots extends Activity implements OnClickListener {
 	private ToggleButton blueSlot;
 	private ToggleButton greenSlot;
 	private ToggleButton yellowSlot;
-	private ToggleButton lockIn;
 	private Button go;
 	private SharedPreferences settings;
 	
@@ -44,15 +43,14 @@ public class PogoSlots extends Activity implements OnClickListener {
 		greenSlot    = (ToggleButton) this.findViewById(R.id.greenSlot);
 		yellowSlot   = (ToggleButton) this.findViewById(R.id.yellowSlot);
 
-		lockIn = (ToggleButton) this.findViewById(R.id.lockIn);
 		go = (Button) this.findViewById(R.id.startGame);
 
 		redSlot.setOnClickListener(this);
 		blueSlot.setOnClickListener(this);
 		greenSlot.setOnClickListener(this);
 		yellowSlot.setOnClickListener(this);
-		
-		lockIn.setOnClickListener(this);
+	
+
 		go.setOnClickListener(this);
 
 		gameType          = (TextView) findViewById(R.id.gameType_text);
@@ -69,7 +67,7 @@ public class PogoSlots extends Activity implements OnClickListener {
 		
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		
-		showHind("Choose your starting position", Toast.LENGTH_LONG);
+		showHint("Choose your starting position", Toast.LENGTH_LONG);
 	}
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -81,12 +79,10 @@ public class PogoSlots extends Activity implements OnClickListener {
 			yellowSlot.setChecked(false);
 			if (redSlot.isChecked()) {
 				setSinglePlayer();
-				if (!lockIn.isEnabled()) {
-					lockIn.setEnabled(true);
-				}
+				enableStartGameButton(true);
 			} else {
 				setDefaultTexts();
-				lockIn.setEnabled(false);
+				enableStartGameButton(false);
 			}
 			break;
 		case R.id.blueSlot:
@@ -97,12 +93,10 @@ public class PogoSlots extends Activity implements OnClickListener {
 			yellowSlot.setChecked(false);
 			if (blueSlot.isChecked()) {
 				setSinglePlayer();
-				if (!lockIn.isEnabled()) {
-					lockIn.setEnabled(true);
-				}
+				enableStartGameButton(true);
 			} else {
 				setDefaultTexts();
-				lockIn.setEnabled(false);
+				enableStartGameButton(false);
 			}
 			break;
 		case R.id.greenSlot:
@@ -113,12 +107,10 @@ public class PogoSlots extends Activity implements OnClickListener {
 			yellowSlot.setChecked(false);
 			if (greenSlot.isChecked()) {
 				setSinglePlayer();
-				if (!lockIn.isEnabled()) {
-					lockIn.setEnabled(true);
-				}
+				enableStartGameButton(true);
 			} else {
 				setDefaultTexts();
-				lockIn.setEnabled(false);
+				enableStartGameButton(false);
 			}
 			break;
 		case R.id.yellowSlot:
@@ -129,53 +121,26 @@ public class PogoSlots extends Activity implements OnClickListener {
 			redSlot.setChecked(false);
 			if (yellowSlot.isChecked()) {
 				setSinglePlayer();
-				if (!lockIn.isEnabled()) {
-					lockIn.setEnabled(true);
-				}
+				enableStartGameButton(true);
 			} else {
 				setDefaultTexts();
-				lockIn.setEnabled(false);
-			}
-			break;
-		case R.id.lockIn:
-			if (lockIn.isEnabled()) {
-				if (lockIn.isChecked()) {
-					disableSlots();
-					showHind("If you are ready, go ahead by pressing Go!", Toast.LENGTH_LONG);
-					go.setEnabled(true);
-					
-				} else {
-					enableSlots();
-					go.setEnabled(false);
-				}
-			} else {
-				disableSlots();
+				enableStartGameButton(false);
 			}
 			break;
 		case R.id.startGame:
 			if (go.isEnabled()) {
-				showHind("You are playing with " + settings.getString("PLAYER_COLOR", ""), Toast.LENGTH_SHORT);
+				showHint("You are playing with " + settings.getString("PLAYER_COLOR", ""), Toast.LENGTH_SHORT);
 				startActivity(new Intent(this, CanvasActivity.class));
 				this.finish();
 			}
 		}
 	}
-
-	private void disableSlots() {
-		redSlot.setEnabled(false);
-		blueSlot.setEnabled(false);
-		greenSlot.setEnabled(false);
-		yellowSlot.setEnabled(false);
-	}
-
-	private void enableSlots() {
-		redSlot.setEnabled(true);
-		blueSlot.setEnabled(true);
-		greenSlot.setEnabled(true);
-		yellowSlot.setEnabled(true);
+	
+	private void enableStartGameButton(boolean state) {
+		go.setEnabled(state);
 	}
 	
-	private void showHind(String message, int length) {
+	private void showHint(String message, int length) {
 		Toast toast = Toast.makeText(this, message, length);
 		toast.setGravity(Gravity.CENTER, 0, 0);
 		toast.show();

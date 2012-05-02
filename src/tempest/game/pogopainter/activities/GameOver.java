@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -24,6 +25,8 @@ public class GameOver extends Activity implements OnClickListener {
 	protected Intent gameIntent;
 	protected boolean incrementRunning = false;
 
+	protected Button play;
+
 	protected int red;
 	protected int blue;
 	protected int green;
@@ -35,6 +38,9 @@ public class GameOver extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game_over);
 		gameIntent = getIntent();
+		
+		play = (Button) findViewById(R.id.play_again);
+		play.setOnClickListener(this);
 
 		initPlayersProgress();
 		setProgressMaxPoints();
@@ -42,13 +48,6 @@ public class GameOver extends Activity implements OnClickListener {
 		setPlayersPointsIndicators();
 		
 		getWinner();
-
-		View play = findViewById(R.id.play_again);
-		play.setOnClickListener(this);
-
-		View menu = findViewById(R.id.go_to_menu);
-		menu.setOnClickListener(this);
-
 	}
 
 	protected void setPlayersPointsIndicators() {
@@ -100,11 +99,12 @@ public class GameOver extends Activity implements OnClickListener {
 						} else {
 							Thread.sleep(25);
 						}
-
 					}
+					Thread.sleep(3000);
+					incrementRunning = false;
 				}
 				catch (Throwable t) {
-				}     
+				}
 			}     
 		});
 		incrementRunning = true;
@@ -135,18 +135,18 @@ public class GameOver extends Activity implements OnClickListener {
 		TextView winner = (TextView) findViewById(R.id.player_winner_text);
 		TextView draw   = (TextView) findViewById(R.id.winners); 
 		winner.setText("Nobody");
-		
+
 		Map<String, Integer> playersResults = new Hashtable<String, Integer>();
 		pointsComparator = new ValueComparator(playersResults);
 		TreeMap<String, Integer> sortedPlayersByPoints = new TreeMap<String, Integer>(pointsComparator);
-		
+
 		playersResults.put("Red", red);
 		playersResults.put("Blue", blue);
 		playersResults.put("Green", green);
 		playersResults.put("Yellow", yellow);
-		
+
 		sortedPlayersByPoints.putAll(playersResults);
-		
+
 		winnersNumber(winner, draw, sortedPlayersByPoints);
 	}
 
@@ -154,7 +154,7 @@ public class GameOver extends Activity implements OnClickListener {
 			TreeMap<String, Integer> sortedPlayersByPoints) {
 		int firstValue = sortedPlayersByPoints.get(sortedPlayersByPoints.firstKey());
 		String firstKey = sortedPlayersByPoints.firstKey();
-		
+
 		if (sortedPlayersByPoints.get(sortedPlayersByPoints.firstKey()) != 0) {
 			if (sortedPlayersByPoints.size() > 1 && firstValue+1 == firstValue) {
 				if (sortedPlayersByPoints.size() > 2 && firstValue+2 == firstValue) {
@@ -169,7 +169,7 @@ public class GameOver extends Activity implements OnClickListener {
 					winner.setText(firstKey + " and " + firstKey+1);
 					draw.setText("are winners");
 				}
-				
+
 			} else {
 				winner.setText(firstKey);
 			}	
@@ -179,32 +179,31 @@ public class GameOver extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.play_again:
-			Intent play = new Intent(this, CanvasActivity.class);
-			startActivity(play);
-			finish();
-			break;
-		case R.id.go_to_menu:
-			this.finish();
+			if (!incrementRunning) {
+				Intent play = new Intent(this, CanvasActivity.class);
+				startActivity(play);
+				finish();
+			}
 			break;
 		}
 	}
-}
 
-class ValueComparator implements Comparator<Object> {
+	class ValueComparator implements Comparator<Object> {
 
-	  Map<String, Integer> base;
-	  public ValueComparator(Map<String, Integer> base) {
-	      this.base = base;
-	  }
+		Map<String, Integer> base;
+		public ValueComparator(Map<String, Integer> base) {
+			this.base = base;
+		}
 
-	  public int compare(Object a, Object b) {
+		public int compare(Object a, Object b) {
 
-	    if((Integer)base.get(a) < (Integer)base.get(b)) {
-	      return 1;
-	    } else if((Integer)base.get(a) == (Integer)base.get(b)) {
-	      return 0;
-	    } else {
-	      return -1;
-	    }
-	  }
+			if((Integer)base.get(a) < (Integer)base.get(b)) {
+				return 1;
+			} else if((Integer)base.get(a) == (Integer)base.get(b)) {
+				return 0;
+			} else {
+				return -1;
+			}
+		}
 	}
+}
