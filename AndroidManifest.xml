@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="tempeset.game.pogopainter"
+    android:versionCode="0"
+    android:versionName="0.14.2" >
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-sdk
+        android:maxSdkVersion="13"
+        android:minSdkVersion="7"
+        android:targetSdkVersion="7" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        <activity
+            android:name="tempest.game.pogopainter.activities.PogoPainterActivity"
+            android:configChanges="locale|keyboard|keyboardHidden|orientation"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="tempest.game.pogopainter.activities.AboutUs"
+            android:label="@string/about_title"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name="tempest.game.pogopainter.activities.AboutPogo"
+            android:label="@string/about_title"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name="tempest.game.pogopainter.activities.AboutTabActivity"
+            android:label="@string/about_title" >
+        </activity>
+        <activity
+            android:name="tempest.game.pogopainter.activities.GameOver"
+            android:label="Game Over"
+            android:noHistory="true" >
+        </activity>
+        <activity
+            android:name="tempest.game.pogopainter.activities.MultiplayerActivity"
+            android:label="@string/multiplayer_title" >
+        </activity>
+        <activity
+            android:name="tempest.game.pogopainter.activities.PogoSlots"
+            android:label="Play"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="tempest.game.pogopainter.activities.ClassicHelp"
+            android:label="@string/classic_help_title" >
+        </activity>
+        <activity
+            android:name="tempest.game.pogopainter.activities.ClassicHelpTab"
+            android:label="@string/about_title" >
+        </activity>
+        <activity
+            android:name="tempest.game.pogopainter.activities.CoopHelp"
+            android:label="@string/coop_help_title" >
+        </activity>
+        <activity
+            android:name="tempest.game.pogopainter.activities.CoopHelpTab"
+            android:label="@string/coop_help_title" >
+        </activity>
+        <activity
+            android:name="tempest.game.pogopainter.activities.DeathmatchHelp"
+            android:label="@string/deathmatch_help_title" >
+        </activity>
+        <activity
+            android:name="tempest.game.pogopainter.activities.DeathmatchHelpTab"
+            android:label="@string/deathmatch_help_title" >
+        </activity>
+        <activity
+            android:name="tempest.game.pogopainter.activities.PreferencesActivity"
+            android:label="@string/settings_title" >
+            <intent-filter>
+                <action android:name="tempest.game.pogopainter.activities.preferences" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="tempest.game.pogopainter.activities.ScoreSystem"
+            android:label="Score system"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name="tempest.game.pogopainter.activities.CanvasActivity"
+            android:label="Canvas"
+            android:screenOrientation="landscape" >
+        </activity>
+    </application>
+
+</manifest>

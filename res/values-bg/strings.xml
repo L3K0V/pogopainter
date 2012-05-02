@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- general -->
+    <string name="version">Версия</string>
+    <string name="exit">Изход</string>
+    <string name="exit_question">Наистина ли искате да излезете?</string>
+    <string name="no">Не</string>
+    <string name="yes">Да</string>
+    <string name="ok">Добре</string>
+    <string name="ops">Опаа...</string>
+    <string name="bluetooth_miss">Bluetooth unavailable on your device. You cannot use multiplayer option!</string>
+    <string name="pref_changed">Настройките са запазени</string>
+    <string name="pref_reset">Настройките са нулирани</string>
+    <string name="change_saved">Промените са запазени</string>
+    <string name="lang_change">Езика е сменен</string>
+    <string name="pogo_rules">Pogo правила</string>
+
+    <!-- main menu -->
+    <string name="main_title">Pogo Painter</string>
+    <string name="single_player_label">Един играч</string>
+    <string name="multi_player_label">Игра в мрежа</string>
+    <string name="about_label">За играта</string>
+    <string name="help_label">Помощ</string>
+    <string name="options_label">Настройки</string>
+
+    <!-- multiplayer -->
+    <string name="classic_label">Classic</string>
+    <string name="classic_help_title">Classic game rules</string>
+    <string name="coop_label">Co-op</string>
+    <string name="coop_help_title">Coop game rules</string>
+    <string name="deathmatch_label">Deathmatch</string>
+    <string name="deathmatch_help_title">Deathmatch game rules</string>
+    <string name="multiplayer_create_label">Create game</string>
+    <string name="multiplayer_join_label">Join game</string>
+    <string name="question_label">What?</string>
+    <string name="score_rules_label">Score system</string>
+    <string name="multiplayer_title">Multiplayer</string>
+
+    <!-- about -->
+    <string name="about_us_title">About us</string>
+    <string name="about_title">About Pogo Painter</string>
+    <string name="contact_us">Contact us</string>
+    <string name="about_game_text">        Pogo Painter is a funny &amp; arcade game. It provides single &amp; multiplayer modes with different types of gameplay.</string>
+    <string name="about_us_text">        We are two students from ELSYS and Pogo Painter is our project. We will continue developing it if there is interest in it!</string>
+
+    <!-- settings -->
+    <string name="pogo_reset">Pogo Ресет</string>
+    <string name="pogo_reset_question">Наистина ли искате да върнете първоначалните настройки?</string>
+    <string name="settings_label">Настройки</string>
+    <string name="settings_title">Pogo Настройки</string>
+    <string name="settings_shortcut">s</string>
+    <string name="choose_size">Choose size</string>
+    <string name="choose_time">Choose round time</string>
+    <string name="choose_points">Choose round points</string>
+    <string name="classic">Classic</string>
+    <string name="coop">Co-op</string>
+    <string name="deathmatch">Deathmatch</string>
+    <string name="general">General</string>
+    <string name="game_sounds">Game sounds</string>
+    <string name="game_sounds_sum">Check if you want in-game sounds</string>
+    <string name="game_lang">Game languages</string>
+    <string name="board_size">Board size</string>
+
+</resources>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <string-array name="classic_game_time">
+        <item>1:30 min (90 sec)</item>
+        <item>2:00 min (120 sec)</item>
+        <item>2:30 min (150 sec)</item>
+        <item>3:00 min (180 sec)</item>
+    </string-array>
+    <string-array name="classic_game_time_values">
+        <item>90</item>
+        <item>120</item>
+        <item>150</item>
+        <item>180</item>
+    </string-array>
+    <string-array name="classic_ai_difficulty">
+        <item>Easy</item>
+        <item>Normal</item>
+        <item>Hard</item>
+    </string-array>
+    <string-array name="classic_ai_difficulty_values">
+        <item>easy</item>
+        <item>normal</item>
+        <item>hard</item>
+    </string-array>
+
+    <!-- coop -->
+    <string-array name="coop_game_time">
+        <item>1:30 min (90 sec)</item>
+        <item>2:00 min (120 sec)</item>
+        <item>2:30 min (150 sec)</item>
+        <item>3:00 min (180 sec)</item>
+    </string-array>
+    <string-array name="coop_game_time_values">
+        <item>90</item>
+        <item>120</item>
+        <item>150</item>
+        <item>180</item>
+    </string-array>
+    <string-array name="coop_ai_difficulty">
+        <item>Easy</item>
+        <item>Normal</item>
+        <item>Hard</item>
+    </string-array>
+    <string-array name="coop_ai_difficulty_values">
+        <item>easy</item>
+        <item>normal</item>
+        <item>hard</item>
+    </string-array>
+
+    <!-- deathmatch -->
+    <string-array name="deathmatch_game_points">
+        <item>128</item>
+        <item>256</item>
+        <item>512</item>
+        <item>1024</item>
+    </string-array>
+    <string-array name="deathmatch_game_points_values">
+        <item>128</item>
+        <item>256</item>
+        <item>512</item>
+        <item>1024</item>
+    </string-array>
+
+    <!-- general -->
+    <string-array name="player_color">
+        <item>Red</item>
+        <item>Blue</item>
+        <item>Green</item>
+        <item>Yellow</item>
+    </string-array>
+    <string-array name="player_color_values">
+        <item>red</item>
+        <item>blue</item>
+        <item>green</item>
+        <item>yellow</item>
+    </string-array>
+
+</resources>
