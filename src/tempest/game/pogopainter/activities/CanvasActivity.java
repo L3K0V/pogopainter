@@ -85,7 +85,7 @@ public class CanvasActivity extends Activity {
 			showResults = false;
 		}
 		panel.stopThreads();
-		panel.releaseSounds();
+		panel.clearMemory();
 	}
 
 	private void collectPlayersPoints(List<Player> players) {

@@ -426,3 +426,9 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Navigation Arrow now drawing only when movement animation is finished
 + Refactored some code
 + Delete some unused method and field
+
+0.14.1(20120502)
++ Fixed: Memory Issues, maybe project have more...
++ Class: AIBehavior refactoring & cosmetics
++ Added: New Cleaner bonus drawable (bonus needs to be implement)
++ Added: New SpeedUp bonus drawable (bonus needs to be implement)
