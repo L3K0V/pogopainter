@@ -33,17 +33,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:background="@android:drawable/title_bar" >
-
-        <ToggleButton
-            android:id="@+id/lockIn"
-            android:layout_width="0dp"
-            android:textOn="Unlock"
-            android:textOff="Lock"
-            android:background="@drawable/toggle_button"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:enabled="false"/>
 
         <Button
             android:background="@drawable/toggle_button"
@@ -52,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:enabled="false"
-            android:text="Go!" />
+            android:text="Start game" />
     </LinearLayout>
 
     <LinearLayout
