@@ -1,6 +1,5 @@
 package tempest.game.pogopainter.activities;
 
-import java.util.Locale;
 import java.util.Map;
 
 import tempeset.game.pogopainter.R;
@@ -10,12 +9,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,7 +25,6 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 	private SharedPreferences settings;
 	private String tag = "Preferences";
 	private Intent data = new Intent();
-	private Locale locale = null;
 	private ExtrasActivity extras = new ExtrasActivity();
 
 	@Override
@@ -37,9 +35,17 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		settings.registerOnSharedPreferenceChangeListener(this);
 		
+		PreferenceCategory coop = (PreferenceCategory) findPreference("GAME_TYPE_COOP");
+		PreferenceCategory deathmatch = (PreferenceCategory) findPreference("GAME_TYPE_DEATHMATCH");
+		
 		ListPreference color = (ListPreference) findPreference("PLAYER_COLOR");
+		
 		PreferenceCategory general = (PreferenceCategory) findPreference("GENERAL");
+		PreferenceScreen root = (PreferenceScreen) findPreference("PREFERENCES_ROOT");
+		
 		general.removePreference(color);
+		root.removePreference(coop);
+		root.removePreference(deathmatch);
 	}
 
 	@Override
@@ -92,23 +98,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
-		if (key.equals("GAME_LANGUEGE")) {
-			String lang = sharedPreferences.getString("GAME_LANGUEGE", "");
-			if ("English".equals(lang)) {
-				lang = "en";
-			} else if ("Bulgarian".equals(lang)) {
-				lang = "bg";
-			}
-
-			locale = new Locale(lang);
-			//Locale.setDefault(locale);
-			Configuration config = new Configuration();
-			config.locale = locale;
-			getBaseContext().getResources().updateConfiguration(config, null);
-			setResult(4, data);
-		} else {
-			setResult(RESULT_OK, data);
-		}
+		setResult(RESULT_OK, data);
 		Map<String, ?> prefs = sharedPreferences.getAll();
 		Log.d(tag, "Change " + key + " to " + prefs.get(key));
 	}

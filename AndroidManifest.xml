@@ -87,7 +87,8 @@
         </activity>
         <activity
             android:name="tempest.game.pogopainter.activities.PreferencesActivity"
-            android:label="@string/settings_title" >
+            android:label="@string/settings_title"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="tempest.game.pogopainter.activities.preferences" />
 

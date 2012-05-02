@@ -434,6 +434,10 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Added: New SpeedUp bonus drawable (bonus needs to be implement)
 
 0.14.2(20120502)
++ Changed: Pogo Slots, now does not have lock button
++ Changed: In game over menu cannot click button while update scores + must wait 2 sec to click button
++ Changed: Preferences screen - added sounds & music options + getters from metrics
++ Changed: Hide unused preferences!
 + Merge threads now using only one thread
 + Extended left and right rectangles of the joystick so it is easier to 
     touch them in bigger resolutions
