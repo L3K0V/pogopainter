@@ -32,7 +32,8 @@ public class Metrics {
 
 	private boolean LeftControls;
 	
-	private boolean sounds;
+	private boolean GAME_SOUNDS;
+	private boolean GAME_MUSIC;
 
 	public Metrics() {
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -70,7 +71,8 @@ public class Metrics {
 		}
 
 		LeftControls = pref.getBoolean("CONTROLS", false);
-		sounds = pref.getBoolean("GAME_SOUNDS", true);
+		GAME_SOUNDS = pref.getBoolean("GAME_SOUNDS", true);
+		GAME_MUSIC = pref.getBoolean("GAME_MUSIC", true);
 	}
 
 	private void deathmatch(SharedPreferences pref) {
@@ -166,6 +168,10 @@ public class Metrics {
 	}
 	
 	public boolean isSounds() {
-		return sounds;
+		return GAME_SOUNDS;
+	}
+	
+	public boolean isMusic() {
+		return GAME_MUSIC;
 	}
 }

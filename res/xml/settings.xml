@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="PREFERENCES_ROOT" >
 
     <!-- Classic options -->
     <PreferenceCategory
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:key="GAME_TYPE_CLASSIC"
         android:title="@string/classic" >
         <Preference
             android:defaultValue="8"
+            android:enabled="true"
             android:key="CLASSIC_BOARD_SIZE"
-            android:enabled="false"
+            android:selectable="false"
             android:summary="8x8 or 64 cells"
             android:title="@string/classic_board_size" />
 
@@ -33,11 +36,12 @@
     <!-- Coop options -->
     <PreferenceCategory
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:key="GAME_TYPE_COOP"
         android:title="@string/coop" >
         <Preference
             android:defaultValue="8"
-            android:key="COOP_BOARD_SIZE"
             android:enabled="false"
+            android:key="COOP_BOARD_SIZE"
             android:summary="8x8 or 64 cells"
             android:title="@string/coop_board_size" />
 
@@ -62,11 +66,12 @@
     <!-- Deathmatch options -->
     <PreferenceCategory
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:key="GAME_TYPE_DEATHMATCH"
         android:title="@string/deathmatch" >
         <Preference
             android:defaultValue="8"
-            android:key="DEATHMATCH_BOARD_SIZE"
             android:enabled="false"
+            android:key="DEATHMATCH_BOARD_SIZE"
             android:summary="8x8 or 64 cells"
             android:title="@string/deathmatch_board_size" />
 
@@ -91,15 +96,15 @@
     </PreferenceCategory>
     <PreferenceCategory
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:title="@string/general"
-        android:key="GENERAL" >
+        android:key="GENERAL"
+        android:title="@string/general" >
 
         <!-- General -->
         <ListPreference
             android:defaultValue="red"
             android:entries="@array/player_color"
             android:entryValues="@array/player_color_values"
-            android:key="PLAYER_COLOR"/>
+            android:key="PLAYER_COLOR" />
 
         <CheckBoxPreference
             android:defaultValue="false"
@@ -108,6 +113,11 @@
             android:selectable="true"
             android:summary="@string/controls_sum"
             android:title="@string/controls" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:key="SOUNDS"
+        android:title="Sounds" >
         <CheckBoxPreference
             android:defaultValue="true"
             android:enabled="true"
@@ -115,6 +125,13 @@
             android:selectable="true"
             android:summary="@string/game_sounds_sum"
             android:title="@string/game_sounds" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:enabled="true"
+            android:key="GAME_MUSIC"
+            android:selectable="true"
+            android:summary="Background game music"
+            android:title="Game music" />
     </PreferenceCategory>
 
 </PreferenceScreen>
