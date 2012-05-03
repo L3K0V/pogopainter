@@ -41,6 +41,7 @@ public class GameOver extends Activity implements OnClickListener {
 		
 		play = (Button) findViewById(R.id.play_again);
 		play.setOnClickListener(this);
+		play.setEnabled(false);
 
 		initPlayersProgress();
 		setProgressMaxPoints();
@@ -100,13 +101,14 @@ public class GameOver extends Activity implements OnClickListener {
 							Thread.sleep(25);
 						}
 					}
-					Thread.sleep(3000);
+					Thread.sleep(500);
 					incrementRunning = false;
 				}
 				catch (Throwable t) {
 				}
 			}     
 		});
+		play.setEnabled(incrementRunning ? false : true);
 		incrementRunning = true;
 		updateProgress.start();
 	}
