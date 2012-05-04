@@ -42,28 +42,28 @@ public abstract class BonusObject {
 	}
 
 	public void draw(Canvas canvas, Paint paint, Rect bonusRectangle) {
-		if (!ifScaled) {
-			Matrix mat = new Matrix();
-			
-			// Bitmap is a square so we need only the size of the walls
-			float fullScaledSize = ((float) bonusRectangle.width()) / bonusBitmap.getWidth();
-			
-			mat.postScale(scaleSize, scaleSize);
-			
-			float left = bonusRectangle.exactCenterX() - ((scaleSize * bonusBitmap.getWidth()) / 2);
-			float top = bonusRectangle.exactCenterY() - ((scaleSize * bonusBitmap.getHeight()) / 2);
-			mat.postTranslate(left, top);
-			
-			canvas.drawBitmap(bonusBitmap, mat, paint);
-			
-			if (scaleSize < fullScaledSize) {
-				scaleSize += 0.05f;
-			} else {
-				ifScaled = true;
-			}
-		} else {
-			canvas.drawBitmap(bonusBitmap, null, bonusRectangle, paint);
-		}
+	    if (!ifScaled) {
+            Matrix mat = new Matrix();
+            
+            // Bitmap is a square so we need only the size of the walls
+            float fullScaledSize = ((float) bonusRectangle.width()) / bonusBitmap.getWidth();
+            
+            mat.postScale(scaleSize, scaleSize);
+            
+            float left = bonusRectangle.exactCenterX() - ((scaleSize * bonusBitmap.getWidth()) / 2);
+            float top = bonusRectangle.exactCenterY() - ((scaleSize * bonusBitmap.getHeight()) / 2);
+            mat.postTranslate(left, top);
+            
+            canvas.drawBitmap(bonusBitmap, mat, paint);
+            
+            if (scaleSize < fullScaledSize) {
+                    scaleSize += 0.05f;
+            } else {
+                    ifScaled = true;
+            }
+	    } else {
+	            canvas.drawBitmap(bonusBitmap, null, bonusRectangle, paint);
+	    }
 	}
 
 	public boolean ifBitmap() {
