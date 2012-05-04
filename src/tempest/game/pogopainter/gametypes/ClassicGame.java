@@ -1,7 +1,6 @@
 package tempest.game.pogopainter.gametypes;
 
 import java.util.ArrayList;
-
 import tempest.game.pogopainter.bonuses.BonusHandler;
 import tempest.game.pogopainter.bonuses.Bonuses;
 import tempest.game.pogopainter.graphics.Panel;
@@ -25,8 +24,8 @@ public class ClassicGame extends Game {
 		int classicCellNumber = m.getClassicCellNumber();
 		int playerColor = m.getPlayerColor();
 		ifSounds = m.isSounds();
-		//ifBackground = m.isBackground(); need to make under true to ifBackground
-		music = new Music(true, ifSounds);
+		ifBackground = m.isMusic(); 
+		music = new Music(ifBackground, ifSounds);
 		b = new Board(classicCellNumber);
 		time = m.getClassicGameTime();
 

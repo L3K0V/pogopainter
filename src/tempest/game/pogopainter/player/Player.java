@@ -33,12 +33,6 @@ public class Player {
 	}
 
 	public void draw(Canvas canvas, Paint paint, Rect rectangle) {
-//		Matrix mat = new Matrix();
-//		
-//		float fullScaledSize = ((float) rectangle.width()) / bitmap.getWidth();	
-//		mat.postScale(fullScaledSize, fullScaledSize);
-//		mat.postTranslate(rectangle.left, rectangle.top);
-	
 		canvas.drawBitmap(bitmap, null, rectangle, paint);
 	}
 	

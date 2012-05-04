@@ -29,7 +29,6 @@ public class PlayerAnimation {
 	}
 	
 	public Rect getCurrentPosition(Rect desireRectangle) {
-		Rect currentRect = new Rect(desireRectangle);
 		int desireLeft   = desireRectangle.left;
 		int desireTop    = desireRectangle.top;
 		int desireSize   = desireRectangle.width(); // need only 1 because desireRectangle is a square
@@ -42,27 +41,27 @@ public class PlayerAnimation {
 		
 		switch (this.dir) {
 		case LEFT:
-			currentRect.left   += movement;
-			currentRect.right  += movement;
+			desireRectangle.left   += movement;
+			desireRectangle.right  += movement;
 			break;
 		case RIGHT:
-			currentRect.left   -= movement;
-			currentRect.right  -= movement;
+			desireRectangle.left   -= movement;
+			desireRectangle.right  -= movement;
 			break;
 		case UP:
-			currentRect.top    += movement;
-			currentRect.bottom += movement;
+			desireRectangle.top    += movement;
+			desireRectangle.bottom += movement;
 			break;
 		case DOWN:
-			currentRect.top    -= movement;
-			currentRect.bottom -= movement;
+			desireRectangle.top    -= movement;
+			desireRectangle.bottom -= movement;
 			break;
 		}
 		
-		if ((currentRect.left == desireLeft) && (currentRect.top == desireTop)) {
+		if ((desireRectangle.left == desireLeft) && (desireRectangle.top == desireTop)) {
 			finishAnimation();
 		}
-		return currentRect;
+		return desireRectangle;
 	}
 	
 	private void finishAnimation() {
