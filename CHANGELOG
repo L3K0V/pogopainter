@@ -442,3 +442,6 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Extended left and right rectangles of the joystick so it is easier to 
     touch them in bigger resolutions
 + Extracted all music releated stuff in new class Music
+
+0.14.3(20120505)
++ Project build with ant for coverage test reports
