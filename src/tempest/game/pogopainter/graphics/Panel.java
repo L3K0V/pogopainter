@@ -144,6 +144,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		_bitmapCache.put(R.drawable.bonus_arrow,      BitmapFactory.decodeResource(getResources(), R.drawable.bonus_arrow));
 		_bitmapCache.put(R.drawable.bonus_teleport,   BitmapFactory.decodeResource(getResources(), R.drawable.bonus_teleport));
 		_bitmapCache.put(R.drawable.bonus_checkpoint, BitmapFactory.decodeResource(getResources(), R.drawable.bonus_checkpoint));
+		_bitmapCache.put(R.drawable.bonus_cleaner,    BitmapFactory.decodeResource(getResources(), R.drawable.bonus_cleaner));
 		_bitmapCache.put(R.drawable.joystick,         BitmapFactory.decodeResource(getResources(), R.drawable.joystick));
 		_bitmapCache.put(R.drawable.joystick_clicked, BitmapFactory.decodeResource(getResources(), R.drawable.joystick_clicked));
 		_bitmapCache.put(R.drawable.joystick_action,  BitmapFactory.decodeResource(getResources(), R.drawable.joystick_action));
@@ -368,6 +369,10 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 			break;
 		case ARROW:
 			bonus.setBitmap(_bitmapCache.get(R.drawable.bonus_arrow));
+		case CLEANER:
+			if (!bonus.ifBitmap()) {
+				bonus.setBitmap(_bitmapCache.get(R.drawable.bonus_cleaner));
+			}
 		case NONE:
 			break;
 		}
