@@ -13,13 +13,13 @@ public class Checkpoint extends BonusObject {
 	}
 
 	@Override
-	public void setBonusEffect(Player p, Board b) {
-		Score score = new Score(b, p);
+	public void setBonusEffect(Player player, Board board) {
+		Score score = new Score(board, player);
 		
 		checkpointScore = score.Calculate();
-		p.changeScore(checkpointScore);
+		player.changeScore(checkpointScore);
 		score.reset();
-		b.setPlayerColorOnCell(p);
+		board.setPlayerColorOnCell(player);
 	}
 
 	public int getScoreFromCheckpoint() {

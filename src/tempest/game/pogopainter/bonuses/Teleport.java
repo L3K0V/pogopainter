@@ -10,17 +10,17 @@ public class Teleport extends BonusObject {
 	}
 	
 	@Override
-	public void setBonusEffect(Player p, Board b) {}
+	public void setBonusEffect(Player player, Board board) {}
 	
-	public void setBonusEffect(Player p, Board b, Checkpoint bonus) {
-		p.setX(bonus.getX());
-		p.setY(bonus.getY());
-		b.setPlayerColorOnCell(p);
+	public void setBonusEffect(Player player, Board board, Checkpoint bonus) {
+		player.setX(bonus.getX());
+		player.setY(bonus.getY());
+		board.setPlayerColorOnCell(player);
 		
-		p.setBonus(b.getCellAt(p.getX(), p.getY()).getBonus());
-		p.getBonus().setBonusEffect(p, b);
+		player.setBonus(board.getCellAt(player.getX(), player.getY()).getBonus());
+		player.getBonus().setBonusEffect(player, board);
 		
-		b.getCellAt(p.getX(), p.getY()).clearBonus();
+		board.getCellAt(player.getX(), player.getY()).clearBonus();
 	}
 
 }

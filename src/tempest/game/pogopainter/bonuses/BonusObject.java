@@ -70,5 +70,5 @@ public abstract class BonusObject {
 		return bonusBitmap != null;
 	}
 
-	public abstract void setBonusEffect(Player p, Board b);
+	public abstract void setBonusEffect(Player player, Board board);
 }

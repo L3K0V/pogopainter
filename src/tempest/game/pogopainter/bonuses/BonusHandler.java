@@ -29,6 +29,7 @@ public class BonusHandler {
 		rnd = new Random();
 		checkpointLimit = cpLimit;
 		otherBonusLimit = otherBLimit;
+		seedBonuses();
 	}
 
 	private void fillQueues() {
@@ -49,7 +50,7 @@ public class BonusHandler {
 		 * bonus with highest chance activates only from 4 numbers
 		 */
 		BonusObject res = null;
-		int ran = rnd.nextInt(5);
+		int ran = rnd.nextInt(6);
 		switch (ran) {
 		case 0: case 1: case 2:
 			res = new Arrow();
@@ -57,11 +58,14 @@ public class BonusHandler {
 		case 3: case 4:
 			res = new Teleport();
 			break;
+		case 5:
+			res = new Cleaner();
+			break;
 		}
 		return res;
 	}
 
-	public void seedBonuses(Bonuses[] bon) {
+	private void seedBonuses() {
 		CHECKPOINTS   = new ArrayList<Checkpoint>();
 		OTHERBONUSES = new ArrayList<BonusObject>();
 		this.queues = new BonusQueues(checkpointLimit, otherBonusLimit);
