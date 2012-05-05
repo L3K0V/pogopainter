@@ -28,6 +28,7 @@ public class Music {
 		_soundCache.put(R.raw.arrow, _pool.load(context, R.raw.arrow, 0));
 		_soundCache.put(R.raw.checkpoint, _pool.load(context, R.raw.arrow, 0));
 		_soundCache.put(R.raw.teleport, _pool.load(context, R.raw.teleport, 0));
+		_soundCache.put(R.raw.cleaner, _pool.load(context, R.raw.cleaner, 0));
 	}
 	
 	public void playSound(int id) {

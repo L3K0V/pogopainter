@@ -449,3 +449,7 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Some refactoring in Panel and some other classes
 + Cleaner bonus implement - 50%
 + Removed unused activities & class files
+
+0.14.4(20120505)
++ Cleaner bonus fully implemented and working
++ Refactored some code

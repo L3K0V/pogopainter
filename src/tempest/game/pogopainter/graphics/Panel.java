@@ -369,10 +369,12 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 			break;
 		case ARROW:
 			bonus.setBitmap(_bitmapCache.get(R.drawable.bonus_arrow));
+			break;
 		case CLEANER:
 			if (!bonus.ifBitmap()) {
 				bonus.setBitmap(_bitmapCache.get(R.drawable.bonus_cleaner));
 			}
+			break;
 		case NONE:
 			break;
 		}

@@ -1,27 +1,22 @@
 package tempest.game.pogopainter.bonuses;
 
-import java.util.List;
-
 import android.graphics.Color;
-
 import tempest.game.pogopainter.player.Player;
 import tempest.game.pogopainter.system.Board;
 
 public class Cleaner extends BonusObject {
+	
+	public Cleaner() {
+		type = Bonuses.CLEANER;
+	}
 
 	@Override
-	public void setBonusEffect(Player p, Board b) {
-	}
-	
-	public void setBonusEffect(List<Player> players, Board b) {
-		for (int x = 0; x < b.getBoardSize(); x++) {
-			for (int y = 0; y < b.getBoardSize(); y++) {
-				b.getCellAt(x, y).setColor(Color.GRAY);
+	public void setBonusEffect(Player player, Board board) {
+		for (int x = 0; x < board.getBoardSize(); x++) {
+			for (int y = 0; y < board.getBoardSize(); y++) {
+				board.getCellAt(x, y).setColor(Color.GRAY);
 			}
 		}
-		for (Player p : players) {
-			b.setPlayerColorOnCell(p);
-		}
+		board.setPlayerColorOnCell(player);
 	}
-
 }

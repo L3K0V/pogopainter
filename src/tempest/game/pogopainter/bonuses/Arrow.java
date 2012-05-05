@@ -19,30 +19,30 @@ public class Arrow extends BonusObject {
 	}
 
 	@Override
-	public void setBonusEffect(Player p, Board b) {
-		int playerX = p.getX();
-		int playerY = p.getY();
-		int bSize = b.getBoardSize();
+	public void setBonusEffect(Player player, Board board) {
+		int playerX = player.getX();
+		int playerY = player.getY();
+		int bSize = board.getBoardSize();
 
 		switch (state) {
 		case 1: //RIGHT
 			for (; playerX < bSize; playerX++) {
-				b.getCellAt(playerX, playerY).setColor(p.getColor());
+				board.getCellAt(playerX, playerY).setColor(player.getColor());
 			}
 			break;
 		case 2: //DOWN
 			for (; playerY < bSize; playerY++) {
-				b.getCellAt(playerX, playerY).setColor(p.getColor());
+				board.getCellAt(playerX, playerY).setColor(player.getColor());
 			}
 			break;
 		case 3: //LEFT
 			for (; playerX >= 0; playerX--) {
-				b.getCellAt(playerX, playerY).setColor(p.getColor());
+				board.getCellAt(playerX, playerY).setColor(player.getColor());
 			}
 			break;
 		case 4: //UP
 			for (; playerY >= 0; playerY--) {
-				b.getCellAt(playerX, playerY).setColor(p.getColor());
+				board.getCellAt(playerX, playerY).setColor(player.getColor());
 			}
 			break;
 		}

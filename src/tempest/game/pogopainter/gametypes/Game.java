@@ -3,7 +3,6 @@ package tempest.game.pogopainter.gametypes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import tempeset.game.pogopainter.R;
 import tempest.game.pogopainter.activities.CanvasActivity;
 import tempest.game.pogopainter.bonuses.BonusHandler;
@@ -24,7 +23,7 @@ import tempest.game.pogopainter.system.Music;
 import android.graphics.Color;
 
 public abstract class Game {
-	protected Board b;
+	protected Board board;
 	protected Panel _panel;
 	protected int time = 1000;
 	protected BonusHandler bHandler;
@@ -104,7 +103,7 @@ public abstract class Game {
 	
 	public boolean checkDir(Direction dir, Player player) {
 		boolean res = false;
-		int boardSize = b.getBoardSize();
+		int boardSize = board.getBoardSize();
 		boardSize --;
 		switch(dir) {
 		case RIGHT:
@@ -177,7 +176,7 @@ public abstract class Game {
 		if (bonus == null) {
 			return;
 		}
-		playMusic(bonus);
+		playBonusMusic(bonus);
 		if (bonus.getType() == Bonuses.TELEPORT) {
 			Random rnd = new Random();
 			Checkpoint cp;
@@ -185,16 +184,16 @@ public abstract class Game {
 			if (checkpoints.size() > 0) {
 				cp = checkpoints.get(rnd.nextInt(checkpoints.size()));
 				Teleport tp = (Teleport) bonus;
-				tp.setBonusEffect(player, b, cp);
+				tp.setBonusEffect(player, board, cp);
 				checkpoints.remove(cp);
 				player.setBonus(null);
 			}
 		} else {
-			bonus.setBonusEffect(player, b);
+			bonus.setBonusEffect(player, board);
 		}
 	}
 
-	private void playMusic(BonusObject bonus) {
+	private void playBonusMusic(BonusObject bonus) {
 		switch(bonus.getType()) {
 		case TELEPORT :
 			music.playSound(R.raw.teleport);
@@ -205,6 +204,9 @@ public abstract class Game {
 		case CHECKPOINT :
 			music.playSound(R.raw.checkpoint);
 			break;
+		case CLEANER :
+			music.playSound(R.raw.cleaner);
+			break;
 		}
 	}
 
@@ -213,7 +215,7 @@ public abstract class Game {
 	}
 	
 	public Board getBoard() {
-		return b;
+		return board;
 	}
 
 	public int getTime() {
@@ -243,7 +245,7 @@ public abstract class Game {
 			finishGame();
 		} else {
 			for (Player pl: PLAYERS) {
-				move(b, pl, pl.getBehaviour().getNextDirection());
+				move(board, pl, pl.getBehaviour().getNextDirection());
 			}
 			movedPlayers.clear();
 			bHandler.update();
