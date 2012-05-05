@@ -447,3 +447,5 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Project build with ant for coverage test reports
 + Now working option for background Music
 + Some refactoring in Panel and some other classes
++ Cleaner bonus implement - 50%
++ Removed unused activities & class files
