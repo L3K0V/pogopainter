@@ -9,7 +9,6 @@ public class Cell {
 	private int y;
 	private int color;
 	private BonusObject bonus;
-	private boolean playerOnCell;
 	
 	public Cell(int x, int y) {
 		this.x = x;
@@ -53,13 +52,5 @@ public class Cell {
 	
 	public void clearBonus() {
 		this.bonus = null;
-	}
-
-	public boolean isPlayerOnCell() {
-		return playerOnCell;
-	}
-
-	public void setPlayerOnCell(boolean playerOnCell) {
-		this.playerOnCell = playerOnCell;
 	}
 }
