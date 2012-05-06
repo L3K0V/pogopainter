@@ -459,3 +459,4 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Add bonus abstract method to bonusObject
 + Stun bonus initialized
 + Refactored some code
++ Fixed the most important Board function... LOL (Tests FTW)
