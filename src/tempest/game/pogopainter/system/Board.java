@@ -26,7 +26,7 @@ public class Board {
 	
 	public Cell getCellAt(int x, int y) {
 		Cell cell = null;
-		if ((x < (cells-1) || (x > 0)) || (y < (cells-1) || (y > 0)))		
+		if ((x < (cells-1) || (x > 0)) && (y < (cells-1) || (y > 0)))		
 			cell = field.get(x + y*cells);
 		return cell;
 	}
