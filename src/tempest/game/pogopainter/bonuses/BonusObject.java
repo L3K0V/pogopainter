@@ -1,5 +1,7 @@
 package tempest.game.pogopainter.bonuses;
 
+import java.util.List;
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -71,4 +73,5 @@ public abstract class BonusObject {
 	}
 
 	public abstract void setBonusEffect(Player player, Board board);
+	public abstract void setBonusEffect(List<Player> players, Board board);
 }

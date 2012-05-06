@@ -1,5 +1,7 @@
 package tempest.game.pogopainter.bonuses;
 
+import java.util.List;
+
 import tempest.game.pogopainter.player.Player;
 import tempest.game.pogopainter.system.Board;
 import tempest.game.pogopainter.system.Score;
@@ -25,4 +27,8 @@ public class Checkpoint extends BonusObject {
 	public int getScoreFromCheckpoint() {
 		return checkpointScore;
 	}
+
+	@Override
+	public void setBonusEffect(List<Player> players, Board board) {}
+	
 }

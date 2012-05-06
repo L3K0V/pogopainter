@@ -13,21 +13,19 @@ public class Player {
 	private int y;
 	private int color;
 	private BonusObject bonus;
-	private int speed;
 	private Behavior behaviour;
 	private int points;
 	private Bitmap bitmap = null;
-	private State playerState;
+	private PlayerState playerState;
 	private PlayerAnimation animation;
 
 	public Player(int x, int y, int color,int points, Behavior control) {
 		this.x = x;
 		this.y = y;
 		this.color = color;
-		this.speed = 1;
 		this.behaviour = control;
 		this.points = points;
-		this.playerState = State.JUMP;
+		this.playerState = PlayerState.NORMAL;
 		this.behaviour.setPlayer(this);
 		this.animation = new PlayerAnimation();
 	}
@@ -48,10 +46,6 @@ public class Player {
 		this.y = y;
 	}
 
-	public void setSpeed(int speed) {
-		this.speed = speed;
-	}
-
 	public int getX() {
 		return this.x;
 	}
@@ -62,10 +56,6 @@ public class Player {
 
 	public int getColor() {
 		return this.color;
-	}
-
-	public int getSpeed() {
-		return this.speed;
 	}
 
 	public void changeScore(int score) {
@@ -88,8 +78,12 @@ public class Player {
 		return behaviour;
 	}
 	
-	public State getPlayerState() {
+	public PlayerState getState() {
 		return playerState;
+	}
+	
+	public void setState(PlayerState st) {
+		this.playerState = st;
 	}
 	
 	public void startMoving(Direction dir) {
