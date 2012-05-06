@@ -24,10 +24,6 @@ public class Checkpoint extends BonusObject {
 		board.setPlayerColorOnCell(player);
 	}
 
-	public int getScoreFromCheckpoint() {
-		return checkpointScore;
-	}
-
 	@Override
 	public void setBonusEffect(List<Player> players, Board board) {}
 	
