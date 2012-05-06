@@ -453,3 +453,9 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 0.14.4(20120505)
 + Cleaner bonus fully implemented and working
 + Refactored some code
+
+0.14.5(20120506)
++ Fix cleaner bonus now working properly when some of the AI take it
++ Add bonus abstract method to bonusObject
++ Stun bonus initialized
++ Refactored some code

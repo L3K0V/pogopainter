@@ -1,11 +1,11 @@
 package tempest.game.pogopainter.player;
 
-public enum State {
-	STUN(0), JUMP(1), RUN(2);
+public enum PlayerState {
+	STUN(0), NORMAL(1);
 	
 	private int state;
 	
-	private State(int state) {
+	private PlayerState(int state) {
 		this.state = state;
 	}
 	

@@ -14,6 +14,7 @@ import tempest.game.pogopainter.graphics.Panel;
 import tempest.game.pogopainter.player.AIBehavior;
 import tempest.game.pogopainter.player.Difficulty;
 import tempest.game.pogopainter.player.Player;
+import tempest.game.pogopainter.player.PlayerState;
 import tempest.game.pogopainter.player.UserBehavior;
 import tempest.game.pogopainter.system.Board;
 import tempest.game.pogopainter.system.Cell;
@@ -23,8 +24,9 @@ import tempest.game.pogopainter.system.Music;
 import android.graphics.Color;
 
 public abstract class Game {
+	protected static int STUN_TIME;
 	protected Board board;
-	protected Panel _panel;
+	protected Panel panel;
 	protected int time = 1000;
 	protected BonusHandler bHandler;
 	protected Music	music;
@@ -32,44 +34,70 @@ public abstract class Game {
 	protected List<Player> movedPlayers;
 	protected boolean ifSounds;
 	protected boolean ifBackground;
+	protected int stunTimer = -1;
+	
 	protected abstract void initFields();
 	
 	protected void initPlayerColors(int classicCellNumber, int playerColor) {
 		switch (playerColor) {
 		case Color.RED:
-			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new UserBehavior(_panel)));
-			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED,
+					0, new UserBehavior(panel)));
+			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 
+					0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(0, 0, Color.GREEN, 
+					0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 
+					0, new AIBehavior(Difficulty.EASY, this)));
 			break;
 		case Color.BLUE:
-			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new UserBehavior(_panel)));
-			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
+					0, new UserBehavior(panel)));
+			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED,
+					0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(0, 0, Color.GREEN,
+					0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(classicCellNumber - 1,
+					0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this)));
 			break;
 		case Color.GREEN:
-			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, new UserBehavior(_panel)));
-			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(0, 0, Color.GREEN,
+					0, new UserBehavior(panel)));
+			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED,
+					0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
+					0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
+					0, new AIBehavior(Difficulty.EASY, this)));
 			break;
 		case Color.YELLOW:
-			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new UserBehavior(_panel)));
-			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
+					0, new UserBehavior(panel)));
+			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED,
+					0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
+					0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(0, 0, Color.GREEN,
+					0, new AIBehavior(Difficulty.EASY, this)));
 			break;
 		default:
-			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED, 0, new UserBehavior(_panel)));
-			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(0, 0, Color.GREEN, 0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED,
+					0, new UserBehavior(panel)));
+			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
+					0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(0, 0, Color.GREEN,
+					0, new AIBehavior(Difficulty.EASY, this)));
+			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
+					0, new AIBehavior(Difficulty.EASY, this)));
 			break;
 		}
 	}
 	
 	public void move(Board b, Player player, Direction dir) {
+		if (player.getState() == PlayerState.STUN) {
+			return;
+		}
+		movedPlayers.add(player);
 		switch (dir) {
 		case RIGHT:
 			if (checkDir(dir, player)) {
@@ -98,7 +126,6 @@ public abstract class Game {
 		}
 		b.setPlayerColorOnCell(player);
 		applyBonusEffect(player, b);
-		movedPlayers.add(player);
 	}
 	
 	public boolean checkDir(Direction dir, Player player) {
@@ -188,6 +215,13 @@ public abstract class Game {
 				checkpoints.remove(cp);
 				player.setBonus(null);
 			}
+		} else if (bonus.getType() == Bonuses.CLEANER) {
+			bonus.setBonusEffect(movedPlayers, board);
+		} else if (bonus.getType() == Bonuses.STUN) {
+			List<Player> stunPl = new ArrayList<Player>(PLAYERS);
+			stunPl.remove(player);
+			bonus.setBonusEffect(stunPl, board);
+			stunTimer = 0;
 		} else {
 			bonus.setBonusEffect(player, board);
 		}
@@ -206,6 +240,9 @@ public abstract class Game {
 			break;
 		case CLEANER :
 			music.playSound(R.raw.cleaner);
+			break;
+		case STUN :
+			music.playSound(R.raw.stun);
 			break;
 		}
 	}
@@ -240,6 +277,22 @@ public abstract class Game {
 		return bHandler;
 	}
 	
+	public Music getMusic() {
+		return music;
+	}
+	
+	private void manageStun() {
+		if (stunTimer >= 0) {
+			stunTimer++;
+			if (stunTimer == STUN_TIME) {
+				for(Player pl : PLAYERS) {
+					pl.setState(PlayerState.NORMAL);
+				}
+				stunTimer = -1;
+			}
+		}
+	}
+
 	public void update() {
 		if (time == 0) {
 			finishGame();
@@ -251,17 +304,14 @@ public abstract class Game {
 			bHandler.update();
 		}
 		time--;
+		manageStun();
 	}
 
 	private void finishGame() {
-		_panel.stopThreads();
-		_panel.surfaceDestroyed(_panel.getHolder());
-		_panel.clearFocus();
+		panel.stopThreads();
+		panel.surfaceDestroyed(panel.getHolder());
+		panel.clearFocus();
 		CanvasActivity.showResults = true;
-		_panel.getOwner().finish();
-	}
-	
-	public Music getMusic() {
-		return music;
+		panel.getOwner().finish();
 	}
 }

@@ -42,23 +42,19 @@ public class BonusHandler {
 	}
 
 	private BonusObject getRandomBonus() {
-		/*
-		 * random number form 1 to 10
-		 * bonus with least chance activates only from 1 number
-		 * bonus with second least chance activates only from 2 numbers
-		 * bonus with second highest chance activates only from 3 numbers
-		 * bonus with highest chance activates only from 4 numbers
-		 */
 		BonusObject res = null;
-		int ran = rnd.nextInt(6);
+		int ran = rnd.nextInt(8);
 		switch (ran) {
 		case 0: case 1: case 2:
 			res = new Arrow();
 			break;
-		case 3: case 4:
+		case 3:
 			res = new Teleport();
 			break;
-		case 5:
+		case 4: case 5:
+			res = new Stun();
+			break;
+		case 6: case 7:
 			res = new Cleaner();
 			break;
 		}
