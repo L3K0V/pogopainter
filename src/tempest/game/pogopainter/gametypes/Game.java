@@ -27,7 +27,7 @@ public abstract class Game {
 	protected static int STUN_TIME;
 	protected Board board;
 	protected Panel panel;
-	protected int time = 1000;
+	protected int time;
 	protected BonusHandler bHandler;
 	protected Music	music;
 	protected List<Player> PLAYERS;
@@ -41,56 +41,65 @@ public abstract class Game {
 	protected void initPlayerColors(int classicCellNumber, int playerColor) {
 		switch (playerColor) {
 		case Color.RED:
-			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED,
-					0, new UserBehavior(panel)));
-			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 
-					0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(0, 0, Color.GREEN, 
-					0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 
-					0, new AIBehavior(Difficulty.EASY, this)));
+			initRedUser(classicCellNumber);
 			break;
 		case Color.BLUE:
-			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
-					0, new UserBehavior(panel)));
-			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED,
-					0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(0, 0, Color.GREEN,
-					0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(classicCellNumber - 1,
-					0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this)));
+			initBlueUser(classicCellNumber);
 			break;
 		case Color.GREEN:
-			PLAYERS.add(new Player(0, 0, Color.GREEN,
-					0, new UserBehavior(panel)));
-			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED,
-					0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
-					0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
-					0, new AIBehavior(Difficulty.EASY, this)));
+			initGreenUser(classicCellNumber);
 			break;
 		case Color.YELLOW:
-			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
-					0, new UserBehavior(panel)));
-			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED,
-					0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
-					0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(0, 0, Color.GREEN,
-					0, new AIBehavior(Difficulty.EASY, this)));
+			initYellowUser(classicCellNumber);
 			break;
 		default:
-			PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED,
-					0, new UserBehavior(panel)));
-			PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
-					0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(0, 0, Color.GREEN,
-					0, new AIBehavior(Difficulty.EASY, this)));
-			PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
-					0, new AIBehavior(Difficulty.EASY, this)));
+			initRedUser(classicCellNumber);
 			break;
 		}
+	}
+
+	private void initYellowUser(int classicCellNumber) {
+		PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
+				0, new UserBehavior(panel)));
+		PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED,
+				0, new AIBehavior(Difficulty.EASY, this)));
+		PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
+				0, new AIBehavior(Difficulty.EASY, this)));
+		PLAYERS.add(new Player(0, 0, Color.GREEN,
+				0, new AIBehavior(Difficulty.EASY, this)));
+	}
+
+	private void initGreenUser(int classicCellNumber) {
+		PLAYERS.add(new Player(0, 0, Color.GREEN,
+				0, new UserBehavior(panel)));
+		PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED,
+				0, new AIBehavior(Difficulty.EASY, this)));
+		PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
+				0, new AIBehavior(Difficulty.EASY, this)));
+		PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
+				0, new AIBehavior(Difficulty.EASY, this)));
+	}
+
+	private void initBlueUser(int classicCellNumber) {
+		PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
+				0, new UserBehavior(panel)));
+		PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED,
+				0, new AIBehavior(Difficulty.EASY, this)));
+		PLAYERS.add(new Player(0, 0, Color.GREEN,
+				0, new AIBehavior(Difficulty.EASY, this)));
+		PLAYERS.add(new Player(classicCellNumber - 1,
+				0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this)));
+	}
+
+	private void initRedUser(int classicCellNumber) {
+		PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED,
+				0, new UserBehavior(panel)));
+		PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 
+				0, new AIBehavior(Difficulty.EASY, this)));
+		PLAYERS.add(new Player(0, 0, Color.GREEN, 
+				0, new AIBehavior(Difficulty.EASY, this)));
+		PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 
+				0, new AIBehavior(Difficulty.EASY, this)));
 	}
 	
 	public void move(Board b, Player player, Direction dir) {
@@ -183,19 +192,6 @@ public abstract class Game {
 				p.setBonus(bonus);
 			}
 			clearBonus(p, b);
-			for (Checkpoint cp : bHandler.getCheckpoints()) {
-				if (p.getX() == cp.getX() && p.getY() == cp.getY()) {
-					bHandler.removeBonus(true, cp);
-					break;
-				}
-			}
-			
-			for (BonusObject other : bHandler.getOtherBonuses()) {
-				if (p.getX() == other.getX() && p.getY() == other.getY()) {
-					bHandler.removeBonus(false, other);
-					break;
-				}
-			}
 		}
 	}
 
@@ -247,8 +243,21 @@ public abstract class Game {
 		}
 	}
 
-	protected void clearBonus(Player p, Board b) {
+	private void clearBonus(Player p, Board b) {
 		b.getCellAt(p.getX(), p.getY()).clearBonus();
+		for (Checkpoint cp : bHandler.getCheckpoints()) {
+			if (p.getX() == cp.getX() && p.getY() == cp.getY()) {
+				bHandler.removeBonus(BonusHandler.CheckQueue, cp);
+				break;
+			}
+		}
+		
+		for (BonusObject other : bHandler.getOtherBonuses()) {
+			if (p.getX() == other.getX() && p.getY() == other.getY()) {
+				bHandler.removeBonus(BonusHandler.OtherQueue, other);
+				break;
+			}
+		}
 	}
 	
 	public Board getBoard() {

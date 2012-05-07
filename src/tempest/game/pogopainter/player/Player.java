@@ -30,10 +30,6 @@ public class Player {
 		this.animation = new PlayerAnimation();
 	}
 
-	public void draw(Canvas canvas, Paint paint, Rect rectangle) {
-		canvas.drawBitmap(bitmap, null, rectangle, paint);
-	}
-	
 	public void setBitmap(Bitmap bitmap) {
 		this.bitmap = bitmap;
 	}
@@ -44,6 +40,14 @@ public class Player {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public void setBonus(BonusObject b) {
+		bonus = b;
+	}
+
+	public void setState(PlayerState st) {
+		this.playerState = st;
 	}
 
 	public int getX() {
@@ -58,16 +62,8 @@ public class Player {
 		return this.color;
 	}
 
-	public void changeScore(int score) {
-		this.points += score;
-	}
-
 	public int getPoints() {
 		return this.points;
-	}
-
-	public void setBonus(BonusObject b) {
-		bonus = b;
 	}
 
 	public BonusObject getBonus() {
@@ -82,15 +78,19 @@ public class Player {
 		return playerState;
 	}
 	
-	public void setState(PlayerState st) {
-		this.playerState = st;
+	public PlayerAnimation getAnimation() {
+		return this.animation;
 	}
-	
+
+	public void changeScore(int score) {
+		this.points += score;
+	}
+
 	public void startMoving(Direction dir) {
 		this.animation.startMoving(dir);
 	}
-	
-	public PlayerAnimation getAnimation() {
-		return this.animation;
+
+	public void draw(Canvas canvas, Paint paint, Rect rectangle) {
+		canvas.drawBitmap(bitmap, null, rectangle, paint);
 	}
 }
