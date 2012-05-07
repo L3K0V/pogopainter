@@ -460,3 +460,4 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Stun bonus initialized
 + Refactored some code
 + Fixed the most important Board function... LOL (Tests FTW)
++ Fixed Teleport logic issue

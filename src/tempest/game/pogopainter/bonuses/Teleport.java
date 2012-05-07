@@ -17,11 +17,10 @@ public class Teleport extends BonusObject {
 	public void setBonusEffect(Player player, Board board, Checkpoint bonus) {
 		player.setX(bonus.getX());
 		player.setY(bonus.getY());
+		
+		bonus.setBonusEffect(player, board);
+		
 		board.setPlayerColorOnCell(player);
-		
-		player.setBonus(board.getCellAt(player.getX(), player.getY()).getBonus());
-		player.getBonus().setBonusEffect(player, board);
-		
 		board.getCellAt(player.getX(), player.getY()).clearBonus();
 	}
 
