@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import tempest.game.pogopainter.player.Player;
 import tempest.game.pogopainter.system.Board;
-import tempest.game.pogopainter.system.Direction;
 
 public class Arrow extends BonusObject {
 	private int state = 0;
@@ -98,23 +97,6 @@ public class Arrow extends BonusObject {
 
 	public int getState() {
 		return this.state;
-	}
-
-	public void setState(Direction dir) {
-		switch (dir) {
-		case RIGHT:
-			this.state = 1;
-			break;
-		case LEFT:
-			this.state = 3;
-			break;
-		case UP:
-			this.state = 4;
-			break;
-		case DOWN:
-			this.state = 2;
-			break;
-		}
 	}
 
 	@Override

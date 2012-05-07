@@ -463,3 +463,8 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Fixed Teleport logic issue
 + New game Icon
 + Refactoring Manifest file
+
+0.14.6(20120507)
++ Fixed stupid things in arrow
++ Fixed some code
++ Refactored some big methods

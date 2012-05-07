@@ -20,8 +20,8 @@ public class BonusHandler {
     private int checkpointLimit;
     private int otherBonusLimit;
     
-    private final boolean CheckQueue = true;
-    private final boolean OtherQueue = false;
+    public static final boolean CheckQueue = true;
+    public static final boolean OtherQueue = false;
 
 	public BonusHandler(Board b, List<Player> pl, int cpLimit, int otherBLimit) {
 		this.board = b;
