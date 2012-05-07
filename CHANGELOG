@@ -461,3 +461,5 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Refactored some code
 + Fixed the most important Board function... LOL (Tests FTW)
 + Fixed Teleport logic issue
++ New game Icon
++ Refactoring Manifest file
