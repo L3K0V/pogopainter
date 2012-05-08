@@ -468,3 +468,7 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Fixed stupid things in arrow
 + Fixed some code
 + Refactored some big methods
+
+0.14.7(20120508)
++ Now painting the cell under player on movement only after move aniumation is finished
++ No Cleaner clean only opponents field not your too 

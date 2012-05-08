@@ -1,6 +1,8 @@
 package tempest.game.pogopainter.graphics;
 
 import android.graphics.Rect;
+import tempest.game.pogopainter.player.Player;
+import tempest.game.pogopainter.system.Board;
 import tempest.game.pogopainter.system.Direction;
 
 public class PlayerAnimation {
@@ -8,20 +10,24 @@ public class PlayerAnimation {
 	private Direction dir;
 	private static final int step;
 	private int currentStep;
+	private Player player;
+	private Board board;
 	
 	static {
 		step = 15; // 15 pixels step for moving
 	}
 	
-	public PlayerAnimation() {
+	public PlayerAnimation(Player pl) {
 		this.isMoving = false;
 		this.dir = Direction.NONE;
 		this.currentStep = 0;
+		this.player = pl;
 	}
 	
-	public void startMoving(Direction d) {
+	public void startMoving(Direction d, Board b) {
 		this.isMoving = true;
 		this.dir = d;
+		this.board = b;
 	}
 	
 	public boolean getMoving() {
@@ -68,5 +74,6 @@ public class PlayerAnimation {
 		this.dir = Direction.NONE;
 		this.currentStep = 0;
 		this.isMoving = false;
+		this.board.setPlayerColorOnCell(player);
 	}
 }

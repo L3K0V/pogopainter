@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import tempest.game.pogopainter.bonuses.BonusObject;
 import tempest.game.pogopainter.graphics.PlayerAnimation;
+import tempest.game.pogopainter.system.Board;
 import tempest.game.pogopainter.system.Direction;
 
 public class Player {
@@ -27,7 +28,7 @@ public class Player {
 		this.points = points;
 		this.playerState = PlayerState.NORMAL;
 		this.behaviour.setPlayer(this);
-		this.animation = new PlayerAnimation();
+		this.animation = new PlayerAnimation(this);
 	}
 
 	public void setBitmap(Bitmap bitmap) {
@@ -86,8 +87,8 @@ public class Player {
 		this.points += score;
 	}
 
-	public void startMoving(Direction dir) {
-		this.animation.startMoving(dir);
+	public void startMoving(Direction dir, Board board) {
+		this.animation.startMoving(dir, board);
 	}
 
 	public void draw(Canvas canvas, Paint paint, Rect rectangle) {

@@ -102,7 +102,7 @@ public abstract class Game {
 				0, new AIBehavior(Difficulty.EASY, this)));
 	}
 	
-	public void move(Board b, Player player, Direction dir) {
+	public void move(Board board, Player player, Direction dir) {
 		if (player.getState() == PlayerState.STUN) {
 			return;
 		}
@@ -110,31 +110,30 @@ public abstract class Game {
 		switch (dir) {
 		case RIGHT:
 			if (checkDir(dir, player)) {
-				player.startMoving(dir);
+				player.startMoving(dir, board);
 				player.setX(player.getX() + 1);
 			}
 			break;
 		case UP:
 			if (checkDir(dir, player)) {
-				player.startMoving(dir);
+				player.startMoving(dir, board);
 				player.setY(player.getY() -1);
 			}
 			break;
 		case LEFT:
 			if (checkDir(dir, player)) {
-				player.startMoving(dir);
+				player.startMoving(dir, board);
 				player.setX(player.getX() -1);
 			}
 			break;
 		case DOWN:
 			if (checkDir(dir, player)) {
-				player.startMoving(dir);
+				player.startMoving(dir, board);
 				player.setY(player.getY() +1);	
 			}
 			break;
 		}
-		b.setPlayerColorOnCell(player);
-		applyBonusEffect(player, b);
+		applyBonusEffect(player, board);
 	}
 	
 	public boolean checkDir(Direction dir, Player player) {
