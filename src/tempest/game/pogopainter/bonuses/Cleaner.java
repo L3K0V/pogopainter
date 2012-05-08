@@ -17,9 +17,18 @@ public class Cleaner extends BonusObject {
 
 	@Override
 	public void setBonusEffect(List<Player> players, Board board) {
+		int playerColor = 0;
+		for (Player pl: players) {
+			if ((pl.getX() == x) && (pl.getY() == y)) {
+				playerColor = pl.getColor();
+			}
+		}
+		
 		for (int x = 0; x < board.getBoardSize(); x++) {
 			for (int y = 0; y < board.getBoardSize(); y++) {
-				board.getCellAt(x, y).setColor(Color.GRAY);
+				if (playerColor != board.getCellAt(x, y).getColor()) {
+					board.getCellAt(x, y).setColor(Color.GRAY);
+				}
 			}
 		}
 		for (Player pl: players) {
