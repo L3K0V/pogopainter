@@ -68,17 +68,16 @@ public class BonusHandler {
 		fillQueues();
 	}
 
-	public void update() {
-		putBonus();
-		fillQueues();
-		for (BonusObject bo : OTHERBONUSES) {
-			if (bo.getType() == Bonuses.ARROW) {
-				Arrow aw = (Arrow) bo;
-				aw.changeState();
+	private boolean checkCurrentPosition(int x, int y) {
+		boolean canPutBonus = true;
+		for (Player p : players) {
+			if (p.getX() == x && p.getY() == y) {
+				canPutBonus = false;
 			}
 		}
+		return canPutBonus;
 	}
-	
+
 	public void initialBonuses() {
 		while ((CHECKPOINTS.size() != checkpointLimit) && (OTHERBONUSES.size() != otherBonusLimit)) {
 			while (true) {
@@ -143,49 +142,6 @@ public class BonusHandler {
 		}
 	}
 
-	private boolean checkCurrentPosition(int x, int y) {
-		boolean canPutBonus = true;
-		for (Player p : players) {
-			if (p.getX() == x && p.getY() == y) {
-				canPutBonus = false;
-			}
-		}
-		return canPutBonus;
-	}
-
-	public boolean checkPlayerOnBonus(Player player, BonusObject bonus) {
-		boolean sure = false;
-		if (player.getX() == bonus.getX() && player.getY() == bonus.getY()) {
-			sure = true;
-		}
-		return sure;
-	}
-
-	public boolean checkArrowForGivingPoints(Arrow arrow) {
-		boolean sure = true;
-		int x = arrow.getX();
-		int y = arrow.getY();
-		switch (arrow.getState()) {
-		case 1:
-			if (x == 7) {sure = false;}break;
-		case 2:
-			if (y == 7) {sure = false;}break;
-		case 3:
-			if (x == 0) {sure = false;}break;
-		case 4:
-			if (y == 0) {sure = false;}break;
-		}
-		return sure;	
-	}
-
-	public List<Checkpoint> getCheckpoints() {
-		return CHECKPOINTS;
-	}
-
-	public List<BonusObject> getOtherBonuses() {
-		return OTHERBONUSES;
-	}
-	
 	public void removeBonus(boolean ifCP, BonusObject bonus) {
 		if (ifCP) {
 			if (CHECKPOINTS.size() == checkpointLimit) {
@@ -202,6 +158,25 @@ public class BonusHandler {
 			}
 			OTHERBONUSES.remove(bonus);
 		}
+	}
+
+	public void update() {
+		putBonus();
+		fillQueues();
+		for (BonusObject bo : OTHERBONUSES) {
+			if (bo.getType() == Bonuses.ARROW) {
+				Arrow aw = (Arrow) bo;
+				aw.changeState();
+			}
+		}
+	}
+
+	public List<Checkpoint> getCheckpoints() {
+		return CHECKPOINTS;
+	}
+
+	public List<BonusObject> getOtherBonuses() {
+		return OTHERBONUSES;
 	}
 }
 
@@ -288,13 +263,5 @@ class BonusQueues {
 		case 4:
 			if (canTakeOth2 != timeDelay) { canTakeOth2++; } break;
 		}
-	}
-	
-	public LinkedList<Checkpoint> getCheckpoints() {
-		return CHECKPOINTS;
-	}
-	
-	public LinkedList<BonusObject> getOtherBonuses() {
-		return OtherBONUSES;
 	}
 }
