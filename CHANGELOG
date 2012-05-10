@@ -471,4 +471,9 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 
 0.14.7(20120508)
 + Now painting the cell under player on movement only after move aniumation is finished
-+ No Cleaner clean only opponents field not your too 
++ No Cleaner clean only opponents field not your too
+
+0.14.8(20120510)
++ Added: stun indicator when players are stuned!
++ New: AI Mechanics more details later...
++ Fixed some core methods
