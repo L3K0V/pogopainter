@@ -1,13 +1,17 @@
 package tempest.game.pogopainter.player;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+
+import android.graphics.Color;
 
 import tempest.game.pogopainter.bonuses.Arrow;
 import tempest.game.pogopainter.bonuses.BonusObject;
 import tempest.game.pogopainter.bonuses.Bonuses;
 import tempest.game.pogopainter.bonuses.Checkpoint;
+import tempest.game.pogopainter.bonuses.Cleaner;
 import tempest.game.pogopainter.bonuses.Teleport;
 import tempest.game.pogopainter.gametypes.Game;
 import tempest.game.pogopainter.system.Board;
@@ -31,20 +35,21 @@ import tempest.game.pogopainter.system.Score;
 public class AIBehavior implements Behavior {
 	private Difficulty AIdifficult;
 	private Game actions;
-	private Direction currentDir = Direction.NONE;
-	private Checkpoint random    = null;
-	private Arrow arrow          = null;
-	private Teleport tp          = null;
-	private BonusObject followCP = null;
+	private Direction currentDirection = Direction.NONE;
+	private Direction nextDirection    = Direction.NONE;
+	private BonusObject bonus = null;
 
 	private Random rnd = new Random();
 	private boolean following = false;
 	private Score score       = null;
 	private Player AI;
-	
-	private List<Arrow> arrows;
-	private List<Teleport> teleports;
-	
+
+	private List<BonusObject> checkpoints;
+	private List<BonusObject> arrows;
+	private List<BonusObject> teleports;
+	private List<BonusObject> allBonuses;
+	private List<BonusObject> cleaners;
+	private List<BonusObject> stuns;
 
 	/**
 	 * Use {@link #AIBehavior(Difficulty, Game)} to attach behavior to AI
@@ -70,140 +75,199 @@ public class AIBehavior implements Behavior {
 	 * @param randomNumber random number, chance to take some bonuses
 	 */
 
-	public void easy(Board b,Player AI, int randomNumber) {
-		Direction nextDir = Direction.NONE;
+	public void easy(Board b,Player AI) {
 		score = new Score(b, AI);
 
-		int pointsToFollow = 5;
-
-		List<Checkpoint> checkpoints = actions.getBonusHandler().getCheckpoints();
-		arrows = new ArrayList<Arrow>();
-		teleports = new ArrayList<Teleport>();
-		
-		fillBonusLitstByTypes();
-
-		getFreshCheckpointTarget(checkpoints);
-		getFreshArrowTarget();
-		getFreshTeleportTarget();
-
-		nextDir = Direction.values()[rnd.nextInt(4)+1];
-
-		if (!actions.checkDir(nextDir, AI) && !following) {
-			getNewFreshDirection(b, AI, nextDir);
+		if (checkpoints == null) {
+			checkpoints = new ArrayList<BonusObject>();
+			arrows = new ArrayList<BonusObject>();
+			teleports = new ArrayList<BonusObject>();
+			allBonuses = new ArrayList<BonusObject>();
+			cleaners = new ArrayList<BonusObject>();
+			stuns = new ArrayList<BonusObject>();
 		}
-		if (random != null && actions.getBonusHandler().checkPlayerOnBonus(AI, random)) {
+
+		refreshBonusLists();
+
+		if (score.Calculate() >= 6 && checkpoints.size() > 0) {
+			if (AI.getBonus() != null && AI.getBonus().getType() == Bonuses.TELEPORT) {
+				getNearestBonus(checkpoints);
+				if (!isAINearestToBonus(bonus)) {
+					actions.triggerBonus(AI, AI.getBonus());
+				} else {
+					following = true;
+				}
+			}
+			getNearestBonus(checkpoints);
+			following = true;
+		} else if (teleports.size() > 0) {
+			getNearestBonus(teleports);
+			following = true;
+		} else if (stuns.size() > 0) {
+			getNearestBonus(stuns);
+			following = true;
+		} else if (arrows.size() > 0) {
+			getNearestBonus(arrows);
+			following = true;
+		} else if (naturalCells() >= 18 && cleaners.size() > 0) {
+			getNearestBonus(cleaners);
+			following = true;
+		}
+
+		if (bonus != null && !isAINearestToBonus(bonus)) {
+			getNearestBonus(allBonuses);
+			following = true;
+		}
+
+		if ((bonus != null && bonus.getType() == Bonuses.ARROW) && !shouldAIGetArrow(AI, (Arrow) bonus)) {
 			following = false;
 		}
 
-		if (teleports.size() > 0 && tp != null && AI.getBonus() == null) {
-			nextDir = getTeleportDirectionForClosestPlayer(AI, nextDir);
-		} else 
-		
-		// CHECKPOINTS
-		if (checkpoints.size() > 1 && !following && score.Calculate() >= pointsToFollow) {
-			nextDir = setClosestCheckpointDirection(AI, checkpoints);
-		} else if (checkpoints.size() > 0 && !actions.getBonusHandler().checkPlayerOnBonus(AI, random) && score.Calculate() >= pointsToFollow) {
-			nextDir = useTeleportOrFollowCheckpoint(b, AI, nextDir);
-			
-		// ARROWS
-		} else if (arrows.size() > 1) {
-			nextDir = getArrowDirectionFromClosestPlayer(AI, nextDir);
-		} else if (arrows.size() > 0) {
-			if (shouldAIGetArrow(AI, arrow)) {
-				nextDir = getNextDirectionToBonus(AI, arrow);
-			}
+		if (following && allBonuses.contains(bonus)) {
+			getNextDirectionToBonus();
 		} else {
-			getNewFreshDirection(b, AI, nextDir);
+			following = false;
+			getNewFreshDirection(b, AI, currentDirection);
 		}
-		setDirection(nextDir);
 	}
 
-	private Direction setClosestCheckpointDirection(Player AI,
-			List<Checkpoint> checkpoints) {
-		Direction nextDir;
-		for (Player p : actions.getPlayers()) {
-			if (calcDistance(p, random.getX(), random.getY()) < calcDistance(AI, random.getX(), random.getX())) {
-				while (random == followCP) {
-					followCP = checkpoints.get(rnd.nextInt(checkpoints.size()));
+	private boolean isAINearestToBonus(BonusObject bonus) {
+		boolean result = true;
+		List<Player> otherPlayers = new ArrayList<Player>(actions.getPlayers());
+		otherPlayers.remove(AI);
+
+		for (Player otherAI: otherPlayers) {
+			if (calcDistance(AI, bonus.getX(), bonus.getY()) > 
+			calcDistance(otherAI, bonus.getX(), bonus.getY())) {
+				result = false;
+			}
+		}
+		return result;
+	}
+
+	private int naturalCells() {
+		int result = actions.getBoard().getBoardSize();
+		for (int x = 0; x < actions.getBoard().getBoardSize(); x++) {
+			for (int y = 0; y < actions.getBoard().getBoardSize(); y++) {
+				if (actions.getBoard().getCellAt(x, y).getColor() == Color.GRAY) {
+					result++;
 				}
-				random = (Checkpoint) followCP;
 			}
 		}
-		nextDir = getNextDirectionToBonus(AI, random);
-		return nextDir;
+		return result;
 	}
 
-	private Direction useTeleportOrFollowCheckpoint(Board b, Player AI,
-			Direction nextDir) {
-		boolean teleport2cp = false;
-		for (Player p : actions.getPlayers()) {
-			if (calcDistance(p, random.getX(), random.getY()) < calcDistance(AI, random.getX(), random.getY())) {
-				teleport2cp = true;
-			}
+	public boolean checkPlayerOnBonus(Player player, BonusObject bonus) {
+		boolean sure = false;
+		if (bonus == null) {
+			sure =  false;
+		} else if (player.getX() == bonus.getX() && player.getY() == bonus.getY()) {
+			sure = true;
 		}
-		if (teleport2cp && AI.getBonus() != null && score.Calculate() >= 10) {
-			actions.triggerBonus(AI, AI.getBonus());
-			nextDir = getNewFreshDirection(b, AI, nextDir);
-		}
-		nextDir = getNextDirectionToBonus(AI, random);
-		following  = true;
-		return nextDir;
+		return sure;
 	}
 
-	private void getFreshTeleportTarget() {
-		if (teleports.size() > 0 && !teleports.contains(tp)) {
-			tp = teleports.get(rnd.nextInt(teleports.size()));
+	public boolean checkArrowForGivingPoints(Arrow arrow) {
+		boolean sure = true;
+		int x = arrow.getX();
+		int y = arrow.getY();
+		switch (arrow.getState()) {
+		case 1:
+			if (x == 7) {sure = false;}break;
+		case 2:
+			if (y == 7) {sure = false;}break;
+		case 3:
+			if (x == 0) {sure = false;}break;
+		case 4:
+			if (y == 0) {sure = false;}break;
 		}
+		return sure;	
 	}
 
-	private void getFreshArrowTarget() {
-		if (arrows.size() > 0 && !arrows.contains(arrow)) {
-			arrow = arrows.get(rnd.nextInt(arrows.size()));
-		}
-	}
-
-	private void getFreshCheckpointTarget(List<Checkpoint> checkpoints) {
-		if (checkpoints.size() > 0 && !checkpoints.contains(random)) {
-			random = checkpoints.get(rnd.nextInt(checkpoints.size()));
-			followCP = random;
-		}
-	}
-
-	private void fillBonusLitstByTypes() {
+	private void refreshBonusLists() {
+		clearAllLists();
 		for (BonusObject bo : actions.getBonusHandler().getOtherBonuses()) {
-			if (bo.getType() == Bonuses.ARROW) {
-				arrows.add((Arrow) bo);
-			} else if (bo.getType() == Bonuses.TELEPORT) {
-				teleports.add((Teleport) bo);
+			switch (bo.getType()) {
+			case ARROW:
+				arrows.add(bo);
+				break;
+			case TELEPORT:
+				teleports.add(bo);
+				break;
+			case CLEANER:
+				cleaners.add(bo);
+				break;
+			case STUN:
+				stuns.add(bo);
+				break;
 			}
+		}
+		for (BonusObject bo : actions.getBonusHandler().getCheckpoints()) {
+			checkpoints.add((Checkpoint) bo);
+		}
+		mergeAllLists();
+	}
+
+	private void mergeAllLists() {
+		//allBonuses.addAll(checkpoints);
+		allBonuses.addAll(arrows);
+		allBonuses.addAll(teleports);
+		allBonuses.addAll(cleaners);
+		allBonuses.addAll(stuns);
+	}
+
+	private void clearAllLists() {
+		arrows.clear();
+		teleports.clear();
+		allBonuses.clear();
+		checkpoints.clear();
+		cleaners.clear();
+		stuns.clear();
+	}
+
+	private void getNewFreshBonus(Bonuses freshBonus) {
+		switch (freshBonus) {
+		case CHECKPOINT:
+			if (checkpoints.size() > 0 && !following) {
+				bonus = checkpoints.get(rnd.nextInt(checkpoints.size()));
+			}
+			break;
+		case ARROW:
+			if (arrows.size() > 0 && !following) {
+				bonus = arrows.get(rnd.nextInt(arrows.size()));
+			}
+			break;
+		case TELEPORT: 
+			if (teleports.size() > 0 && !following) {
+				bonus = teleports.get(rnd.nextInt(teleports.size()));
+			}
+			break;
+		case CLEANER:
+			if (cleaners.size() > 0 && !following) {
+				bonus = cleaners.get(rnd.nextInt(cleaners.size()));
+			}
+			break;
+		case STUN:
+			if (stuns.size() > 0 && !following) {
+				bonus = stuns.get(rnd.nextInt(stuns.size()));
+			}
+			break;
 		}
 	}
 
-	private Direction getArrowDirectionFromClosestPlayer(Player AI,
-			Direction nextDir) {
-		for (Arrow arrow : arrows) {
-			if (calcDistance(AI, this.arrow.getX(), this.arrow.getY()) > calcDistance(AI, arrow.getX(), arrow.getY())) {
-				this.arrow = arrow;
+	private void getNearestBonus(List<BonusObject> bonuses) {
+		BonusObject nearestBonus = null;
+
+		double minDistance = 1000;
+
+		for (BonusObject bo : bonuses) {
+			double calcDistance = calcDistance(AI, bo.getX(), bo.getY());
+			if (calcDistance < minDistance) {
+				minDistance = calcDistance;
+				nearestBonus = bo;
 			}
 		}
-		if (shouldAIGetArrow(AI, arrow)) {
-			nextDir = getNextDirectionToBonus(AI, arrow);
-		}
-		return nextDir;
-	}
-
-	private Direction getTeleportDirectionForClosestPlayer(Player AI,
-			Direction nextDir) {
-		for (Player p : actions.getPlayers()) {
-			if (calcDistance(AI, tp.getX(), tp.getY()) < calcDistance(p, tp.getX(), tp.getY())) {
-				nextDir = getNextDirectionToBonus(AI, tp);
-			}
-		}
-		return nextDir;
-	}
-
-	private void setDirection(Direction dir) {
-		currentDir = dir;
+		bonus = nearestBonus;
 	}
 
 	/**
@@ -224,16 +288,16 @@ public class AIBehavior implements Behavior {
 			boolean checkDir = actions.checkDir(dir, AI);
 			switch (dir) {
 			case LEFT:
-				if (checkDir && actions.getBonusHandler().checkArrowForGivingPoints(arrow)) {isReached = true;}
+				if (checkDir && checkArrowForGivingPoints(arrow)) {isReached = true;}
 				break;
 			case RIGHT:
-				if (checkDir && actions.getBonusHandler().checkArrowForGivingPoints(arrow)) {isReached = true;}
+				if (checkDir && checkArrowForGivingPoints(arrow)) {isReached = true;}
 				break;
 			case UP:
-				if (checkDir && actions.getBonusHandler().checkArrowForGivingPoints(arrow)) {isReached = true;}
+				if (checkDir && checkArrowForGivingPoints(arrow)) {isReached = true;}
 				break;
 			case DOWN:
-				if (checkDir && actions.getBonusHandler().checkArrowForGivingPoints(arrow)) {isReached = true;}
+				if (checkDir && checkArrowForGivingPoints(arrow)) {isReached = true;}
 				break;
 			}
 		}
@@ -253,13 +317,14 @@ public class AIBehavior implements Behavior {
 	 * @return new direction different from last & available
 	 */
 
-	private Direction getNewFreshDirection(Board b, Player p, Direction l) {
-		Direction newDir = Direction.NONE;
-		while(!actions.checkDir(l, p) && (l == newDir || newDir == Direction.NONE)) {
-			newDir = Direction.values()[rnd.nextInt(4)+1];
-			setDirection(newDir);
+	private void getNewFreshDirection(Board b, Player p, Direction l) {
+		while(actions.checkDir(l, p)) {
+			if (nextDirection == Direction.NONE || nextDirection != l) {
+				nextDirection = Direction.values()[rnd.nextInt(4)+1];
+			}
+			currentDirection = nextDirection;
+			break;
 		}
-		return newDir;
 	}
 
 	/**
@@ -274,7 +339,7 @@ public class AIBehavior implements Behavior {
 	 * @param destination Destination cell
 	 * @return A* distance from player to target cell
 	 */
-	
+
 	private double calcDistance(int x, int y, Cell destination) {
 		double distance = Math.sqrt(Math.pow((x - destination.getX()), 2) + 
 				Math.pow((y - destination.getY()), 2));
@@ -315,8 +380,7 @@ public class AIBehavior implements Behavior {
 	 * Uses {@link #calcDistance(int, int, Cell)} & {@link #calcDistance(Player, int, int)}
 	 */
 
-	private Direction getNextDirectionToBonus(Player AI, BonusObject bonus) {
-		Direction nextDirection = Direction.NONE;
+	private void getNextDirectionToBonus() {
 		int x = AI.getX();
 		int y = AI.getY();
 		Cell destination = new Cell(bonus.getX(), bonus.getY());
@@ -352,12 +416,10 @@ public class AIBehavior implements Behavior {
 				break;
 			}
 		}
-
-		return nextDirection;
 	}
 
 	public Direction getNextDirection() {
-		easy(actions.getBoard(), AI, rnd.nextInt(2) + 1);
-		return currentDir;
+		easy(actions.getBoard(), AI);
+		return nextDirection;
 	}
 }
