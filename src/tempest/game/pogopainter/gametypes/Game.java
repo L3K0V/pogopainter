@@ -307,6 +307,7 @@ public abstract class Game {
 		if (time == 0) {
 			finishGame();
 		} else {
+			manageStun();
 			for (Player pl: PLAYERS) {
 				move(board, pl, pl.getBehaviour().getNextDirection());
 			}
@@ -314,7 +315,6 @@ public abstract class Game {
 			bHandler.update();
 		}
 		time--;
-		manageStun();
 	}
 
 	private void finishGame() {

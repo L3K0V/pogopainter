@@ -10,7 +10,7 @@ import tempest.game.pogopainter.system.Music;
 
 public class ClassicGame extends Game {
 	static {
-		STUN_TIME = 3;
+		STUN_TIME = 4;
 	}
 
 	public ClassicGame(Panel panel) {

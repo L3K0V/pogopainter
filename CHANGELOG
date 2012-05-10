@@ -477,3 +477,4 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Added: stun indicator when players are stuned!
 + New: AI Mechanics more details later...
 + Fixed some core methods
++ Fixed stun time
