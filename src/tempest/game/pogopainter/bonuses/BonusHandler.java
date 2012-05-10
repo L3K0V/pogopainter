@@ -68,16 +68,17 @@ public class BonusHandler {
 		fillQueues();
 	}
 
-	private boolean checkCurrentPosition(int x, int y) {
-		boolean canPutBonus = true;
-		for (Player p : players) {
-			if (p.getX() == x && p.getY() == y) {
-				canPutBonus = false;
+	public void update() {
+		putBonus();
+		fillQueues();
+		for (BonusObject bo : OTHERBONUSES) {
+			if (bo.getType() == Bonuses.ARROW) {
+				Arrow aw = (Arrow) bo;
+				aw.changeState();
 			}
 		}
-		return canPutBonus;
 	}
-
+	
 	public void initialBonuses() {
 		while ((CHECKPOINTS.size() != checkpointLimit) && (OTHERBONUSES.size() != otherBonusLimit)) {
 			while (true) {
@@ -142,6 +143,24 @@ public class BonusHandler {
 		}
 	}
 
+	private boolean checkCurrentPosition(int x, int y) {
+		boolean canPutBonus = true;
+		for (Player p : players) {
+			if (p.getX() == x && p.getY() == y) {
+				canPutBonus = false;
+			}
+		}
+		return canPutBonus;
+	}
+
+	public List<Checkpoint> getCheckpoints() {
+		return CHECKPOINTS;
+	}
+
+	public List<BonusObject> getOtherBonuses() {
+		return OTHERBONUSES;
+	}
+	
 	public void removeBonus(boolean ifCP, BonusObject bonus) {
 		if (ifCP) {
 			if (CHECKPOINTS.size() == checkpointLimit) {
@@ -158,25 +177,6 @@ public class BonusHandler {
 			}
 			OTHERBONUSES.remove(bonus);
 		}
-	}
-
-	public void update() {
-		putBonus();
-		fillQueues();
-		for (BonusObject bo : OTHERBONUSES) {
-			if (bo.getType() == Bonuses.ARROW) {
-				Arrow aw = (Arrow) bo;
-				aw.changeState();
-			}
-		}
-	}
-
-	public List<Checkpoint> getCheckpoints() {
-		return CHECKPOINTS;
-	}
-
-	public List<BonusObject> getOtherBonuses() {
-		return OTHERBONUSES;
 	}
 }
 
@@ -263,5 +263,13 @@ class BonusQueues {
 		case 4:
 			if (canTakeOth2 != timeDelay) { canTakeOth2++; } break;
 		}
+	}
+	
+	public LinkedList<Checkpoint> getCheckpoints() {
+		return CHECKPOINTS;
+	}
+	
+	public LinkedList<BonusObject> getOtherBonuses() {
+		return OtherBONUSES;
 	}
 }

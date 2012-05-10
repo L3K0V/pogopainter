@@ -161,6 +161,8 @@ public abstract class Game {
 				res = true;
 			}
 			break;
+		case NONE:
+			res = true;
 		}
 		return res;
 	}

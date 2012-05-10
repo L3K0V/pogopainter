@@ -7,6 +7,7 @@ import tempest.game.pogopainter.bonuses.BonusObject;
 import tempest.game.pogopainter.bonuses.Bonuses;
 import tempest.game.pogopainter.gametypes.Game;
 import tempest.game.pogopainter.player.Player;
+import tempest.game.pogopainter.player.PlayerState;
 import tempest.game.pogopainter.system.Cell;
 import tempest.game.pogopainter.system.Direction;
 import tempest.game.pogopainter.system.Metrics;
@@ -146,6 +147,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		bitmapCache.put(R.drawable.bonus_checkpoint, BitmapFactory.decodeResource(getResources(), R.drawable.bonus_checkpoint));
 		bitmapCache.put(R.drawable.bonus_cleaner,    BitmapFactory.decodeResource(getResources(), R.drawable.bonus_cleaner));
 		bitmapCache.put(R.drawable.bonus_stun,       BitmapFactory.decodeResource(getResources(), R.drawable.bonus_stun));
+		bitmapCache.put(R.drawable.indicators_stun,  BitmapFactory.decodeResource(getResources(), R.drawable.indicators_stun));
 		bitmapCache.put(R.drawable.joystick,         BitmapFactory.decodeResource(getResources(), R.drawable.joystick));
 		bitmapCache.put(R.drawable.joystick_clicked, BitmapFactory.decodeResource(getResources(), R.drawable.joystick_clicked));
 		bitmapCache.put(R.drawable.joystick_action,  BitmapFactory.decodeResource(getResources(), R.drawable.joystick_action));
@@ -270,6 +272,9 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 			Rect rect = new Rect(posX, posY, posX + cellSize, posY + cellSize);
 			if (!player.getAnimation().getMoving()) {
 				player.draw(canvas, bPaint, rect);
+				if (player.getState() == PlayerState.STUN) {
+					canvas.drawBitmap(bitmapCache.get(R.drawable.indicators_stun), null, rect, bPaint);
+				}
 			} else {
 				player.draw(canvas, bPaint, player.getAnimation().getCurrentPosition(rect));
 			}
