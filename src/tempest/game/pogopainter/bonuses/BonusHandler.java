@@ -153,31 +153,6 @@ public class BonusHandler {
 		return canPutBonus;
 	}
 
-	public boolean checkPlayerOnBonus(Player player, BonusObject bonus) {
-		boolean sure = false;
-		if (player.getX() == bonus.getX() && player.getY() == bonus.getY()) {
-			sure = true;
-		}
-		return sure;
-	}
-
-	public boolean checkArrowForGivingPoints(Arrow arrow) {
-		boolean sure = true;
-		int x = arrow.getX();
-		int y = arrow.getY();
-		switch (arrow.getState()) {
-		case 1:
-			if (x == 7) {sure = false;}break;
-		case 2:
-			if (y == 7) {sure = false;}break;
-		case 3:
-			if (x == 0) {sure = false;}break;
-		case 4:
-			if (y == 0) {sure = false;}break;
-		}
-		return sure;	
-	}
-
 	public List<Checkpoint> getCheckpoints() {
 		return CHECKPOINTS;
 	}
