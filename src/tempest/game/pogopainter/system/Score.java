@@ -3,9 +3,7 @@ package tempest.game.pogopainter.system;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import tempest.game.pogopainter.player.Player;
-
 import android.graphics.Color;
 
 public class Score {
@@ -29,11 +27,43 @@ public class Score {
 		int cells = field.getBoardSize();
 
 		int colScore    = 0;
-		int col         = 0;
+		int rowScore    = 0;
+		
+		rowScore = calcRows(cells, rowScore);
+		
+		colScore = calcCols(cells, colScore);
+		
+		score += rowScore + colScore;
+		return playerCells.size() + score;
+	}
+
+	private int calcCols(int cells, int colScore) {
+		int col = 0;
 		boolean fullCol = false;
 
-		int rowScore    = 0;
-		int row         = 0;
+		for (int x = 0; x < cells; x++) {
+			col = 0;
+			for (int y = 0; y < cells; y++) {
+				if (field.getCellAt(x, y).getColor() == playerColor) {
+					col++;
+				}
+			}
+			
+			if (col / cells == 1) {
+				colScore += 2;
+				if (fullCol) {
+					colScore += 10;
+					fullCol = false;
+				} else {
+					fullCol = true;
+				}
+			}
+		}
+		return colScore;
+	}
+
+	private int calcRows(int cells, int rowScore) {
+		int row = 0;
 		boolean fullRow = false;
 
 		for (int y = 0; y < cells; y++) {
@@ -55,34 +85,14 @@ public class Score {
 				}
 			}
 		}
-		
-		for (int x = 0; x < cells; x++) {
-			col = 0;
-			for (int y = 0; y < cells; y++) {
-				if (field.getCellAt(x, y).getColor() == playerColor) {
-					col++;
-				}
-			}
-			
-			if (col / cells == 1) {
-				colScore += 2;
-				if (fullCol) {
-					colScore += 10;
-					fullCol = false;
-				} else {
-					fullCol = true;
-				}
-			}
-		}
-		
-		score += rowScore + colScore;
-		return playerCells.size() + score;
+		return rowScore;
 	}
 
 	public void reset() {
 		for (int x = 0; x < getPSize(); x++) {
 			for (int y = 0; y < getPSize(); y++) {
-				field.getCellAt(playerCells.get(y).getX(), playerCells.get(y).getY()).setColor(Color.GRAY);
+				field.getCellAt(playerCells.get(y).getX(), playerCells.get(y).getY())
+						.setColor(Color.GRAY);
 			}
 		}
 	}

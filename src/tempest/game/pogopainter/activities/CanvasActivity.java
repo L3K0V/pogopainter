@@ -14,10 +14,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 public class CanvasActivity extends Activity {
+	public static boolean SHOW_RESULTS;
+	
 	public ClassicPanel panel;
 	private Intent gameover;
-	private int AllPoints;
-	public static boolean showResults;
+	private int allPoints;
 	private AlertDialog dialog;
 
 	@Override
@@ -69,7 +70,7 @@ public class CanvasActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if (showResults) {
+		if (SHOW_RESULTS) {
 			gameover = new Intent(this, GameOver.class);
 
 			List<Player> users = new ArrayList<Player>();
@@ -79,10 +80,10 @@ public class CanvasActivity extends Activity {
 			collectPlayersPoints(users);
 			collectPlayersPoints(AIs);
 
-			gameover.putExtra("ALL_PLAYERS_POINTS", AllPoints);
+			gameover.putExtra("ALL_PLAYERS_POINTS", allPoints);
 
 			this.startActivity(gameover);
-			showResults = false;
+			SHOW_RESULTS = false;
 		}
 		panel.stopThreads();
 		panel.clearMemory();
@@ -105,7 +106,7 @@ public class CanvasActivity extends Activity {
 				break;
 
 			}
-			AllPoints += p.getPoints();
+			allPoints += p.getPoints();
 		}
 	}
 }

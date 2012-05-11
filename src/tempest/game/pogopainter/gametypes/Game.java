@@ -30,10 +30,8 @@ public abstract class Game {
 	protected int time;
 	protected BonusHandler bHandler;
 	protected Music	music;
-	protected List<Player> PLAYERS;
+	protected List<Player> players;
 	protected List<Player> movedPlayers;
-	protected boolean ifSounds;
-	protected boolean ifBackground;
 	protected int stunTimer = -1;
 	
 	protected abstract void initFields();
@@ -59,79 +57,74 @@ public abstract class Game {
 	}
 
 	private void initYellowUser(int classicCellNumber) {
-		PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
+		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
 				0, new UserBehavior(panel)));
-		PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED,
+		players.add(new Player(0, classicCellNumber - 1, Color.RED,
 				0, new AIBehavior(Difficulty.EASY, this)));
-		PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
+		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
 				0, new AIBehavior(Difficulty.EASY, this)));
-		PLAYERS.add(new Player(0, 0, Color.GREEN,
+		players.add(new Player(0, 0, Color.GREEN,
 				0, new AIBehavior(Difficulty.EASY, this)));
 	}
 
 	private void initGreenUser(int classicCellNumber) {
-		PLAYERS.add(new Player(0, 0, Color.GREEN,
+		players.add(new Player(0, 0, Color.GREEN,
 				0, new UserBehavior(panel)));
-		PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED,
+		players.add(new Player(0, classicCellNumber - 1, Color.RED,
 				0, new AIBehavior(Difficulty.EASY, this)));
-		PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
+		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
 				0, new AIBehavior(Difficulty.EASY, this)));
-		PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
+		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
 				0, new AIBehavior(Difficulty.EASY, this)));
 	}
 
 	private void initBlueUser(int classicCellNumber) {
-		PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
+		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
 				0, new UserBehavior(panel)));
-		PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED,
+		players.add(new Player(0, classicCellNumber - 1, Color.RED,
 				0, new AIBehavior(Difficulty.EASY, this)));
-		PLAYERS.add(new Player(0, 0, Color.GREEN,
+		players.add(new Player(0, 0, Color.GREEN,
 				0, new AIBehavior(Difficulty.EASY, this)));
-		PLAYERS.add(new Player(classicCellNumber - 1,
+		players.add(new Player(classicCellNumber - 1,
 				0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this)));
 	}
 
 	private void initRedUser(int classicCellNumber) {
-		PLAYERS.add(new Player(0, classicCellNumber - 1, Color.RED,
+		players.add(new Player(0, classicCellNumber - 1, Color.RED,
 				0, new UserBehavior(panel)));
-		PLAYERS.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 
+		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 
 				0, new AIBehavior(Difficulty.EASY, this)));
-		PLAYERS.add(new Player(0, 0, Color.GREEN, 
+		players.add(new Player(0, 0, Color.GREEN, 
 				0, new AIBehavior(Difficulty.EASY, this)));
-		PLAYERS.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 
+		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 
 				0, new AIBehavior(Difficulty.EASY, this)));
 	}
 	
 	public void move(Board board, Player player, Direction dir) {
-		if (player.getState() == PlayerState.STUN) {
+		if (player.getState() == PlayerState.STUN)
 			return;
-		}
 		movedPlayers.add(player);
 		switch (dir) {
 		case RIGHT:
 			if (checkDir(dir, player)) {
 				player.startMoving(dir, board);
 				player.setX(player.getX() + 1);
-			}
-			break;
+			} break;
 		case UP:
 			if (checkDir(dir, player)) {
 				player.startMoving(dir, board);
 				player.setY(player.getY() -1);
-			}
-			break;
+			} break;
 		case LEFT:
 			if (checkDir(dir, player)) {
 				player.startMoving(dir, board);
 				player.setX(player.getX() -1);
-			}
-			break;
+			} break;
 		case DOWN:
 			if (checkDir(dir, player)) {
 				player.startMoving(dir, board);
 				player.setY(player.getY() +1);	
-			}
-			break;
+			} break;
 		}
 		applyBonusEffect(player, board);
 	}
@@ -144,25 +137,21 @@ public abstract class Game {
 		case RIGHT:
 			if (player.getX() < boardSize && !checkIfPlayer(player.getX() + 1, player.getY())) {
 				res = true;
-			}
-			break;
+			} break;
 		case UP:
 			if(player.getY() > 0 && !checkIfPlayer(player.getX(), player.getY() - 1)) {
 				res = true;
-			}
-			break;
+			} break;
 		case LEFT:
 			if (player.getX() > 0 && !checkIfPlayer(player.getX() - 1, player.getY())) {
 				res = true;
-			}
-			break;
+			} break;
 		case DOWN:
 			if (player.getY() < boardSize && !checkIfPlayer(player.getX(), player.getY() + 1)) {
 				res = true;
-			}
-			break;
+			} break;
 		case NONE:
-			res = true;
+			res = true; break;
 		}
 		return res;
 	}
@@ -177,29 +166,28 @@ public abstract class Game {
 		return res;
 	}
 
-	public BonusObject checkForBonus(Player p, Board b) {
+	public BonusObject checkForBonus(Player pl, Board board) {
 		BonusObject res;
-		Cell thisCell = b.getCellAt(p.getX(), p.getY());
+		Cell thisCell = board.getCellAt(pl.getX(), pl.getY());
 		res = thisCell.getBonus();
 		return res;
 	}
 
-	public void applyBonusEffect(Player p, Board b) {
+	public void applyBonusEffect(Player player, Board board) {
 		BonusObject bonus;
-		if ((bonus = checkForBonus(p, b)) != null) {
+		if ((bonus = checkForBonus(player, board)) != null) {
 			if (!(bonus.getType() == Bonuses.TELEPORT)) {
-				triggerBonus(p, bonus);
+				triggerBonus(player, bonus);
 			} else {
-				p.setBonus(bonus);
+				player.setBonus(bonus);
 			}
-			clearBonus(p, b);
+			clearBonus(player, board);
 		}
 	}
 
 	public void triggerBonus(Player player, BonusObject bonus) {
-		if (bonus == null) {
+		if (bonus == null)
 			return;
-		}
 		playBonusMusic(bonus);
 		if (bonus.getType() == Bonuses.TELEPORT) {
 			Random rnd = new Random();
@@ -215,7 +203,7 @@ public abstract class Game {
 		} else if (bonus.getType() == Bonuses.CLEANER) {
 			bonus.setBonusEffect(movedPlayers, board);
 		} else if (bonus.getType() == Bonuses.STUN) {
-			List<Player> stunPl = new ArrayList<Player>(PLAYERS);
+			List<Player> stunPl = new ArrayList<Player>(players);
 			stunPl.remove(player);
 			bonus.setBonusEffect(stunPl, board);
 			stunTimer = 0;
@@ -244,18 +232,18 @@ public abstract class Game {
 		}
 	}
 
-	private void clearBonus(Player p, Board b) {
-		b.getCellAt(p.getX(), p.getY()).clearBonus();
+	private void clearBonus(Player pl, Board board) {
+		board.getCellAt(pl.getX(), pl.getY()).clearBonus();
 		for (Checkpoint cp : bHandler.getCheckpoints()) {
-			if (p.getX() == cp.getX() && p.getY() == cp.getY()) {
-				bHandler.removeBonus(BonusHandler.CheckQueue, cp);
+			if (pl.getX() == cp.getX() && pl.getY() == cp.getY()) {
+				bHandler.removeBonus(BonusHandler.CHECK_QUEUE, cp);
 				break;
 			}
 		}
 		
 		for (BonusObject other : bHandler.getOtherBonuses()) {
-			if (p.getX() == other.getX() && p.getY() == other.getY()) {
-				bHandler.removeBonus(BonusHandler.OtherQueue, other);
+			if (pl.getX() == other.getX() && pl.getY() == other.getY()) {
+				bHandler.removeBonus(BonusHandler.OTHER_QUEUE, other);
 				break;
 			}
 		}
@@ -270,18 +258,18 @@ public abstract class Game {
 	}
 
 	public Player getUser() {
-		return PLAYERS.get(0);
+		return players.get(0);
 	}
 
 	public List<Player> getAIs() {
 		List<Player> res = new ArrayList<Player>();
-		for (int i = 1; i < PLAYERS.size(); i++) {
-			res.add(PLAYERS.get(i));
+		for (int i = 1; i < players.size(); i++) {
+			res.add(players.get(i));
 		}
 		return res;
 	}
 	public List<Player> getPlayers() {
-		return PLAYERS;
+		return players;
 	}
 	public BonusHandler getBonusHandler() {
 		return bHandler;
@@ -295,7 +283,7 @@ public abstract class Game {
 		if (stunTimer >= 0) {
 			stunTimer++;
 			if (stunTimer == STUN_TIME) {
-				for(Player pl : PLAYERS) {
+				for(Player pl : players) {
 					pl.setState(PlayerState.NORMAL);
 				}
 				stunTimer = -1;
@@ -308,7 +296,7 @@ public abstract class Game {
 			finishGame();
 		} else {
 			manageStun();
-			for (Player pl: PLAYERS) {
+			for (Player pl: players) {
 				move(board, pl, pl.getBehaviour().getNextDirection());
 			}
 			movedPlayers.clear();
@@ -321,7 +309,7 @@ public abstract class Game {
 		panel.stopThreads();
 		panel.surfaceDestroyed(panel.getHolder());
 		panel.clearFocus();
-		CanvasActivity.showResults = true;
+		CanvasActivity.SHOW_RESULTS = true;
 		panel.getOwner().finish();
 	}
 }

@@ -25,8 +25,9 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public abstract class Panel extends SurfaceView implements SurfaceHolder.Callback {
-	private CanvasThread panelThread;
 	protected Game game;
+	
+	private CanvasThread panelThread;
 	private int cellNumber;
 	private int cellSize;
 	private int boardStartX;
@@ -85,7 +86,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	}
 
 	public void stopThreads() {
-		panelThread.stopThisShit();
+		panelThread.stopThread();
 	}
 
 	protected void initFields() {
@@ -98,6 +99,17 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		padding = cellSize / 5;
 		bitmapCache = new HashMap<Integer, Bitmap>();
 		fillBitmapCache();
+		Rect control = fixLeftOrRightControls(screenWidth, screenHeigth, leftControlns);
+		defineTouchRect(control);
+		bPaint = new Paint();
+		bPaint.setAntiAlias(false);
+		bPaint.setFilterBitmap(true);
+		for (Player p : game.getPlayers()) {
+			p.setBitmap(getPlayerColor(p.getColor()));
+		}
+	}
+
+	private Rect fixLeftOrRightControls(int screenWidth, int screenHeigth, boolean leftControlns) {
 		Rect control = null;
 		int controlStartX = 0;
 		if (leftControlns) {
@@ -116,19 +128,14 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 			boardStartX = 0;
 			control = new Rect(controlStartX + padding / 2 , (screenHeigth / 2),
 					screenWidth - padding / 2 , screenHeigth - padding / 2);
+			
 			fixControlRect(control);
 			counterRect = new Rect(controlStartX + padding / 2, padding / 2,
 					screenWidth - padding / 2, (screenHeigth / 2) - padding / 2);
 
 			board = new Rect(boardStartX, 0, controlStartX - padding / 2, screenHeigth);
 		}
-		defineTouchRect(control);
-		bPaint = new Paint();
-		bPaint.setAntiAlias(false);
-		bPaint.setFilterBitmap(true);
-		for (Player p : game.getPlayers()) {
-			p.setBitmap(getPlayerColor(p.getColor()));
-		}
+		return control;
 	}
 
 	private void fillBitmapCache() {
@@ -273,7 +280,8 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 			if (!player.getAnimation().getMoving()) {
 				player.draw(canvas, bPaint, rect);
 				if (player.getState() == PlayerState.STUN) {
-					canvas.drawBitmap(bitmapCache.get(R.drawable.indicators_stun), null, rect, bPaint);
+					canvas.drawBitmap(bitmapCache.get(R.drawable.indicators_stun), 
+							null, rect, bPaint);
 				}
 			} else {
 				player.draw(canvas, bPaint, player.getAnimation().getCurrentPosition(rect));
@@ -353,42 +361,38 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 				bitmapStartX  + counterPadding, counterY + counterPadding);
 
 		canvas.drawBitmap(bitmap, null, rect, bPaint);
-		canvas.drawText(spoints, rect.right + padding * 2, counterY + counterPadding - padding, paint);
+		canvas.drawText(spoints, rect.right + padding * 2, 
+				counterY + counterPadding - padding, paint);
 		counterY += counterPadding;
 	}
 
 	private void drawBonus(Canvas canvas, Rect rect, BonusObject bonus) {
 		Bonuses type = Bonuses.NONE;
-		if (bonus != null) {
+		if (bonus != null)
 			type = bonus.getType();
-		}
 		switch (type) {
 		case CHECKPOINT:
 			if (!bonus.ifBitmap()) {
 				bonus.setBitmap(bitmapCache.get(R.drawable.bonus_checkpoint));
-			}
-			break;
+			} break;
 		case TELEPORT:
 			if (!bonus.ifBitmap()) {
 				bonus.setBitmap(bitmapCache.get(R.drawable.bonus_teleport));
-			}
-			break;
+			} break;
 		case ARROW:
 			bonus.setBitmap(bitmapCache.get(R.drawable.bonus_arrow));
 			break;
 		case CLEANER:
 			if (!bonus.ifBitmap()) {
 				bonus.setBitmap(bitmapCache.get(R.drawable.bonus_cleaner));
-			}
-			break;
+			} break;
 		case STUN:
 			if (!bonus.ifBitmap()) {
 				bonus.setBitmap(bitmapCache.get(R.drawable.bonus_stun));
-			}
+			} break;
 		case NONE:
 			break;
 		}
-
 		bonus.draw(canvas, bPaint, rect);
 	}
 

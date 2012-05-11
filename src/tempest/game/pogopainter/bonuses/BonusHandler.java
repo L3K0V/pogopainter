@@ -12,19 +12,19 @@ public class BonusHandler {
 	private List<Player> players;
 
 	private BonusQueues queues;
-    private List<Checkpoint> CHECKPOINTS;
-    private List<BonusObject> OTHERBONUSES;
+    private List<Checkpoint> checkpoints;
+    private List<BonusObject> otherBonuses;
     
 	private Random rnd;
 	
     private int checkpointLimit;
     private int otherBonusLimit;
     
-    public static final boolean CheckQueue = true;
-    public static final boolean OtherQueue = false;
+    public static final boolean CHECK_QUEUE = true;
+    public static final boolean OTHER_QUEUE = false;
 
-	public BonusHandler(Board b, List<Player> pl, int cpLimit, int otherBLimit) {
-		this.board = b;
+	public BonusHandler(Board board, List<Player> pl, int cpLimit, int otherBLimit) {
+		this.board = board;
 		this.players = pl;
 		rnd = new Random();
 		checkpointLimit = cpLimit;
@@ -33,11 +33,11 @@ public class BonusHandler {
 	}
 
 	private void fillQueues() {
-		while (!queues.full(CheckQueue)) {
-			queues.push(CheckQueue, new Checkpoint());
+		while (!queues.full(CHECK_QUEUE)) {
+			queues.push(CHECK_QUEUE, new Checkpoint());
 		}
-		while (!queues.full(OtherQueue)) {
-			queues.push(OtherQueue, getRandomBonus());
+		while (!queues.full(OTHER_QUEUE)) {
+			queues.push(OTHER_QUEUE, getRandomBonus());
 		}
 	}
 
@@ -62,8 +62,8 @@ public class BonusHandler {
 	}
 
 	private void seedBonuses() {
-		CHECKPOINTS   = new ArrayList<Checkpoint>();
-		OTHERBONUSES = new ArrayList<BonusObject>();
+		checkpoints   = new ArrayList<Checkpoint>();
+		otherBonuses = new ArrayList<BonusObject>();
 		this.queues = new BonusQueues(checkpointLimit, otherBonusLimit);
 		fillQueues();
 	}
@@ -71,7 +71,7 @@ public class BonusHandler {
 	public void update() {
 		putBonus();
 		fillQueues();
-		for (BonusObject bo : OTHERBONUSES) {
+		for (BonusObject bo : otherBonuses) {
 			if (bo.getType() == Bonuses.ARROW) {
 				Arrow aw = (Arrow) bo;
 				aw.changeState();
@@ -80,62 +80,54 @@ public class BonusHandler {
 	}
 	
 	public void initialBonuses() {
-		while ((CHECKPOINTS.size() != checkpointLimit) && (OTHERBONUSES.size() != otherBonusLimit)) {
-			while (true) {
-				int x = rnd.nextInt(board.getBoardSize());
-				int y = rnd.nextInt(board.getBoardSize());
-
-				if ((board.getCellAt(x, y).getBonus() == null) && checkCurrentPosition(x, y)) {
-					Checkpoint bonus = (Checkpoint) queues.pop(CheckQueue);
-					board.getCellAt(x, y).setBonus(bonus);
-					CHECKPOINTS.add(bonus);
-					break;
-				}
-			}
-			while (true) {
-				int x = rnd.nextInt(board.getBoardSize());
-				int y = rnd.nextInt(board.getBoardSize());
-
-				if ((board.getCellAt(x, y).getBonus() == null) && checkCurrentPosition(x, y)) {
-					BonusObject bonus = queues.pop(OtherQueue);
-					board.getCellAt(x, y).setBonus(bonus);
-					OTHERBONUSES.add(bonus);
-					break;
-				}
-			}
+		while ((checkpoints.size() != checkpointLimit) 
+				&& (otherBonuses.size() != otherBonusLimit)) {
+			putCheckpointBonus();
+			putOtherBonus();
 		}
 	}
 
 	public void putBonus() {
-		int x;
-		int y;
+		putCheckpointBonus();
+		putOtherBonus();
+	}
+	
+	private void putCheckpointBonus() {
+		int x = 0;
+		int y = 0;
 		
-		if (!(CHECKPOINTS.size() == checkpointLimit)) {
-			if (queues.canTakeBonus(CheckQueue)) {
+		if (!(checkpoints.size() == checkpointLimit)) {
+			if (queues.canTakeBonus(CHECK_QUEUE)) {
 				while (true) {
 					x = rnd.nextInt(board.getBoardSize());
 					y = rnd.nextInt(board.getBoardSize());
 	
-					if ((board.getCellAt(x, y).getBonus() == null) && checkCurrentPosition(x, y)) {
-						Checkpoint bonus = (Checkpoint) queues.pop(CheckQueue);
+					if ((board.getCellAt(x, y).getBonus() == null) 
+							&& checkCurrentPosition(x, y)) {
+						Checkpoint bonus = (Checkpoint) queues.pop(CHECK_QUEUE);
 						board.getCellAt(x, y).setBonus(bonus);
-						CHECKPOINTS.add(bonus);
+						checkpoints.add(bonus);
 						break;
 					}
 				}
 			}
 		}
-			
-		if (!(OTHERBONUSES.size() == otherBonusLimit)) {
-			if (queues.canTakeBonus(OtherQueue)) {
+	}
+	
+	private void putOtherBonus() {
+		int x = 0;
+		int y = 0;
+		if (!(otherBonuses.size() == otherBonusLimit)) {
+			if (queues.canTakeBonus(OTHER_QUEUE)) {
 				while (true) {
 					x = rnd.nextInt(board.getBoardSize());
 					y = rnd.nextInt(board.getBoardSize());
 
-					if ((board.getCellAt(x, y).getBonus() == null) && checkCurrentPosition(x, y)) {
-						BonusObject bonus = queues.pop(OtherQueue);
+					if ((board.getCellAt(x, y).getBonus() == null) 
+							&& checkCurrentPosition(x, y)) {
+						BonusObject bonus = queues.pop(OTHER_QUEUE);
 						board.getCellAt(x, y).setBonus(bonus);
-						OTHERBONUSES.add(bonus);
+						otherBonuses.add(bonus);
 						break;
 					}
 				}
@@ -154,35 +146,35 @@ public class BonusHandler {
 	}
 
 	public List<Checkpoint> getCheckpoints() {
-		return CHECKPOINTS;
+		return checkpoints;
 	}
 
 	public List<BonusObject> getOtherBonuses() {
-		return OTHERBONUSES;
+		return otherBonuses;
 	}
 	
 	public void removeBonus(boolean ifCP, BonusObject bonus) {
 		if (ifCP) {
-			if (CHECKPOINTS.size() == checkpointLimit) {
+			if (checkpoints.size() == checkpointLimit) {
 				queues.increaseTime(1);
-			} else if (CHECKPOINTS.size() == (checkpointLimit - 1)){
+			} else if (checkpoints.size() == (checkpointLimit - 1)){
 				queues.increaseTime(2);
 			}
-			CHECKPOINTS.remove(bonus);
+			checkpoints.remove(bonus);
 		} else {
-			if (OTHERBONUSES.size() == otherBonusLimit) {
+			if (otherBonuses.size() == otherBonusLimit) {
 				queues.increaseTime(3);
-			} else if (OTHERBONUSES.size() == (otherBonusLimit - 1)){
+			} else if (otherBonuses.size() == (otherBonusLimit - 1)){
 				queues.increaseTime(4);
 			}
-			OTHERBONUSES.remove(bonus);
+			otherBonuses.remove(bonus);
 		}
 	}
 }
 
 class BonusQueues {
-	private LinkedList<Checkpoint> CHECKPOINTS;
-	private LinkedList<BonusObject> OtherBONUSES;
+	private LinkedList<Checkpoint> checkpoints;
+	private LinkedList<BonusObject> otherBonuses;
 	
 	private int checkpointsLimit;
 	private int otherBonusesLimit;
@@ -194,8 +186,8 @@ class BonusQueues {
 	private final int timeDelay = 4;
 	
 	public BonusQueues(int cpLimit, int otherLimit) {
-		CHECKPOINTS = new LinkedList<Checkpoint>();
-		OtherBONUSES = new LinkedList<BonusObject>();
+		checkpoints = new LinkedList<Checkpoint>();
+		otherBonuses = new LinkedList<BonusObject>();
 		this.checkpointsLimit = cpLimit;
 		this.otherBonusesLimit = otherLimit;
 	}
@@ -203,29 +195,29 @@ class BonusQueues {
 	public BonusObject pop(boolean ifCP) {
 		BonusObject bonus = null;
 		if (ifCP) {
-			bonus = CHECKPOINTS.remove();
+			bonus = checkpoints.remove();
 		} else {
-			bonus = OtherBONUSES.remove();
+			bonus = otherBonuses.remove();
 		}
 		return bonus;
 	}
 	
 	public void push(boolean ifCP, BonusObject bonus) {
 		if (ifCP) {
-			CHECKPOINTS.add((Checkpoint) bonus);
+			checkpoints.add((Checkpoint) bonus);
 		} else {
-			OtherBONUSES.add(bonus);
+			otherBonuses.add(bonus);
 		}
 	}
 	
 	public boolean full(boolean ifCP) {
 		boolean res = false;
 		if (ifCP) {
-			if (CHECKPOINTS.size() == checkpointsLimit) {
+			if (checkpoints.size() == checkpointsLimit) {
 				res = true;
 			}
 		} else {
-			if (OtherBONUSES.size() == otherBonusesLimit) {
+			if (otherBonuses.size() == otherBonusesLimit) {
 				res = true;
 			}
 		}
@@ -266,10 +258,10 @@ class BonusQueues {
 	}
 	
 	public LinkedList<Checkpoint> getCheckpoints() {
-		return CHECKPOINTS;
+		return checkpoints;
 	}
 	
 	public LinkedList<BonusObject> getOtherBonuses() {
-		return OtherBONUSES;
+		return otherBonuses;
 	}
 }

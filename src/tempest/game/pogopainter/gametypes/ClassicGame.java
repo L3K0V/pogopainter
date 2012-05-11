@@ -20,22 +20,22 @@ public class ClassicGame extends Game {
 	
 	@Override
 	protected void initFields() {
-		PLAYERS = new ArrayList<Player>();
-		movedPlayers = new ArrayList<Player>();
 		Metrics m = new Metrics();
+		this.players = new ArrayList<Player>();
+		this.movedPlayers = new ArrayList<Player>();
 		int classicCellNumber = m.getClassicCellNumber();
 		int playerColor = m.getPlayerColor();
-		ifSounds = m.isSounds();
-		ifBackground = m.isMusic(); 
-		music = new Music(ifBackground, ifSounds);
-		board = new Board(classicCellNumber);
-		time = m.getClassicGameTime();
+		boolean ifSounds = m.isSounds();
+		boolean ifBackground = m.isMusic(); 
+		this.music = new Music(ifBackground, ifSounds);
+		this.board = new Board(classicCellNumber);
+		this.time = m.getClassicGameTime();
 
 		initPlayerColors(classicCellNumber, playerColor);
-		for (Player players: PLAYERS) {
-			board.setPlayerColorOnCell(players);
+		for (Player pl: players) {
+			this.board.setPlayerColorOnCell(pl);
 		}
-		bHandler = new BonusHandler(board, PLAYERS, 2, 2);
-		bHandler.initialBonuses();
+		this.bHandler = new BonusHandler(board, players, 2, 2);
+		this.bHandler.initialBonuses();
 	}
 }

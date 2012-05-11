@@ -13,12 +13,10 @@ public class ExtrasActivity extends Activity {
 	private String tag = "Extras";
 
 	public void checkAppVersion(Context context) {
-
 		try {
 			Log.d(tag, "Version check");
 			PackageInfo pinfo = null;
 			pinfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-//			int versionNumber = pinfo.versionCode;
 			String versionName = pinfo.versionName;
 
 			new AlertDialog.Builder(context)
