@@ -43,8 +43,8 @@ public class Player {
 		this.y = y;
 	}
 
-	public void setBonus(BonusObject b) {
-		bonus = b;
+	public void setBonus(BonusObject bonus) {
+		this.bonus = bonus;
 	}
 
 	public void setState(PlayerState st) {

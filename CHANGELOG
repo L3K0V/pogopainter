@@ -478,3 +478,8 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + New: AI Mechanics more details later...
 + Fixed some core methods
 + Fixed stun time
+
+0.14.9 (20120511)
++ General code cleanup
++ Methods no logner than 30 lines
++ Code convention cleanup

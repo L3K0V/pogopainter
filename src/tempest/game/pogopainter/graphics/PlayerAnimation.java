@@ -6,15 +6,15 @@ import tempest.game.pogopainter.system.Board;
 import tempest.game.pogopainter.system.Direction;
 
 public class PlayerAnimation {
+	private static final int STEP;
 	private boolean isMoving;
 	private Direction dir;
-	private static final int step;
 	private int currentStep;
 	private Player player;
 	private Board board;
 	
 	static {
-		step = 15; // 15 pixels step for moving
+		STEP = 15; // 15 pixels step for moving
 	}
 	
 	public PlayerAnimation(Player pl) {
@@ -37,37 +37,42 @@ public class PlayerAnimation {
 	public Rect getCurrentPosition(Rect desireRectangle) {
 		int desireLeft   = desireRectangle.left;
 		int desireTop    = desireRectangle.top;
-		int desireSize   = desireRectangle.width(); // need only 1 because desireRectangle is a square
-		currentStep     += step;
+		int desireSize   = desireRectangle.width(); 
+		// need only 1 because desireRectangle is a square
+		
+		currentStep     += STEP;
 		
 		if (currentStep > desireSize) {
 			currentStep = desireSize;
 		}
 		int movement = desireSize - currentStep;
-		
-		switch (this.dir) {
-		case LEFT:
-			desireRectangle.left   += movement;
-			desireRectangle.right  += movement;
-			break;
-		case RIGHT:
-			desireRectangle.left   -= movement;
-			desireRectangle.right  -= movement;
-			break;
-		case UP:
-			desireRectangle.top    += movement;
-			desireRectangle.bottom += movement;
-			break;
-		case DOWN:
-			desireRectangle.top    -= movement;
-			desireRectangle.bottom -= movement;
-			break;
-		}
-		
+		changeRect(desireRectangle, movement);
+	
 		if ((desireRectangle.left == desireLeft) && (desireRectangle.top == desireTop)) {
 			finishAnimation();
 		}
 		return desireRectangle;
+	}
+	
+	private void changeRect(Rect rect, int movement) {
+		switch (this.dir) {
+		case LEFT:
+			rect.left   += movement;
+			rect.right  += movement;
+			break;
+		case RIGHT:
+			rect.left   -= movement;
+			rect.right  -= movement;
+			break;
+		case UP:
+			rect.top    += movement;
+			rect.bottom += movement;
+			break;
+		case DOWN:
+			rect.top    -= movement;
+			rect.bottom -= movement;
+			break;
+		}
 	}
 	
 	private void finishAnimation() {

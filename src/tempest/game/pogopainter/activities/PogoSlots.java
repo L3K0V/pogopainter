@@ -38,19 +38,9 @@ public class PogoSlots extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.slots);
 
-		redSlot      = (ToggleButton) this.findViewById(R.id.redSlot);
-		blueSlot     = (ToggleButton) this.findViewById(R.id.blueSlot);
-		greenSlot    = (ToggleButton) this.findViewById(R.id.greenSlot);
-		yellowSlot   = (ToggleButton) this.findViewById(R.id.yellowSlot);
+		initSlots();
 
 		go = (Button) this.findViewById(R.id.startGame);
-
-		redSlot.setOnClickListener(this);
-		blueSlot.setOnClickListener(this);
-		greenSlot.setOnClickListener(this);
-		yellowSlot.setOnClickListener(this);
-	
-
 		go.setOnClickListener(this);
 
 		gameType          = (TextView) findViewById(R.id.gameType_text);
@@ -64,68 +54,35 @@ public class PogoSlots extends Activity implements OnClickListener {
 		yellowTeams = (ImageView) findViewById(R.id.yellow_player_teams);
 		
 		setDefaultTexts();
-		
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
-		
 		showHint("Choose your starting position", Toast.LENGTH_LONG);
 	}
+	
+	private void initSlots() {
+		redSlot      = (ToggleButton) this.findViewById(R.id.redSlot);
+		blueSlot     = (ToggleButton) this.findViewById(R.id.blueSlot);
+		greenSlot    = (ToggleButton) this.findViewById(R.id.greenSlot);
+		yellowSlot   = (ToggleButton) this.findViewById(R.id.yellowSlot);
+		
+		redSlot.setOnClickListener(this);
+		blueSlot.setOnClickListener(this);
+		greenSlot.setOnClickListener(this);
+		yellowSlot.setOnClickListener(this);
+	}
+	
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.redSlot:
-			settings.edit().putString("PLAYER_COLOR", "red").commit();
-			
-			blueSlot.setChecked(false);
-			greenSlot.setChecked(false);
-			yellowSlot.setChecked(false);
-			if (redSlot.isChecked()) {
-				setSinglePlayer();
-				enableStartGameButton(true);
-			} else {
-				setDefaultTexts();
-				enableStartGameButton(false);
-			}
+			redSlotClick();
 			break;
 		case R.id.blueSlot:
-			settings.edit().putString("PLAYER_COLOR", "blue").commit();
-			
-			redSlot.setChecked(false);
-			greenSlot.setChecked(false);
-			yellowSlot.setChecked(false);
-			if (blueSlot.isChecked()) {
-				setSinglePlayer();
-				enableStartGameButton(true);
-			} else {
-				setDefaultTexts();
-				enableStartGameButton(false);
-			}
+			blueSlotClick();
 			break;
 		case R.id.greenSlot:
-			settings.edit().putString("PLAYER_COLOR", "green").commit();
-			
-			blueSlot.setChecked(false);
-			redSlot.setChecked(false);
-			yellowSlot.setChecked(false);
-			if (greenSlot.isChecked()) {
-				setSinglePlayer();
-				enableStartGameButton(true);
-			} else {
-				setDefaultTexts();
-				enableStartGameButton(false);
-			}
+			greenSlotClick();
 			break;
 		case R.id.yellowSlot:
-			settings.edit().putString("PLAYER_COLOR", "yellow").commit();
-			
-			blueSlot.setChecked(false);
-			greenSlot.setChecked(false);
-			redSlot.setChecked(false);
-			if (yellowSlot.isChecked()) {
-				setSinglePlayer();
-				enableStartGameButton(true);
-			} else {
-				setDefaultTexts();
-				enableStartGameButton(false);
-			}
+			yellowSlotClick();
 			break;
 		case R.id.startGame:
 			if (go.isEnabled()) {
@@ -133,6 +90,66 @@ public class PogoSlots extends Activity implements OnClickListener {
 				startActivity(new Intent(this, CanvasActivity.class));
 				this.finish();
 			}
+		}
+	}
+
+	private void yellowSlotClick() {
+		settings.edit().putString("PLAYER_COLOR", "yellow").commit();
+		
+		blueSlot.setChecked(false);
+		greenSlot.setChecked(false);
+		redSlot.setChecked(false);
+		if (yellowSlot.isChecked()) {
+			setSinglePlayer();
+			enableStartGameButton(true);
+		} else {
+			setDefaultTexts();
+			enableStartGameButton(false);
+		}
+	}
+
+	private void greenSlotClick() {
+		settings.edit().putString("PLAYER_COLOR", "green").commit();
+		
+		blueSlot.setChecked(false);
+		redSlot.setChecked(false);
+		yellowSlot.setChecked(false);
+		if (greenSlot.isChecked()) {
+			setSinglePlayer();
+			enableStartGameButton(true);
+		} else {
+			setDefaultTexts();
+			enableStartGameButton(false);
+		}
+	}
+
+	private void blueSlotClick() {
+		settings.edit().putString("PLAYER_COLOR", "blue").commit();
+		
+		redSlot.setChecked(false);
+		greenSlot.setChecked(false);
+		yellowSlot.setChecked(false);
+		if (blueSlot.isChecked()) {
+			setSinglePlayer();
+			enableStartGameButton(true);
+		} else {
+			setDefaultTexts();
+			enableStartGameButton(false);
+		}
+	}
+
+	private void redSlotClick() {
+		settings.edit().putString("PLAYER_COLOR", "red").commit();
+		
+		blueSlot.setChecked(false);
+		greenSlot.setChecked(false);
+		yellowSlot.setChecked(false);
+		if (redSlot.isChecked()) {
+			setSinglePlayer();
+			enableStartGameButton(true);
+		} else {
+			setDefaultTexts();
+			enableStartGameButton(false);
 		}
 	}
 	

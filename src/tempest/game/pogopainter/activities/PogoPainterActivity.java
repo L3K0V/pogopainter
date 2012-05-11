@@ -19,7 +19,7 @@ import com.bugsense.trace.BugSenseHandler;
 
 public class PogoPainterActivity extends Activity implements OnClickListener {
 
-	private int reques_code = 1;
+	private int requesCode = 1;
 	private String tag = "Pogo";
 	private static Context context;
 	private ExtrasActivity extras = new ExtrasActivity();
@@ -67,14 +67,14 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 		case R.id.options_button:
 			Log.d(tag, "Preferences");
 			Intent Options = new Intent(this, PreferencesActivity.class);
-			startActivityForResult(Options, reques_code);
+			startActivityForResult(Options, requesCode);
 			break;
 		}
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == reques_code) {
+		if (requestCode == requesCode) {
 			if (resultCode == RESULT_OK) {
 				Log.d(tag, getString(R.string.pref_changed));
 				Toast.makeText(getBaseContext(), getString(R.string.change_saved), Toast.LENGTH_SHORT).show();
@@ -128,7 +128,6 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 			public void onClick(DialogInterface dialog, int which) {
 				Log.d( tag, "Exit - Positive");
 				finish();
-
 			}
 		})
 		.show();

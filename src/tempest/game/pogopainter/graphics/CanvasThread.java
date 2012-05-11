@@ -4,9 +4,9 @@ import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
 public class CanvasThread extends Thread {
-	private SurfaceHolder _surfaceHolder;
-	private Panel _panel;
-	private boolean _run = false;
+	private SurfaceHolder surfaceHolder;
+	private Panel panel;
+	private boolean run = false;
 	private final static int FRAME;
 	private long startTime;
 	private long timeBeforeUpdate;
@@ -15,20 +15,20 @@ public class CanvasThread extends Thread {
 		FRAME = 1000;
 	}
 	public CanvasThread(SurfaceHolder holder, Panel panel) {
-		_surfaceHolder = holder;
-		_panel = panel;
+		this.surfaceHolder = holder;
+		this.panel = panel;
+		this.timeBeforeUpdate = FRAME;
 		setName("CanvasThread");
-		timeBeforeUpdate = FRAME;
 	}
 	
 	public void setRunning(boolean run) {
-		_run = run;
-		if (run == false) {
+		this.run = run;
+		if (this.run == false) {
 			timeBeforeUpdate = FRAME;
 		}
 	}
 	
-	public void stopThisShit() {
+	public void stopThread() {
 		setRunning(false);
 		Thread.currentThread().interrupt();
 	}
@@ -36,22 +36,22 @@ public class CanvasThread extends Thread {
 	@Override
 	public void run() {
 		Canvas canvas;
-		while(_run) {
+		while(run) {
 			startTime = System.nanoTime();
 			canvas = null;
 			try {
-				canvas = _surfaceHolder.lockCanvas(null);
-				synchronized (_surfaceHolder) {
+				canvas = surfaceHolder.lockCanvas(null);
+				synchronized (surfaceHolder) {
 					if (timeBeforeUpdate <= 0 ) {
 						timeBeforeUpdate = FRAME;
-						_panel.getGame().update();
+						panel.getGame().update();
 					}
-					_panel.onDraw(canvas);
-					timeBeforeUpdate -= ((System.nanoTime()-startTime)/1000000L);
+					panel.onDraw(canvas);
+					timeBeforeUpdate -= ((System.nanoTime() - startTime)/1000000L);
 				}
 			} finally {
 				if (canvas != null) {
-					_surfaceHolder.unlockCanvasAndPost(canvas);
+					surfaceHolder.unlockCanvasAndPost(canvas);
 				}
 			}
 		}

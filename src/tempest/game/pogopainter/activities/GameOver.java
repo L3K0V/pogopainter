@@ -18,19 +18,17 @@ import android.widget.TextView;
 
 public class GameOver extends Activity implements OnClickListener {
 
-	protected ProgressBar redPlayer;
-	protected ProgressBar bluePlayer;
-	protected ProgressBar greenPlayer;
-	protected ProgressBar yellowPlayer;
-	protected Intent gameIntent;
-	protected boolean incrementRunning = false;
-
-	protected Button play;
-
-	protected int red;
-	protected int blue;
-	protected int green;
-	protected int yellow;
+	private ProgressBar redPlayer;
+	private ProgressBar bluePlayer;
+	private ProgressBar greenPlayer;
+	private ProgressBar yellowPlayer;
+	private Intent gameIntent;
+	private boolean incrementRunning = false;
+	private Button play;
+	private int red;
+	private int blue;
+	private int green;
+	private int yellow;
 	private ValueComparator pointsComparator;
 
 	@Override
@@ -53,16 +51,20 @@ public class GameOver extends Activity implements OnClickListener {
 
 	protected void setPlayersPointsIndicators() {
 		TextView redPoints = (TextView) findViewById(R.id.red_player_points);
-		redPoints.setText("Points: " + Integer.toString(gameIntent.getIntExtra("RED_PLAYER_POINTS", 0)));
+		redPoints.setText("Points: " + 
+					Integer.toString(gameIntent.getIntExtra("RED_PLAYER_POINTS", 0)));
 
 		TextView bluePoints = (TextView) findViewById(R.id.blue_player_points);
-		bluePoints.setText("Points: " + Integer.toString(gameIntent.getIntExtra("BLUE_PLAYER_POINTS", 0)));
+		bluePoints.setText("Points: " + 
+					Integer.toString(gameIntent.getIntExtra("BLUE_PLAYER_POINTS", 0)));
 
 		TextView greenPlayer = (TextView) findViewById(R.id.green_player_points);
-		greenPlayer.setText("Points: " + Integer.toString(gameIntent.getIntExtra("GREEN_PLAYER_POINTS", 0)));
+		greenPlayer.setText("Points: " + 
+					Integer.toString(gameIntent.getIntExtra("GREEN_PLAYER_POINTS", 0)));
 
 		TextView yellowPlayer = (TextView) findViewById(R.id.yellow_player_points);
-		yellowPlayer.setText("Points: " + Integer.toString(gameIntent.getIntExtra("YELLOW_PLAYER_POINTS", 0)));
+		yellowPlayer.setText("Points: " + 
+					Integer.toString(gameIntent.getIntExtra("YELLOW_PLAYER_POINTS", 0)));
 	}
 
 	protected void setPlayersProgressState() {
@@ -76,23 +78,26 @@ public class GameOver extends Activity implements OnClickListener {
 		green = gameIntent.getIntExtra("GREEN_PLAYER_POINTS", 0);
 		yellow = gameIntent.getIntExtra("YELLOW_PLAYER_POINTS", 0);
 
-		Thread updateProgress =new Thread(new Runnable() {
+		Thread updateProgress = updateProgressThread();
+		play.setEnabled(incrementRunning ? false : true);
+		incrementRunning = true;
+		updateProgress.start();
+	}
+
+	private Thread updateProgressThread() {
+		Thread updateProgress = new Thread(new Runnable() {
 			public void run() {
 				try {
 					int max = gameIntent.getIntExtra("ALL_PLAYERS_POINTS", 0);
 					for (int i=0;i<max && incrementRunning;i++) {
-						if (redPlayer.getProgress() <= red) {
+						if (redPlayer.getProgress() <= red)
 							redPlayer.setProgress(i);
-						}
-						if (bluePlayer.getProgress() <= blue) {
+						if (bluePlayer.getProgress() <= blue)
 							bluePlayer.setProgress(i);
-						}
-						if (greenPlayer.getProgress() <= green) {
+						if (greenPlayer.getProgress() <= green)
 							greenPlayer.setProgress(i);
-						}
-						if (yellowPlayer.getProgress() <= yellow) {
+						if (yellowPlayer.getProgress() <= yellow)
 							yellowPlayer.setProgress(i);
-						}
 						if (max < 50) {
 							Thread.sleep(125);
 						} else if (max > 50 && max < 100) {
@@ -103,14 +108,10 @@ public class GameOver extends Activity implements OnClickListener {
 					}
 					Thread.sleep(500);
 					incrementRunning = false;
-				}
-				catch (Throwable t) {
-				}
+				} catch (Throwable t) {}
 			}     
 		});
-		play.setEnabled(incrementRunning ? false : true);
-		incrementRunning = true;
-		updateProgress.start();
+		return updateProgress;
 	}
 
 	public void onStop() {

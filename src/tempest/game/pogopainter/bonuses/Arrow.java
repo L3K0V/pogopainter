@@ -54,11 +54,22 @@ public class Arrow extends BonusObject {
 	public void draw(Canvas canvas, Paint paint, Rect bonusRectangle) {
 		Matrix mat = new Matrix();
 
-		// Bitmap is a square so we need only the size of the walls
-		float fullScaledSize = ((float) bonusRectangle.width()) / bonusBitmap.getWidth();       
+  
 		float left = bonusRectangle.exactCenterX() - ((scaleSize * bonusBitmap.getWidth()) / 2);
 		float top = bonusRectangle.exactCenterY() - ((scaleSize * bonusBitmap.getHeight()) / 2);
 
+		fixScalingAndRotation(bonusRectangle);
+		
+		mat.preRotate(rotationDeg, bonusBitmap.getWidth() / 2, bonusBitmap.getHeight() / 2);
+		mat.postScale(scaleSize, scaleSize);
+		mat.postTranslate(left, top);
+
+		canvas.drawBitmap(bonusBitmap, mat, paint);
+	};
+	
+	private void fixScalingAndRotation(Rect bonusRectangle) {
+		// Bitmap is a square so we need only the size of the walls  
+		float fullScaledSize = ((float) bonusRectangle.width()) / bonusBitmap.getWidth();   
 		if (scaleSize < fullScaledSize) {
 			scaleSize += 0.05f;
 		} else {
@@ -77,13 +88,7 @@ public class Arrow extends BonusObject {
 		} else {
 			rotationDeg = degree;
 		}
-
-		mat.preRotate(rotationDeg, bonusBitmap.getWidth() / 2, bonusBitmap.getHeight() / 2);
-		mat.postScale(scaleSize, scaleSize);
-		mat.postTranslate(left, top);
-
-		canvas.drawBitmap(bonusBitmap, mat, paint);
-	};
+	}
 
 	public void changeState() {
 		this.state++;
