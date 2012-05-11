@@ -319,7 +319,7 @@ public class AIBehavior implements Behavior {
 
 	private void getNewFreshDirection(Board b, Player p, Direction l) {
 		while(actions.checkDir(l, p)) {
-			if (nextDirection == Direction.NONE || nextDirection != l) {
+			if (nextDirection == Direction.NONE || nextDirection == l) {
 				nextDirection = Direction.values()[rnd.nextInt(4)+1];
 			}
 			currentDirection = nextDirection;
