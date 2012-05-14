@@ -10,7 +10,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
@@ -26,6 +28,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 	private String tag = "Preferences";
 	private Intent data = new Intent();
 	private ExtrasActivity extras = new ExtrasActivity();
+	private String current = "Current: ";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,24 +37,44 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		settings.registerOnSharedPreferenceChangeListener(this);
-		
+
 		PreferenceCategory coop = (PreferenceCategory) findPreference("GAME_TYPE_COOP");
 		PreferenceCategory deathmatch = (PreferenceCategory) findPreference("GAME_TYPE_DEATHMATCH");
-		
+
 		ListPreference color = (ListPreference) findPreference("PLAYER_COLOR");
-		
+		ListPreference classicDifficulty = (ListPreference) findPreference("CLASSIC_DIFFICULTY");
+
 		PreferenceCategory general = (PreferenceCategory) findPreference("GENERAL");
+		PreferenceCategory classic = (PreferenceCategory) findPreference("GAME_TYPE_CLASSIC");
 		PreferenceScreen root = (PreferenceScreen) findPreference("PREFERENCES_ROOT");
-		
+
 		general.removePreference(color);
 		root.removePreference(coop);
 		root.removePreference(deathmatch);
+		classic.removePreference(classicDifficulty);
+		
+		updatePreferenceSummary("CLASSIC_GAME_TIME");
+		updatePreferenceSummary("CONTROLS");
+		updatePreferenceSummary("GAME_MUSIC");
+		updatePreferenceSummary("GAME_SOUNDS");
 	}
 
 	@Override
 	public void onBackPressed() {
 		Log.d(tag, "Close");
 		finish();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
 	}
 
 	@Override
@@ -81,6 +104,10 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 			.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					Log.d(tag, "Reset positive");
+					resetPreferences();
+				}
+
+				private void resetPreferences() {
 					settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 					SharedPreferences.Editor editor = settings.edit();
 					editor.clear();
@@ -100,5 +127,22 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 		setResult(RESULT_OK, data);
 		Map<String, ?> prefs = sharedPreferences.getAll();
 		Log.d(tag, "Change " + key + " to " + prefs.get(key));
+
+		updatePreferenceSummary(key);
+	}
+
+	private void updatePreferenceSummary(String key) {
+		Preference pref = findPreference(key);
+
+		if (pref instanceof ListPreference) {
+			ListPreference listPref = (ListPreference) pref;
+			pref.setSummary(current + listPref.getEntry());
+		}
+		
+		if (pref instanceof CheckBoxPreference) {
+			CheckBoxPreference checkBoxPref = (CheckBoxPreference) pref;
+			checkBoxPref.setSummaryOn(pref.getTitle() + ": " + "ON");
+			checkBoxPref.setSummaryOff(pref.getTitle() + ": " + "OFF" );
+		}
 	}
 }

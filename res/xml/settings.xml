@@ -83,16 +83,6 @@
             android:key="DEATHMATCH_POINTS"
             android:summary="Round points of every Deathmatch game"
             android:title="Round points" />
-
-        <EditTextPreference
-            android:defaultValue="2048"
-            android:dialogTitle="Enter custom points number"
-            android:enabled="false"
-            android:inputType="number"
-            android:negativeButtonText="Back"
-            android:positiveButtonText="Submit"
-            android:summary="Enter your own custom round points"
-            android:title="Custom round points" />
     </PreferenceCategory>
     <PreferenceCategory
         xmlns:android="http://schemas.android.com/apk/res/android"

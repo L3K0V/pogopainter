@@ -483,3 +483,9 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + General code cleanup
 + Methods no logner than 30 lines
 + Code convention cleanup
+
+0.14.10(20120515)
++ Fixed: bug in pause menu, when cancel pause dialog
++ Fixed: preferences onSharedPreferencesChange listeners (register & unregister)
++ New: Preference summary now shows current state or value
++ AI: SUCK!

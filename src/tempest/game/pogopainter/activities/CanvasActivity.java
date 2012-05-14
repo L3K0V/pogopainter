@@ -51,6 +51,7 @@ public class CanvasActivity extends Activity {
 		.setTitle("Pause Game")
 		.setMessage("The Game is Paused. Do you wanna Resume or return to main menu ?")
 		.setIcon(android.R.drawable.ic_dialog_alert)
+		.setCancelable(false)
 		.setNegativeButton("Resume", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				panel.startThreads();

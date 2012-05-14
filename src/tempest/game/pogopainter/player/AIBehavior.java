@@ -1,7 +1,6 @@
 package tempest.game.pogopainter.player;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -11,8 +10,6 @@ import tempest.game.pogopainter.bonuses.Arrow;
 import tempest.game.pogopainter.bonuses.BonusObject;
 import tempest.game.pogopainter.bonuses.Bonuses;
 import tempest.game.pogopainter.bonuses.Checkpoint;
-import tempest.game.pogopainter.bonuses.Cleaner;
-import tempest.game.pogopainter.bonuses.Teleport;
 import tempest.game.pogopainter.gametypes.Game;
 import tempest.game.pogopainter.system.Board;
 import tempest.game.pogopainter.system.Cell;
@@ -22,7 +19,7 @@ import tempest.game.pogopainter.system.Score;
 /**
  * 
  * @author Asen Lekov <asenlekoff@gmail.com>
- * @version 3
+ * @version 5
  * @since 29/03/2012
  * 
  * Basic artificial intelligence (AI)
@@ -33,16 +30,16 @@ import tempest.game.pogopainter.system.Score;
  */
 
 public class AIBehavior implements Behavior {
-	private Difficulty AIdifficult;
 	private Game actions;
-	private Direction currentDirection = Direction.NONE;
-	private Direction nextDirection    = Direction.NONE;
+	private Direction currentDirection   = Direction.NONE;
+	private Direction nextDirection      = Direction.NONE;
+	private Direction arrowNextDirection = Direction.NONE;
 	private BonusObject bonus = null;
 
-	private Random rnd = new Random();
+	private Random rnd        = new Random();
 	private boolean following = false;
 	private Score score       = null;
-	private Player AI;
+	private Player ai;
 
 	private List<BonusObject> checkpoints;
 	private List<BonusObject> arrows;
@@ -54,17 +51,15 @@ public class AIBehavior implements Behavior {
 	/**
 	 * Use {@link #AIBehavior(Difficulty, Game)} to attach behavior to AI
 	 * 
-	 * @param AIdifficult behavior difficulty (easy, normal, hard)
 	 * @param game game that provides access to all game components such players, bonuses, board e.g.
 	 */
 
 	public AIBehavior(Difficulty AIdifficult, Game game) {
-		this.AIdifficult = AIdifficult;
 		this.actions = game;
 	}
 
 	public void setPlayer(Player pl) {
-		this.AI = pl;
+		this.ai = pl;
 	}
 
 	/**
@@ -72,30 +67,40 @@ public class AIBehavior implements Behavior {
 	 * 
 	 * @param b board AI play on
 	 * @param AI player
-	 * @param randomNumber random number, chance to take some bonuses
 	 */
 
 	public void easy(Board b,Player AI) {
 		score = new Score(b, AI);
 
-		if (checkpoints == null) {
-			checkpoints = new ArrayList<BonusObject>();
-			arrows = new ArrayList<BonusObject>();
-			teleports = new ArrayList<BonusObject>();
-			allBonuses = new ArrayList<BonusObject>();
-			cleaners = new ArrayList<BonusObject>();
-			stuns = new ArrayList<BonusObject>();
+		initBonusLists();
+		refreshBonusLists();
+		chooseBonus(AI);
+
+		if (bonus != null && !isAINearestToBonus(bonus)) {
+			getNearestBonus(allBonuses);
+			following = true;
 		}
 
-		refreshBonusLists();
+		if ((bonus != null && bonus.getType() == Bonuses.ARROW) && !shouldAIGetArrow(AI, (Arrow) bonus)) {
+			following = false;
+			getNewFreshDirection(b, AI, arrowNextDirection);
+			return;
+		}
 
+		if (following && allBonuses.contains(bonus)) {
+			getNextDirectionToBonus();
+		} else {
+			following = false;
+			getNewFreshDirection(b, AI, currentDirection);
+		}
+	}
+
+	private void chooseBonus(Player AI) {
 		if (score.Calculate() >= 6 && checkpoints.size() > 0) {
 			if (AI.getBonus() != null && AI.getBonus().getType() == Bonuses.TELEPORT) {
 				getNearestBonus(checkpoints);
 				if (!isAINearestToBonus(bonus)) {
 					actions.triggerBonus(AI, AI.getBonus());
-				} else {
-					following = true;
 				}
 			}
 			getNearestBonus(checkpoints);
@@ -113,31 +118,26 @@ public class AIBehavior implements Behavior {
 			getNearestBonus(cleaners);
 			following = true;
 		}
+	}
 
-		if (bonus != null && !isAINearestToBonus(bonus)) {
-			getNearestBonus(allBonuses);
-			following = true;
-		}
-
-		if ((bonus != null && bonus.getType() == Bonuses.ARROW) && !shouldAIGetArrow(AI, (Arrow) bonus)) {
-			following = false;
-		}
-
-		if (following && allBonuses.contains(bonus)) {
-			getNextDirectionToBonus();
-		} else {
-			following = false;
-			getNewFreshDirection(b, AI, currentDirection);
+	private void initBonusLists() {
+		if (checkpoints == null) {
+			checkpoints = new ArrayList<BonusObject>();
+			arrows = new ArrayList<BonusObject>();
+			teleports = new ArrayList<BonusObject>();
+			allBonuses = new ArrayList<BonusObject>();
+			cleaners = new ArrayList<BonusObject>();
+			stuns = new ArrayList<BonusObject>();
 		}
 	}
 
 	private boolean isAINearestToBonus(BonusObject bonus) {
 		boolean result = true;
 		List<Player> otherPlayers = new ArrayList<Player>(actions.getPlayers());
-		otherPlayers.remove(AI);
+		otherPlayers.remove(ai);
 
 		for (Player otherAI: otherPlayers) {
-			if (calcDistance(AI, bonus.getX(), bonus.getY()) > 
+			if (calcDistance(ai, bonus.getX(), bonus.getY()) > 
 			calcDistance(otherAI, bonus.getX(), bonus.getY())) {
 				result = false;
 			}
@@ -209,7 +209,6 @@ public class AIBehavior implements Behavior {
 	}
 
 	private void mergeAllLists() {
-		//allBonuses.addAll(checkpoints);
 		allBonuses.addAll(arrows);
 		allBonuses.addAll(teleports);
 		allBonuses.addAll(cleaners);
@@ -225,43 +224,13 @@ public class AIBehavior implements Behavior {
 		stuns.clear();
 	}
 
-	private void getNewFreshBonus(Bonuses freshBonus) {
-		switch (freshBonus) {
-		case CHECKPOINT:
-			if (checkpoints.size() > 0 && !following) {
-				bonus = checkpoints.get(rnd.nextInt(checkpoints.size()));
-			}
-			break;
-		case ARROW:
-			if (arrows.size() > 0 && !following) {
-				bonus = arrows.get(rnd.nextInt(arrows.size()));
-			}
-			break;
-		case TELEPORT: 
-			if (teleports.size() > 0 && !following) {
-				bonus = teleports.get(rnd.nextInt(teleports.size()));
-			}
-			break;
-		case CLEANER:
-			if (cleaners.size() > 0 && !following) {
-				bonus = cleaners.get(rnd.nextInt(cleaners.size()));
-			}
-			break;
-		case STUN:
-			if (stuns.size() > 0 && !following) {
-				bonus = stuns.get(rnd.nextInt(stuns.size()));
-			}
-			break;
-		}
-	}
-
 	private void getNearestBonus(List<BonusObject> bonuses) {
 		BonusObject nearestBonus = null;
 
 		double minDistance = 1000;
 
 		for (BonusObject bo : bonuses) {
-			double calcDistance = calcDistance(AI, bo.getX(), bo.getY());
+			double calcDistance = calcDistance(ai, bo.getX(), bo.getY());
 			if (calcDistance < minDistance) {
 				minDistance = calcDistance;
 				nearestBonus = bo;
@@ -284,23 +253,15 @@ public class AIBehavior implements Behavior {
 
 	private boolean shouldAIGetArrow(Player AI, Arrow arrow) {
 		boolean isReached = false;
-		for (Direction dir : Direction.values()) {
-			boolean checkDir = actions.checkDir(dir, AI);
-			switch (dir) {
-			case LEFT:
-				if (checkDir && checkArrowForGivingPoints(arrow)) {isReached = true;}
-				break;
-			case RIGHT:
-				if (checkDir && checkArrowForGivingPoints(arrow)) {isReached = true;}
-				break;
-			case UP:
-				if (checkDir && checkArrowForGivingPoints(arrow)) {isReached = true;}
-				break;
-			case DOWN:
-				if (checkDir && checkArrowForGivingPoints(arrow)) {isReached = true;}
-				break;
-			}
+		boolean checkArrowForGivingPoints = checkArrowForGivingPoints(arrow);
+		
+		if (checkArrowForGivingPoints) {
+			isReached = true;
+		} else {
+			getNextDirectionToBonus();
+			arrowNextDirection = nextDirection;
 		}
+		
 		return isReached;
 	}
 
@@ -381,45 +342,39 @@ public class AIBehavior implements Behavior {
 	 */
 
 	private void getNextDirectionToBonus() {
-		int x = AI.getX();
-		int y = AI.getY();
+		int x = ai.getX();
+		int y = ai.getY();
 		Cell destination = new Cell(bonus.getX(), bonus.getY());
 		double distance = calcDistance(x,y , destination);
-
 		for (Direction dir : Direction.values()) {
-			boolean checkDir = actions.checkDir(dir, AI);
-
+			boolean checkDir = actions.checkDir(dir, ai);
 			switch (dir) {
 			case LEFT:
 				if (checkDir && distance > calcDistance(x-1, y, destination)) {
 					distance = calcDistance(x-1, y, destination);
 					nextDirection = dir;
-				}
-				break;
+				} break;
 			case RIGHT:
 				if (checkDir && distance > calcDistance(x+1, y, destination)) {
 					distance = calcDistance(x+1, y, destination);
 					nextDirection = dir;
-				}
-				break;
+				} break;
 			case DOWN:
 				if (checkDir && distance > calcDistance(x, y+1, destination)) {
 					distance = calcDistance(x, y+1, destination);
 					nextDirection = dir;
-				}
-				break;
+				} break;
 			case UP:
 				if (checkDir && distance > calcDistance(x, y-1, destination)) {
 					distance = calcDistance(x, y-1, destination);
 					nextDirection = dir;
-				}
-				break;
+				} break;
 			}
 		}
 	}
 
 	public Direction getNextDirection() {
-		easy(actions.getBoard(), AI);
+		easy(actions.getBoard(), ai);
 		return nextDirection;
 	}
 }
