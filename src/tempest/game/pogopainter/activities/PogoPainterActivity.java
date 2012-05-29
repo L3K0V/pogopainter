@@ -23,6 +23,8 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 	private String tag = "Pogo";
 	private static Context context;
 	private ExtrasActivity extras = new ExtrasActivity();
+	private int games = 0;
+	private Intent playgame;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -64,8 +66,9 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.play_button:
 			Log.d( tag, "Play");
-			Intent Single = new Intent(this, PogoSlots.class);
-			startActivity(Single);
+			playgame = new Intent(this, CanvasActivity.class);
+			games++;
+			startActivityForResult(playgame, 1);
 			break;
 		case R.id.options_button:
 			Log.d(tag, "Preferences");
@@ -90,6 +93,10 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 				finish();
 				startActivity(intent);
 				Toast.makeText(getBaseContext(), getString(R.string.lang_change), Toast.LENGTH_SHORT).show();
+			} else if (games < 10) {
+				games++;
+				Log.d(tag, "Run: " + Integer.toString(games));
+				startActivityForResult(playgame, 1);
 			}
 		}
 	}

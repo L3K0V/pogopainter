@@ -3,8 +3,9 @@ package tempest.game.pogopainter.gametypes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Vector;
+
 import tempeset.game.pogopainter.R;
-import tempest.game.pogopainter.activities.CanvasActivity;
 import tempest.game.pogopainter.bonuses.BonusHandler;
 import tempest.game.pogopainter.bonuses.BonusObject;
 import tempest.game.pogopainter.bonuses.Bonuses;
@@ -12,10 +13,8 @@ import tempest.game.pogopainter.bonuses.Checkpoint;
 import tempest.game.pogopainter.bonuses.Teleport;
 import tempest.game.pogopainter.graphics.Panel;
 import tempest.game.pogopainter.player.AIBehavior;
-import tempest.game.pogopainter.player.Difficulty;
 import tempest.game.pogopainter.player.Player;
 import tempest.game.pogopainter.player.PlayerState;
-import tempest.game.pogopainter.player.UserBehavior;
 import tempest.game.pogopainter.system.Board;
 import tempest.game.pogopainter.system.Cell;
 import tempest.game.pogopainter.system.Direction;
@@ -33,22 +32,25 @@ public abstract class Game {
 	protected List<Player> players;
 	protected List<Player> movedPlayers;
 	protected int stunTimer = -1;
-	
+
+	protected AIBehavior mainBrain = new AIBehavior();
+	protected Vector<Integer> data =  new Vector<Integer>();
+
 	protected abstract void initFields();
-	
+
 	protected void initPlayerColors(int classicCellNumber, int playerColor) {
 		switch (playerColor) {
 		case Color.RED:
 			initRedUser(classicCellNumber);
 			break;
 		case Color.BLUE:
-			initBlueUser(classicCellNumber);
+			//initBlueUser(classicCellNumber);
 			break;
 		case Color.GREEN:
-			initGreenUser(classicCellNumber);
+			//initGreenUser(classicCellNumber);
 			break;
 		case Color.YELLOW:
-			initYellowUser(classicCellNumber);
+			//initYellowUser(classicCellNumber);
 			break;
 		default:
 			initRedUser(classicCellNumber);
@@ -56,50 +58,50 @@ public abstract class Game {
 		}
 	}
 
-	private void initYellowUser(int classicCellNumber) {
-		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
-				0, new UserBehavior(panel)));
-		players.add(new Player(0, classicCellNumber - 1, Color.RED,
-				0, new AIBehavior(Difficulty.EASY, this)));
-		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
-				0, new AIBehavior(Difficulty.EASY, this)));
-		players.add(new Player(0, 0, Color.GREEN,
-				0, new AIBehavior(Difficulty.EASY, this)));
-	}
-
-	private void initGreenUser(int classicCellNumber) {
-		players.add(new Player(0, 0, Color.GREEN,
-				0, new UserBehavior(panel)));
-		players.add(new Player(0, classicCellNumber - 1, Color.RED,
-				0, new AIBehavior(Difficulty.EASY, this)));
-		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
-				0, new AIBehavior(Difficulty.EASY, this)));
-		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
-				0, new AIBehavior(Difficulty.EASY, this)));
-	}
-
-	private void initBlueUser(int classicCellNumber) {
-		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
-				0, new UserBehavior(panel)));
-		players.add(new Player(0, classicCellNumber - 1, Color.RED,
-				0, new AIBehavior(Difficulty.EASY, this)));
-		players.add(new Player(0, 0, Color.GREEN,
-				0, new AIBehavior(Difficulty.EASY, this)));
-		players.add(new Player(classicCellNumber - 1,
-				0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this)));
-	}
+	//	private void initYellowUser(int classicCellNumber) {
+	//		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
+	//				0, new UserBehavior(panel)));
+	//		players.add(new Player(0, classicCellNumber - 1, Color.RED,
+	//				0, new AIBehavior()));
+	//		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
+	//				0, new AIBehavior()));
+	//		players.add(new Player(0, 0, Color.GREEN,
+	//				0, new AIBehavior()));
+	//	}
+	//
+	//	private void initGreenUser(int classicCellNumber) {
+	//		players.add(new Player(0, 0, Color.GREEN,
+	//				0, new UserBehavior(panel)));
+	//		players.add(new Player(0, classicCellNumber - 1, Color.RED,
+	//				0, new AIBehavior()));
+	//		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
+	//				0, new AIBehavior()));
+	//		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
+	//				0, new AIBehavior()));
+	//	}
+	//
+	//	private void initBlueUser(int classicCellNumber) {
+	//		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
+	//				0, new UserBehavior(panel)));
+	//		players.add(new Player(0, classicCellNumber - 1, Color.RED,
+	//				0, new AIBehavior()));
+	//		players.add(new Player(0, 0, Color.GREEN,
+	//				0, new AIBehavior()));
+	//		players.add(new Player(classicCellNumber - 1,
+	//				0, Color.YELLOW, 0, new AIBehavior()));
+	//	}
 
 	private void initRedUser(int classicCellNumber) {
 		players.add(new Player(0, classicCellNumber - 1, Color.RED,
-				0, new UserBehavior(panel)));
+				0, mainBrain));
 		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 
-				0, new AIBehavior(Difficulty.EASY, this)));
+				0, mainBrain));
 		players.add(new Player(0, 0, Color.GREEN, 
-				0, new AIBehavior(Difficulty.EASY, this)));
+				0, mainBrain));
 		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 
-				0, new AIBehavior(Difficulty.EASY, this)));
+				0, mainBrain));
 	}
-	
+
 	public void move(Board board, Player player, Direction dir) {
 		if (player.getState() == PlayerState.STUN)
 			return;
@@ -128,7 +130,7 @@ public abstract class Game {
 		}
 		applyBonusEffect(player, board);
 	}
-	
+
 	public boolean checkDir(Direction dir, Player player) {
 		boolean res = false;
 		int boardSize = board.getBoardSize();
@@ -164,6 +166,74 @@ public abstract class Game {
 			}
 		}	
 		return res;
+	}
+
+	public Vector<Integer> updateNeuronsInputData(Player player) {
+		Vector<Integer> data =  new Vector<Integer>(22);
+		List<Player> AIs = new ArrayList<Player>();
+		AIs.addAll(this.players);
+		List<BonusObject> bonuses = new ArrayList<BonusObject>();
+
+		for (Checkpoint cp : bHandler.getCheckpoints()) {
+			bonuses.add((BonusObject) cp);
+		}
+		bonuses.addAll(bHandler.getOtherBonuses());
+
+		int px = player.getX();
+		int py = player.getY();
+
+		AIs.remove(player);
+
+		for (Player pl : AIs) {
+			data.add(pl.getX() - px);
+			data.add(pl.getY() - py);
+		}
+
+		data.add(player.getPoints());
+
+		for (BonusObject bo : bonuses) {
+			data.add(bo.getX() - px);
+			data.add(bo.getY() - py);
+		}
+
+		for (Player pl : AIs) {
+			data.add(pl.getPoints());
+		}
+
+		int redCells    = 0;
+		int blueCells   = 0;
+		int greenCells  = 0;
+		int yellowCells = 0;
+
+		for (int x = 0; x < board.getBoardSize(); x++) {
+			for (int y = 0; y < board.getBoardSize(); y++) {
+				switch (board.getCellAt(x, y).getColor()) {
+				case Color.RED:
+					redCells++;
+					break;
+				case Color.BLUE:
+					blueCells++;
+					break;
+				case Color.GREEN:
+					greenCells++;
+					break;
+				case Color.YELLOW:
+					yellowCells++;
+					break;
+				}
+			}
+		}
+
+		data.add(redCells);
+		data.add(blueCells);
+		data.add(greenCells);
+		data.add(yellowCells);
+
+		while (data.size() < 22) {
+			data.add(0);
+		}
+
+		return data;
 	}
 
 	public BonusObject checkForBonus(Player pl, Board board) {
@@ -240,7 +310,7 @@ public abstract class Game {
 				break;
 			}
 		}
-		
+
 		for (BonusObject other : bHandler.getOtherBonuses()) {
 			if (pl.getX() == other.getX() && pl.getY() == other.getY()) {
 				bHandler.removeBonus(BonusHandler.OTHER_QUEUE, other);
@@ -248,7 +318,7 @@ public abstract class Game {
 			}
 		}
 	}
-	
+
 	public Board getBoard() {
 		return board;
 	}
@@ -274,11 +344,11 @@ public abstract class Game {
 	public BonusHandler getBonusHandler() {
 		return bHandler;
 	}
-	
+
 	public Music getMusic() {
 		return music;
 	}
-	
+
 	private void manageStun() {
 		if (stunTimer >= 0) {
 			stunTimer++;
@@ -297,7 +367,8 @@ public abstract class Game {
 		} else {
 			manageStun();
 			for (Player pl: players) {
-				move(board, pl, pl.getBehaviour().getNextDirection());
+				pl.getBehaviour().refreshInputData(updateNeuronsInputData(pl));
+				move(board, pl, pl.getBehaviour().getNextDirection() /* NEEDS TO BE FIXED */);
 			}
 			movedPlayers.clear();
 			bHandler.update();
@@ -309,7 +380,7 @@ public abstract class Game {
 		panel.stopThreads();
 		panel.surfaceDestroyed(panel.getHolder());
 		panel.clearFocus();
-		CanvasActivity.SHOW_RESULTS = true;
+		panel.getOwner().setResult(666, panel.getOwner().getIntent());
 		panel.getOwner().finish();
 	}
 }

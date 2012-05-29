@@ -29,7 +29,7 @@ public class ClassicGame extends Game {
 		boolean ifBackground = m.isMusic(); 
 		this.music = new Music(ifBackground, ifSounds);
 		this.board = new Board(classicCellNumber);
-		this.time = m.getClassicGameTime();
+		this.time = 30;
 
 		initPlayerColors(classicCellNumber, playerColor);
 		for (Player pl: players) {

@@ -1,5 +1,7 @@
 package tempest.game.pogopainter.player;
 
+import java.util.Vector;
+
 import tempest.game.pogopainter.graphics.Panel;
 import tempest.game.pogopainter.system.Direction;
 
@@ -14,5 +16,9 @@ public class UserBehavior implements Behavior {
 
 	public Direction getNextDirection() {
 		return panel.getDirection();
+	}
+	public void refreshInputData(Vector<Integer> input) {
+		// TODO Auto-generated method stub
+		
 	}
 }
