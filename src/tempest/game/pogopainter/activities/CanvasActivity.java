@@ -8,37 +8,50 @@ import tempest.game.pogopainter.player.Player;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.PowerManager;
 
 public class CanvasActivity extends Activity {
 	public static boolean SHOW_RESULTS;
-	
+
 	public ClassicPanel panel;
 	private Intent gameover;
 	private int allPoints;
 	private AlertDialog dialog;
+	
+	private PowerManager pm;
+	private PowerManager.WakeLock wl;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+		wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "CanvasActivity");
+		
+		wl.acquire();
 		panel = new ClassicPanel(this, this);
 		setContentView(panel);
+		setResult(666);
 	}
 
 	@Override
 	protected void onPause() {
+		wl.release();
 		panel.pauseThreads();
 		panel.getGame().getMusic().pauseMusic();
 		onBackPressed();
 		dialog.dismiss();
+		
 		super.onPause();
 	}
 
 	@Override
 	protected void onResume() {
+		wl.acquire();
 		panel.resumeThreads();
 		panel.getGame().getMusic().playMusic();
 		super.onResume();
@@ -71,8 +84,9 @@ public class CanvasActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		wl.release();
 		if (SHOW_RESULTS) {
-			gameover = new Intent(this, GameOver.class);
+			//gameover = new Intent(this, GameOver.class);
 
 			List<Player> users = new ArrayList<Player>();
 			users.add(panel.getGame().getUser());
@@ -83,7 +97,7 @@ public class CanvasActivity extends Activity {
 
 			gameover.putExtra("ALL_PLAYERS_POINTS", allPoints);
 
-			this.startActivity(gameover);
+			//this.startActivity(gameover);
 			SHOW_RESULTS = false;
 		}
 		panel.stopThreads();

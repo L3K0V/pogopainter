@@ -55,8 +55,8 @@ public class NeuronNetwork {
 	
 	
 	@SuppressWarnings("unchecked")
-	public Vector<Double> Update(Vector<Double> inputs) {
-		Vector<Double> outputs = new Vector<Double>();
+	public Vector<Integer> Update(Vector<Integer> inputs) {
+		Vector<Integer> outputs = new Vector<Integer>();
 
 		double netInput = 0.0;
 		
@@ -66,7 +66,7 @@ public class NeuronNetwork {
 			
 			if(i>0)
 			{
-				inputs = (Vector<Double>)outputs.clone();			
+				inputs = (Vector<Integer>)outputs.clone();			
 			}
 			
 			outputs.clear();
@@ -82,7 +82,7 @@ public class NeuronNetwork {
 							inputs.get(w);
 				}
 				
-				outputs.add(netInput > neuron.getActivation() ? 1.0 : 0.0);
+				outputs.add(netInput > neuron.getActivation() ? 1 : 0);
 			}
 		}
 
