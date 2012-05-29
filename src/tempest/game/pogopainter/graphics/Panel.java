@@ -139,26 +139,32 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	}
 
 	private void fillBitmapCache() {
-		bitmapCache.put(R.drawable.cell_blue,        BitmapFactory.decodeResource(getResources(), R.drawable.cell_blue));
-		bitmapCache.put(R.drawable.cell_empty,       BitmapFactory.decodeResource(getResources(), R.drawable.cell_empty));
-		bitmapCache.put(R.drawable.cell_yellow,      BitmapFactory.decodeResource(getResources(), R.drawable.cell_yellow));
-		bitmapCache.put(R.drawable.cell_green,       BitmapFactory.decodeResource(getResources(), R.drawable.cell_green));
-		bitmapCache.put(R.drawable.cell_red,         BitmapFactory.decodeResource(getResources(), R.drawable.cell_red));
-		bitmapCache.put(R.drawable.player_blue,      BitmapFactory.decodeResource(getResources(), R.drawable.player_blue));
-		bitmapCache.put(R.drawable.player_yellow,    BitmapFactory.decodeResource(getResources(), R.drawable.player_yellow));
-		bitmapCache.put(R.drawable.player_red,       BitmapFactory.decodeResource(getResources(), R.drawable.player_red));
-		bitmapCache.put(R.drawable.player_green,     BitmapFactory.decodeResource(getResources(), R.drawable.player_green));
-		bitmapCache.put(R.drawable.background,       BitmapFactory.decodeResource(getResources(), R.drawable.background));
-		bitmapCache.put(R.drawable.bonus_arrow,      BitmapFactory.decodeResource(getResources(), R.drawable.bonus_arrow));
-		bitmapCache.put(R.drawable.bonus_teleport,   BitmapFactory.decodeResource(getResources(), R.drawable.bonus_teleport));
-		bitmapCache.put(R.drawable.bonus_checkpoint, BitmapFactory.decodeResource(getResources(), R.drawable.bonus_checkpoint));
-		bitmapCache.put(R.drawable.bonus_cleaner,    BitmapFactory.decodeResource(getResources(), R.drawable.bonus_cleaner));
-		bitmapCache.put(R.drawable.bonus_stun,       BitmapFactory.decodeResource(getResources(), R.drawable.bonus_stun));
-		bitmapCache.put(R.drawable.indicators_stun,  BitmapFactory.decodeResource(getResources(), R.drawable.indicators_stun));
-		bitmapCache.put(R.drawable.joystick,         BitmapFactory.decodeResource(getResources(), R.drawable.joystick));
-		bitmapCache.put(R.drawable.joystick_clicked, BitmapFactory.decodeResource(getResources(), R.drawable.joystick_clicked));
-		bitmapCache.put(R.drawable.joystick_action,  BitmapFactory.decodeResource(getResources(), R.drawable.joystick_action));
-		bitmapCache.put(R.drawable.arrow,            BitmapFactory.decodeResource(getResources(), R.drawable.arrow));
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inDither         = false;
+		options.inPurgeable      = true;
+		options.inInputShareable = true;
+		options.inTempStorage    = new byte[32 * 1024];
+		
+		bitmapCache.put(R.drawable.cell_blue,        BitmapFactory.decodeResource(getResources(), R.drawable.cell_blue, options));
+		bitmapCache.put(R.drawable.cell_empty,       BitmapFactory.decodeResource(getResources(), R.drawable.cell_empty, options));
+		bitmapCache.put(R.drawable.cell_yellow,      BitmapFactory.decodeResource(getResources(), R.drawable.cell_yellow, options));
+		bitmapCache.put(R.drawable.cell_green,       BitmapFactory.decodeResource(getResources(), R.drawable.cell_green, options));
+		bitmapCache.put(R.drawable.cell_red,         BitmapFactory.decodeResource(getResources(), R.drawable.cell_red, options));
+		bitmapCache.put(R.drawable.player_blue,      BitmapFactory.decodeResource(getResources(), R.drawable.player_blue, options));
+		bitmapCache.put(R.drawable.player_yellow,    BitmapFactory.decodeResource(getResources(), R.drawable.player_yellow, options));
+		bitmapCache.put(R.drawable.player_red,       BitmapFactory.decodeResource(getResources(), R.drawable.player_red, options));
+		bitmapCache.put(R.drawable.player_green,     BitmapFactory.decodeResource(getResources(), R.drawable.player_green, options));
+		bitmapCache.put(R.drawable.background,       BitmapFactory.decodeResource(getResources(), R.drawable.background, options));
+		bitmapCache.put(R.drawable.bonus_arrow,      BitmapFactory.decodeResource(getResources(), R.drawable.bonus_arrow, options));
+		bitmapCache.put(R.drawable.bonus_teleport,   BitmapFactory.decodeResource(getResources(), R.drawable.bonus_teleport, options));
+		bitmapCache.put(R.drawable.bonus_checkpoint, BitmapFactory.decodeResource(getResources(), R.drawable.bonus_checkpoint, options));
+		bitmapCache.put(R.drawable.bonus_cleaner,    BitmapFactory.decodeResource(getResources(), R.drawable.bonus_cleaner, options));
+		bitmapCache.put(R.drawable.bonus_stun,       BitmapFactory.decodeResource(getResources(), R.drawable.bonus_stun, options));
+		bitmapCache.put(R.drawable.indicators_stun,  BitmapFactory.decodeResource(getResources(), R.drawable.indicators_stun, options));
+		bitmapCache.put(R.drawable.joystick,         BitmapFactory.decodeResource(getResources(), R.drawable.joystick, options));
+		bitmapCache.put(R.drawable.joystick_clicked, BitmapFactory.decodeResource(getResources(), R.drawable.joystick_clicked, options));
+		bitmapCache.put(R.drawable.joystick_action,  BitmapFactory.decodeResource(getResources(), R.drawable.joystick_action, options));
+		bitmapCache.put(R.drawable.arrow,            BitmapFactory.decodeResource(getResources(), R.drawable.arrow, options));
 	}
 
 	public void clearMemory() {

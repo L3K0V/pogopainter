@@ -41,6 +41,9 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 
 		View optionsButton = findViewById(R.id.options_button);
 		optionsButton.setOnClickListener(this);
+		
+		View helpButton =  findViewById(R.id.help_button);
+		helpButton.setVisibility(View.GONE);
 
 	}
 
