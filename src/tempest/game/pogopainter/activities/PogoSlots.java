@@ -58,6 +58,13 @@ public class PogoSlots extends Activity implements OnClickListener {
 		showHint("Choose your starting position", Toast.LENGTH_LONG);
 	}
 	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		
+		System.gc();
+	}
+
 	private void initSlots() {
 		redSlot      = (ToggleButton) this.findViewById(R.id.redSlot);
 		blueSlot     = (ToggleButton) this.findViewById(R.id.blueSlot);

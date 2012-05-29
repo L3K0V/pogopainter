@@ -489,3 +489,7 @@ BUG:	Movement issues (at random moment for few secs, every jump < 1 sec)
 + Fixed: preferences onSharedPreferencesChange listeners (register & unregister)
 + New: Preference summary now shows current state or value
 + AI: SUCK!
+
+0.14.11(20120527)
++ Some Bitmap VM Budget optimizations...
++ Slots after exit call GC
