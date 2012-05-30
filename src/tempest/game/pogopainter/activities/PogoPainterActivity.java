@@ -93,7 +93,7 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 				finish();
 				startActivity(intent);
 				Toast.makeText(getBaseContext(), getString(R.string.lang_change), Toast.LENGTH_SHORT).show();
-			} else if (games < 10) {
+			} else if (resultCode == 666 && games < 10) {
 				games++;
 				Log.d(tag, "Run: " + Integer.toString(games));
 				startActivityForResult(playgame, 1);

@@ -2,6 +2,7 @@ package tempest.game.pogopainter.player;
 
 import java.util.Vector;
 
+import tempest.app.neurons.base.NeuronNetwork;
 import tempest.game.pogopainter.graphics.Panel;
 import tempest.game.pogopainter.system.Direction;
 
@@ -20,5 +21,9 @@ public class UserBehavior implements Behavior {
 	public void refreshInputData(Vector<Integer> input) {
 		// TODO Auto-generated method stub
 		
+	}
+	public NeuronNetwork getBrain() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
