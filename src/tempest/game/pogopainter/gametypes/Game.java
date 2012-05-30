@@ -5,7 +5,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
+import javax.sql.PooledConnection;
+
 import tempeset.game.pogopainter.R;
+import tempest.app.neurons.base.Genetic;
+import tempest.app.neurons.base.NeuronNetwork;
 import tempest.game.pogopainter.bonuses.BonusHandler;
 import tempest.game.pogopainter.bonuses.BonusObject;
 import tempest.game.pogopainter.bonuses.Bonuses;
@@ -32,8 +36,13 @@ public abstract class Game {
 	protected List<Player> players;
 	protected List<Player> movedPlayers;
 	protected int stunTimer = -1;
+	protected static Genetic geneticAlgorithm;
+	
+	static {
+		geneticAlgorithm = null;
+	}
 
-	protected AIBehavior mainBrain = new AIBehavior();
+	//protected AIBehavior mainBrain = new AIBehavior();
 	protected Vector<Integer> data =  new Vector<Integer>();
 
 	protected abstract void initFields();
@@ -92,14 +101,28 @@ public abstract class Game {
 	//	}
 
 	private void initRedUser(int classicCellNumber) {
+		if (geneticAlgorithm == null) {
+			Vector<NeuronNetwork> pool = new Vector<NeuronNetwork>(4);
+			AIBehavior player1 = new AIBehavior();
+			AIBehavior player2 = new AIBehavior();
+			AIBehavior player3 = new AIBehavior();
+			AIBehavior player4 = new AIBehavior();
+			
+			pool.add(player1.getBrain());
+			pool.add(player2.getBrain());
+			pool.add(player3.getBrain());
+			pool.add(player4.getBrain());
+			geneticAlgorithm = new Genetic(pool);
+		}
+		
 		players.add(new Player(0, classicCellNumber - 1, Color.RED,
-				0, mainBrain));
+				0, new AIBehavior(geneticAlgorithm.getVector().get(0))));
 		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 
-				0, mainBrain));
+				0, new AIBehavior(geneticAlgorithm.getVector().get(1))));
 		players.add(new Player(0, 0, Color.GREEN, 
-				0, mainBrain));
+				0, new AIBehavior(geneticAlgorithm.getVector().get(2))));
 		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 
-				0, mainBrain));
+				0, new AIBehavior(geneticAlgorithm.getVector().get(3))));
 	}
 
 	public void move(Board board, Player player, Direction dir) {
@@ -169,7 +192,8 @@ public abstract class Game {
 	}
 
 	public Vector<Integer> updateNeuronsInputData(Player player) {
-		Vector<Integer> data =  new Vector<Integer>(22);
+
+		Vector<Integer> data =  new Vector<Integer>(24);
 		List<Player> AIs = new ArrayList<Player>();
 		AIs.addAll(this.players);
 		List<BonusObject> bonuses = new ArrayList<BonusObject>();
@@ -182,23 +206,23 @@ public abstract class Game {
 		int px = player.getX();
 		int py = player.getY();
 
-		AIs.remove(player);
+		//AIs.remove(player);
 
 		for (Player pl : AIs) {
 			data.add(pl.getX() - px);
 			data.add(pl.getY() - py);
 		}
 
-		data.add(player.getPoints());
+		//data.add(player.getPoints());
 
 		for (BonusObject bo : bonuses) {
 			data.add(bo.getX() - px);
 			data.add(bo.getY() - py);
 		}
 
-		for (Player pl : AIs) {
-			data.add(pl.getPoints());
-		}
+//		for (Player pl : AIs) {
+//			data.add(pl.getPoints());
+//		}
 
 		int redCells    = 0;
 		int blueCells   = 0;
@@ -229,8 +253,8 @@ public abstract class Game {
 		data.add(greenCells);
 		data.add(yellowCells);
 
-		while (data.size() < 22) {
-			data.add(0);
+		while (data.size() < 24) {
+			data.add(-1);
 		}
 
 		return data;
@@ -365,6 +389,7 @@ public abstract class Game {
 		if (time == 0) {
 			finishGame();
 		} else {
+			//geneticAlgorithm.evolve();
 			manageStun();
 			for (Player pl: players) {
 				pl.getBehaviour().refreshInputData(updateNeuronsInputData(pl));
@@ -377,6 +402,27 @@ public abstract class Game {
 	}
 
 	private void finishGame() {
+		int totalScore = 0, maxScore = -1, worstScore = 9999;
+		Player bestPlayer = null;
+		
+		for (Player p : players) {
+			if (p.getPoints() > maxScore) {
+				maxScore = p.getPoints();
+				bestPlayer = p;
+			}
+			else if (p.getPoints() < worstScore)
+				worstScore = p.getPoints();
+			
+			totalScore += p.getPoints();
+		}
+		geneticAlgorithm.setBestScore(maxScore);
+		geneticAlgorithm.setAvrScore(totalScore / players.size());
+		geneticAlgorithm.setTotalScore(totalScore);
+		geneticAlgorithm.setWorstScore(worstScore);
+		geneticAlgorithm.setBestPlayer(bestPlayer.getBehaviour().getBrain());
+		
+		geneticAlgorithm.evolve();
+		
 		panel.stopThreads();
 		panel.surfaceDestroyed(panel.getHolder());
 		panel.clearFocus();

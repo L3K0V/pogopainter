@@ -2,3 +2,7 @@
 + Run N time games (for now 10 games)
 + Replaced AI behavior using Neuron network
 - No Genetic Alg... no logic, stupid AIs
+
+0.1.2.0(20120530)
++ Added Genetic alg.
++ Connect Neurons + Genetic

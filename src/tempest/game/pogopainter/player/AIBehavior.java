@@ -1,5 +1,6 @@
 package tempest.game.pogopainter.player;
 
+import java.util.Random;
 import java.util.Vector;
 
 import tempest.app.neurons.base.NeuronNetwork;
@@ -10,15 +11,25 @@ public class AIBehavior implements Behavior {
 	private Vector<Integer> inputData;
 	private Vector<Integer> outputData;
 	private NeuronNetwork  brain;
-	
+
+	public void setBrain(NeuronNetwork brain) {
+		this.brain = brain;
+	}
+
 	public void setPlayer(Player pl) {
 		// TODO Auto-generated method stub
 	}
 	
 	public AIBehavior() {
-		brain      = new NeuronNetwork(22, 2, 2, 11);
-		inputData  = new Vector<Integer>(22);
-		outputData = new Vector<Integer>();
+		brain      = new NeuronNetwork(24, 2, 2, 11);
+		inputData  = new Vector<Integer>(24);
+		outputData = new Vector<Integer>(2);
+	}
+	
+	public AIBehavior(NeuronNetwork network) {
+		this.brain = network;
+		inputData  = new Vector<Integer>(24);
+		outputData = new Vector<Integer>(2);
 	}
 	
 	public void refreshInputData(Vector<Integer> input) {
@@ -30,6 +41,7 @@ public class AIBehavior implements Behavior {
 
 	public Direction getNextDirection() {
 		Direction next = Direction.NONE;
+		System.out.println(outputData.toString());
 		if (outputData.firstElement() == 0) {
 			if (outputData.elementAt(1) == 1) {
 				next = Direction.RIGHT;
@@ -43,9 +55,16 @@ public class AIBehavior implements Behavior {
 				next = Direction.UP;
 			}
 		} else {
-			next = Direction.NONE;
+			Random rnd = new Random();
+			while (next == Direction.NONE) {
+				next = Direction.values()[rnd.nextInt(4)+1];
+			}
 		}
 		return next;
+	}
+	
+	public NeuronNetwork getBrain() {
+		return brain;
 	}
 	
 }

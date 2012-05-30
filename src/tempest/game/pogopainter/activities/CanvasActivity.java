@@ -74,6 +74,7 @@ public class CanvasActivity extends Activity {
 		.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				panel.surfaceDestroyed(panel.getHolder());
+				setResult(667);
 				finish();
 				dialog.dismiss();
 			}
