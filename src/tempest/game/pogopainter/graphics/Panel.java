@@ -141,7 +141,7 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 	private void fillBitmapCache() {
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inDither         = false;
-		options.inPurgeable      = true;
+		options.inPurgeable      = false;
 		options.inInputShareable = true;
 		options.inTempStorage    = new byte[32 * 1024];
 		
