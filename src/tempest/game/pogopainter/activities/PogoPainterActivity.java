@@ -1,6 +1,10 @@
 package tempest.game.pogopainter.activities;
 
+import java.util.Vector;
+
 import tempeset.game.pogopainter.R;
+import tempest.app.neurons.base.Genetic;
+import tempest.app.neurons.base.NeuronNetwork;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -25,6 +29,15 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 	private ExtrasActivity extras = new ExtrasActivity();
 	private int games = 0;
 	private Intent playgame;
+	public static Genetic genetic;
+	
+	static {
+		Vector<NeuronNetwork> AIs = new Vector<NeuronNetwork>(4);
+		for (int i = 0; i < 4; i++) {
+			AIs.add(new NeuronNetwork(24, 2, 2, 11));
+		}
+		genetic = new Genetic(AIs);
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +59,6 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 		
 		View helpButton =  findViewById(R.id.help_button);
 		helpButton.setVisibility(View.GONE);
-
 	}
 
 	@Override

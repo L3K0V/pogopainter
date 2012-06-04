@@ -2,7 +2,7 @@ package tempest.app.neurons.base;
 
 import java.util.Vector;
 
-public class NeuronNetwork {
+public class NeuronNetwork implements Cloneable {
 	private int numberOfInputs;
 	private int numberOfOutputs;
 	private int numberHiddenLayers;
@@ -36,7 +36,7 @@ public class NeuronNetwork {
 
 		return res;
 	}
-	
+
 	public int getNumberOfWeights() {
 		int res = 0;
 
@@ -48,44 +48,46 @@ public class NeuronNetwork {
 
 		return res;
 	}
-	
+
 	public void updateWeights(Vector<Double> weights) {
-		// Put new chromosome, Vector<Double>
+		int currentWeight = 0;
+		for (NeuronLayer layer : network) {
+			for (Neuron neuron : layer.getLayerNeurons()) {
+				Vector<Double> newWeights = new Vector<Double>();
+				
+				for (int i = currentWeight; i < neuron.getInputs(); i++, currentWeight++) {
+					newWeights.add(weights.get(i));
+				}
+				
+				neuron.setInputWeights(newWeights);
+			}
+		}
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
 	public Vector<Integer> Update(Vector<Integer> inputs) {
 		Vector<Integer> outputs = new Vector<Integer>();
 
-		double netInput = 0.0;
-		
-		if(inputs.size() != numberOfInputs) return outputs;
-	
-		for(int i=0;i<numberHiddenLayers+1;++i){
+		for (int i = 0; i < network.size(); i++) {
+			NeuronLayer layer = network.get(i);
 			
-			if(i>0)
-			{
-				inputs = (Vector<Integer>)outputs.clone();			
+			if (i > 0) {
+				inputs = (Vector<Integer>)outputs.clone();
 			}
 			
 			outputs.clear();
 			
-			NeuronLayer neuronLayer = network.get(i);
-			Vector<Neuron> layerNeurons = neuronLayer.getLayerNeurons();
-			for(int j=0; j < layerNeurons.size(); j++) {
-				Neuron neuron = layerNeurons.get(j);
-				int numInputs = neuron.getInputs();
+			for (Neuron neuron : layer.getLayerNeurons()) {
+				double inputResult = 0;
 				
-				for (int w = 0; w < numInputs; w++) {
-					netInput += neuron.getInputWeights().get(w) * 
-							inputs.get(w);
+				for (int j = 0; j < neuron.getInputs(); j++) {
+					inputResult += neuron.getInputWeights().get(j) * inputs.get(j);
 				}
 				
-				outputs.add(netInput > neuron.getActivation() ? 1 : 0);
-			}
+				outputs.add(inputResult > neuron.getActivation() ? 1 : 0);
+			}			
 		}
-
+		
 		return outputs;
 	}
 
@@ -108,4 +110,14 @@ public class NeuronNetwork {
 	public Vector<NeuronLayer> getNetwork() {
 		return network;
 	}
+
+	public NeuronNetwork clone() {
+		try {
+			return (NeuronNetwork) super.clone();
+		}
+		catch( CloneNotSupportedException e )
+		{
+			return null;
+		}
+	} 
 }
