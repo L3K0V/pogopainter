@@ -33,10 +33,10 @@ public class AIBehavior implements Behavior {
 	}
 	
 	public void refreshInputData(Vector<Integer> input) {
+		System.out.println(input);
 		inputData.clear();
 		inputData = input;
 		outputData = brain.Update(input);
-		System.out.println(input);
 	}
 
 	public Direction getNextDirection() {

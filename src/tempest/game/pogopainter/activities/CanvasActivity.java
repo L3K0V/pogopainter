@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tempest.game.pogopainter.graphics.ClassicPanel;
+import tempest.game.pogopainter.graphics.Panel;
 import tempest.game.pogopainter.player.Player;
 
 import android.app.Activity;
@@ -18,7 +19,7 @@ import android.os.PowerManager;
 public class CanvasActivity extends Activity {
 	public static boolean SHOW_RESULTS;
 
-	public ClassicPanel panel;
+	public Panel panel;
 	private Intent gameover;
 	private int allPoints;
 	private AlertDialog dialog;
@@ -75,6 +76,15 @@ public class CanvasActivity extends Activity {
 			public void onClick(DialogInterface dialog, int which) {
 				panel.surfaceDestroyed(panel.getHolder());
 				setResult(667);
+				finish();
+				dialog.dismiss();
+			}
+		})
+		.setNeutralButton("Next run", new DialogInterface.OnClickListener() {
+			
+			public void onClick(DialogInterface arg0, int arg1) {
+				panel.surfaceDestroyed(panel.getHolder());
+				setResult(666);
 				finish();
 				dialog.dismiss();
 			}

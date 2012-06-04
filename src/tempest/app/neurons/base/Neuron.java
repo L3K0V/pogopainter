@@ -10,12 +10,12 @@ public class Neuron {
 	public Neuron(int inputs) {
 		this.inputs = inputs;
 		
-		inputWeights = new Vector<Double>(this.inputs);
+		setInputWeights(new Vector<Double>(this.inputs));
 		
 		Random rnd = new Random();
 		
 		for (int i = 0; i < this.inputs+1; i++) {
-			inputWeights.add(-1 + rnd.nextDouble()*2);
+			getInputWeights().add(-1 + rnd.nextDouble()*2);
 		}
 	}
 	
@@ -24,7 +24,7 @@ public class Neuron {
 	}
 	
 	public void printWeights() {
-		for (Double weight : inputWeights) {
+		for (Double weight : getInputWeights()) {
 			System.out.print(weight + " ");
 		}
 		System.out.println();
@@ -35,6 +35,10 @@ public class Neuron {
 	}
 
 	public Double getActivation() {
-		return inputWeights.lastElement();
+		return getInputWeights().lastElement();
+	}
+
+	public void setInputWeights(Vector<Double> inputWeights) {
+		this.inputWeights = inputWeights;
 	}
 }

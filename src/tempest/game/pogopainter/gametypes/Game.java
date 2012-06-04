@@ -5,11 +5,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
-import javax.sql.PooledConnection;
-
 import tempeset.game.pogopainter.R;
-import tempest.app.neurons.base.Genetic;
-import tempest.app.neurons.base.NeuronNetwork;
+import tempest.game.pogopainter.activities.CanvasActivity;
 import tempest.game.pogopainter.bonuses.BonusHandler;
 import tempest.game.pogopainter.bonuses.BonusObject;
 import tempest.game.pogopainter.bonuses.Bonuses;
@@ -19,6 +16,7 @@ import tempest.game.pogopainter.graphics.Panel;
 import tempest.game.pogopainter.player.AIBehavior;
 import tempest.game.pogopainter.player.Player;
 import tempest.game.pogopainter.player.PlayerState;
+import tempest.game.pogopainter.player.UserBehavior;
 import tempest.game.pogopainter.system.Board;
 import tempest.game.pogopainter.system.Cell;
 import tempest.game.pogopainter.system.Direction;
@@ -36,30 +34,22 @@ public abstract class Game {
 	protected List<Player> players;
 	protected List<Player> movedPlayers;
 	protected int stunTimer = -1;
-	protected static Genetic geneticAlgorithm;
 	
-	static {
-		geneticAlgorithm = null;
-	}
-
-	//protected AIBehavior mainBrain = new AIBehavior();
-	protected Vector<Integer> data =  new Vector<Integer>();
-
 	protected abstract void initFields();
-
+	
 	protected void initPlayerColors(int classicCellNumber, int playerColor) {
 		switch (playerColor) {
 		case Color.RED:
 			initRedUser(classicCellNumber);
 			break;
 		case Color.BLUE:
-			//initBlueUser(classicCellNumber);
+			initBlueUser(classicCellNumber);
 			break;
 		case Color.GREEN:
-			//initGreenUser(classicCellNumber);
+			initGreenUser(classicCellNumber);
 			break;
 		case Color.YELLOW:
-			//initYellowUser(classicCellNumber);
+			initYellowUser(classicCellNumber);
 			break;
 		default:
 			initRedUser(classicCellNumber);
@@ -67,64 +57,50 @@ public abstract class Game {
 		}
 	}
 
-	//	private void initYellowUser(int classicCellNumber) {
-	//		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
-	//				0, new UserBehavior(panel)));
-	//		players.add(new Player(0, classicCellNumber - 1, Color.RED,
-	//				0, new AIBehavior()));
-	//		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
-	//				0, new AIBehavior()));
-	//		players.add(new Player(0, 0, Color.GREEN,
-	//				0, new AIBehavior()));
-	//	}
-	//
-	//	private void initGreenUser(int classicCellNumber) {
-	//		players.add(new Player(0, 0, Color.GREEN,
-	//				0, new UserBehavior(panel)));
-	//		players.add(new Player(0, classicCellNumber - 1, Color.RED,
-	//				0, new AIBehavior()));
-	//		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
-	//				0, new AIBehavior()));
-	//		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
-	//				0, new AIBehavior()));
-	//	}
-	//
-	//	private void initBlueUser(int classicCellNumber) {
-	//		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
-	//				0, new UserBehavior(panel)));
-	//		players.add(new Player(0, classicCellNumber - 1, Color.RED,
-	//				0, new AIBehavior()));
-	//		players.add(new Player(0, 0, Color.GREEN,
-	//				0, new AIBehavior()));
-	//		players.add(new Player(classicCellNumber - 1,
-	//				0, Color.YELLOW, 0, new AIBehavior()));
-	//	}
-
-	private void initRedUser(int classicCellNumber) {
-		if (geneticAlgorithm == null) {
-			Vector<NeuronNetwork> pool = new Vector<NeuronNetwork>(4);
-			AIBehavior player1 = new AIBehavior();
-			AIBehavior player2 = new AIBehavior();
-			AIBehavior player3 = new AIBehavior();
-			AIBehavior player4 = new AIBehavior();
-			
-			pool.add(player1.getBrain());
-			pool.add(player2.getBrain());
-			pool.add(player3.getBrain());
-			pool.add(player4.getBrain());
-			geneticAlgorithm = new Genetic(pool);
-		}
-		
+	private void initYellowUser(int classicCellNumber) {
+		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
+				0, new UserBehavior(panel)));
 		players.add(new Player(0, classicCellNumber - 1, Color.RED,
-				0, new AIBehavior(geneticAlgorithm.getVector().get(0))));
-		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 
-				0, new AIBehavior(geneticAlgorithm.getVector().get(1))));
-		players.add(new Player(0, 0, Color.GREEN, 
-				0, new AIBehavior(geneticAlgorithm.getVector().get(2))));
-		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 
-				0, new AIBehavior(geneticAlgorithm.getVector().get(3))));
+				0, new AIBehavior()));
+		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
+				0, new AIBehavior()));
+		players.add(new Player(0, 0, Color.GREEN,
+				0, new AIBehavior()));
 	}
 
+	private void initGreenUser(int classicCellNumber) {
+		players.add(new Player(0, 0, Color.GREEN,
+				0, new UserBehavior(panel)));
+		players.add(new Player(0, classicCellNumber - 1, Color.RED,
+				0, new AIBehavior()));
+		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
+				0, new AIBehavior()));
+		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
+				0, new AIBehavior()));
+	}
+
+	private void initBlueUser(int classicCellNumber) {
+		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
+				0, new UserBehavior(panel)));
+		players.add(new Player(0, classicCellNumber - 1, Color.RED,
+				0, new AIBehavior()));
+		players.add(new Player(0, 0, Color.GREEN,
+				0, new AIBehavior()));
+		players.add(new Player(classicCellNumber - 1,
+				0, Color.YELLOW, 0, new AIBehavior()));
+	}
+
+	private void initRedUser(int classicCellNumber) {
+		players.add(new Player(0, classicCellNumber - 1, Color.RED,
+				0, new UserBehavior(panel)));
+		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 
+				0, new AIBehavior()));
+		players.add(new Player(0, 0, Color.GREEN, 
+				0, new AIBehavior()));
+		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 
+				0, new AIBehavior()));
+	}
+	
 	public void move(Board board, Player player, Direction dir) {
 		if (player.getState() == PlayerState.STUN)
 			return;
@@ -153,7 +129,7 @@ public abstract class Game {
 		}
 		applyBonusEffect(player, board);
 	}
-
+	
 	public boolean checkDir(Direction dir, Player player) {
 		boolean res = false;
 		int boardSize = board.getBoardSize();
@@ -189,75 +165,6 @@ public abstract class Game {
 			}
 		}	
 		return res;
-	}
-
-	public Vector<Integer> updateNeuronsInputData(Player player) {
-
-		Vector<Integer> data =  new Vector<Integer>(24);
-		List<Player> AIs = new ArrayList<Player>();
-		AIs.addAll(this.players);
-		List<BonusObject> bonuses = new ArrayList<BonusObject>();
-
-		for (Checkpoint cp : bHandler.getCheckpoints()) {
-			bonuses.add((BonusObject) cp);
-		}
-		bonuses.addAll(bHandler.getOtherBonuses());
-
-		int px = player.getX();
-		int py = player.getY();
-
-		//AIs.remove(player);
-
-		for (Player pl : AIs) {
-			data.add(pl.getX() - px);
-			data.add(pl.getY() - py);
-		}
-
-		//data.add(player.getPoints());
-
-		for (BonusObject bo : bonuses) {
-			data.add(bo.getX() - px);
-			data.add(bo.getY() - py);
-		}
-
-//		for (Player pl : AIs) {
-//			data.add(pl.getPoints());
-//		}
-
-		int redCells    = 0;
-		int blueCells   = 0;
-		int greenCells  = 0;
-		int yellowCells = 0;
-
-		for (int x = 0; x < board.getBoardSize(); x++) {
-			for (int y = 0; y < board.getBoardSize(); y++) {
-				switch (board.getCellAt(x, y).getColor()) {
-				case Color.RED:
-					redCells++;
-					break;
-				case Color.BLUE:
-					blueCells++;
-					break;
-				case Color.GREEN:
-					greenCells++;
-					break;
-				case Color.YELLOW:
-					yellowCells++;
-					break;
-				}
-			}
-		}
-
-		data.add(redCells);
-		data.add(blueCells);
-		data.add(greenCells);
-		data.add(yellowCells);
-
-		while (data.size() < 24) {
-			data.add(-1);
-		}
-
-		return data;
 	}
 
 	public BonusObject checkForBonus(Player pl, Board board) {
@@ -334,7 +241,7 @@ public abstract class Game {
 				break;
 			}
 		}
-
+		
 		for (BonusObject other : bHandler.getOtherBonuses()) {
 			if (pl.getX() == other.getX() && pl.getY() == other.getY()) {
 				bHandler.removeBonus(BonusHandler.OTHER_QUEUE, other);
@@ -342,7 +249,7 @@ public abstract class Game {
 			}
 		}
 	}
-
+	
 	public Board getBoard() {
 		return board;
 	}
@@ -368,11 +275,11 @@ public abstract class Game {
 	public BonusHandler getBonusHandler() {
 		return bHandler;
 	}
-
+	
 	public Music getMusic() {
 		return music;
 	}
-
+	
 	private void manageStun() {
 		if (stunTimer >= 0) {
 			stunTimer++;
@@ -384,16 +291,83 @@ public abstract class Game {
 			}
 		}
 	}
+	
+	public Vector<Integer> updateNeuronsInputData(Player player) {
+		Vector<Integer> data =  new Vector<Integer>(24);
+		List<Player> AIs = new ArrayList<Player>();
+		AIs.addAll(this.players);
+		List<BonusObject> bonuses = new ArrayList<BonusObject>();
+
+		for (Checkpoint cp : bHandler.getCheckpoints()) {
+			bonuses.add((BonusObject) cp);
+		}
+		bonuses.addAll(bHandler.getOtherBonuses());
+
+		int px = player.getX();
+		int py = player.getY();
+
+		//AIs.remove(player);
+
+		for (Player pl : AIs) {
+			data.add(pl.getX() - px);
+			data.add(pl.getY() - py);
+		}
+
+		//data.add(player.getPoints());
+
+		for (BonusObject bo : bonuses) {
+			data.add(bo.getX() - px);
+			data.add(bo.getY() - py);
+		}
+
+		for (Player pl : AIs) {
+			data.add(pl.getPoints());
+		}
+
+		int redCells    = 0;
+		int blueCells   = 0;
+		int greenCells  = 0;
+		int yellowCells = 0;
+
+		for (int x = 0; x < board.getBoardSize(); x++) {
+			for (int y = 0; y < board.getBoardSize(); y++) {
+				switch (board.getCellAt(x, y).getColor()) {
+				case Color.RED:
+					redCells++;
+					break;
+				case Color.BLUE:
+					blueCells++;
+					break;
+				case Color.GREEN:
+					greenCells++;
+					break;
+				case Color.YELLOW:
+					yellowCells++;
+					break;
+				}
+			}
+		}
+
+		data.add(redCells);
+		data.add(blueCells);
+		data.add(greenCells);
+		data.add(yellowCells);
+
+		while (data.size() < 24) {
+			data.add(-1);
+		}
+		System.out.println(data.toString() + " size: " + data.size());
+		return data;
+	}
 
 	public void update() {
 		if (time == 0) {
 			finishGame();
 		} else {
-			//geneticAlgorithm.evolve();
 			manageStun();
 			for (Player pl: players) {
 				pl.getBehaviour().refreshInputData(updateNeuronsInputData(pl));
-				move(board, pl, pl.getBehaviour().getNextDirection() /* NEEDS TO BE FIXED */);
+				move(board, pl, pl.getBehaviour().getNextDirection());
 			}
 			movedPlayers.clear();
 			bHandler.update();
@@ -402,31 +376,10 @@ public abstract class Game {
 	}
 
 	private void finishGame() {
-		int totalScore = 0, maxScore = -1, worstScore = 9999;
-		Player bestPlayer = null;
-		
-		for (Player p : players) {
-			if (p.getPoints() > maxScore) {
-				maxScore = p.getPoints();
-				bestPlayer = p;
-			}
-			else if (p.getPoints() < worstScore)
-				worstScore = p.getPoints();
-			
-			totalScore += p.getPoints();
-		}
-		geneticAlgorithm.setBestScore(maxScore);
-		geneticAlgorithm.setAvrScore(totalScore / players.size());
-		geneticAlgorithm.setTotalScore(totalScore);
-		geneticAlgorithm.setWorstScore(worstScore);
-		geneticAlgorithm.setBestPlayer(bestPlayer.getBehaviour().getBrain());
-		
-		geneticAlgorithm.evolve();
-		
 		panel.stopThreads();
 		panel.surfaceDestroyed(panel.getHolder());
 		panel.clearFocus();
-		panel.getOwner().setResult(666, panel.getOwner().getIntent());
+		//CanvasActivity.SHOW_RESULTS = true;
 		panel.getOwner().finish();
 	}
 }
