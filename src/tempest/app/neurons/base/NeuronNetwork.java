@@ -1,8 +1,13 @@
 package tempest.app.neurons.base;
 
+import java.io.Serializable;
 import java.util.Vector;
 
-public class NeuronNetwork implements Cloneable {
+public class NeuronNetwork implements Cloneable, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int numberOfInputs;
 	private int numberOfOutputs;
 	private int numberHiddenLayers;

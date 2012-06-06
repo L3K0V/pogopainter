@@ -2,7 +2,7 @@ package tempest.game.pogopainter.graphics;
 
 import java.util.HashMap;
 import java.util.Map;
-import tempeset.game.pogopainter.R;
+import tempest.game.pogopainter.R;
 import tempest.game.pogopainter.bonuses.BonusObject;
 import tempest.game.pogopainter.bonuses.Bonuses;
 import tempest.game.pogopainter.gametypes.Game;
@@ -239,11 +239,11 @@ public abstract class Panel extends SurfaceView implements SurfaceHolder.Callbac
 		drawBackground(canvas);
 		drawBoard(canvas);
 		drawPlayers(canvas);
-		drawNav(canvas);
+		//drawNav(canvas);
 		drawTimer(canvas);
 		drawPointCounters(canvas);
-		drawControls(canvas);
-		drawDirection(canvas);
+		//drawControls(canvas);
+		//drawDirection(canvas);
 	}
 
 	private void drawBackground(Canvas canvas) {

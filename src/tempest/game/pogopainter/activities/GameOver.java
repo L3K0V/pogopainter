@@ -5,8 +5,7 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.TreeMap;
 
-import tempeset.game.pogopainter.R;
-
+import tempest.game.pogopainter.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

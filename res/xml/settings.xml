@@ -103,6 +103,10 @@
             android:selectable="true"
             android:summary="@string/controls_sum"
             android:title="@string/controls" />
+        <Preference
+            android:key="VERSION"
+            android:selectable="false"
+            android:title="Pogo version" />
     </PreferenceCategory>
     <PreferenceCategory
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -122,6 +126,38 @@
             android:selectable="true"
             android:summary="Background game music"
             android:title="Game music" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:key="NEURAL"
+        android:title="Neural network" >
+        <EditTextPreference
+            android:defaultValue="8"
+            android:dialogTitle="Number of inputs"
+            android:key="INPUTS"
+            android:title="Inputs" />
+        <EditTextPreference
+            android:defaultValue="2"
+            android:dialogTitle="Number of outputs"
+            android:key="OUTPUTS"
+            android:selectable="false"
+            android:summary="Current: 2"
+            android:title="Outputs" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:key="NEURAL_HIDDEN"
+        android:title="Neural hidden layers" >
+        <EditTextPreference
+            android:defaultValue="1"
+            android:dialogTitle="Number of hidden layers"
+            android:key="HIDDENS"
+            android:title="Hidden layers" />
+        <EditTextPreference
+            android:defaultValue="5"
+            android:dialogTitle="Number of neurons per layers"
+            android:key="HIDDENS_NEURONS"
+            android:title="Neurons per layers" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -1,9 +1,14 @@
 package tempest.app.neurons.base;
 
+import java.io.Serializable;
 import java.util.Random;
 import java.util.Vector;
 
-public class Neuron {
+public class Neuron implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int inputs  = 0;
 	private Vector<Double> inputWeights;
 
