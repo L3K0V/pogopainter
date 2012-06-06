@@ -2,15 +2,17 @@ package tempest.game.pogopainter.activities;
 
 import java.util.Map;
 
-import tempeset.game.pogopainter.R;
-
+import tempest.game.pogopainter.R;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -29,6 +31,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 	private Intent data = new Intent();
 	private ExtrasActivity extras = new ExtrasActivity();
 	private String current = "Current: ";
+	private String versionName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,8 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 
 		PreferenceCategory general = (PreferenceCategory) findPreference("GENERAL");
 		PreferenceCategory classic = (PreferenceCategory) findPreference("GAME_TYPE_CLASSIC");
+		PreferenceCategory neural  = (PreferenceCategory) findPreference("NEURAL");
+		PreferenceCategory neuralLayers = (PreferenceCategory) findPreference("NEURAL_LAYERS");
 		PreferenceScreen root = (PreferenceScreen) findPreference("PREFERENCES_ROOT");
 
 		general.removePreference(color);
@@ -57,6 +62,21 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 		updatePreferenceSummary("CONTROLS");
 		updatePreferenceSummary("GAME_MUSIC");
 		updatePreferenceSummary("GAME_SOUNDS");
+		updatePreferenceSummary("INPUTS");
+		updatePreferenceSummary("OUTPUTS");
+		updatePreferenceSummary("HIDDENS");
+		updatePreferenceSummary("HIDDENS_NEURONS");
+		
+		try {
+			Log.d(tag, "Version check");
+			PackageInfo pinfo = null;
+			pinfo = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
+			versionName = pinfo.versionName;
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		Preference version = findPreference("VERSION");
+		version.setSummary(versionName);
 	}
 
 	@Override
@@ -143,6 +163,11 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 			CheckBoxPreference checkBoxPref = (CheckBoxPreference) pref;
 			checkBoxPref.setSummaryOn(pref.getTitle() + ": " + "ON");
 			checkBoxPref.setSummaryOff(pref.getTitle() + ": " + "OFF" );
+		}
+		
+		if (pref instanceof EditTextPreference) {
+			EditTextPreference editTextPref = (EditTextPreference) pref;
+			editTextPref.setSummary("Current: " + editTextPref.getText());
 		}
 	}
 }

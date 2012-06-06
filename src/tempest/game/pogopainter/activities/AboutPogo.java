@@ -1,6 +1,6 @@
 package tempest.game.pogopainter.activities;
 
-import tempeset.game.pogopainter.R;
+import tempest.game.pogopainter.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;

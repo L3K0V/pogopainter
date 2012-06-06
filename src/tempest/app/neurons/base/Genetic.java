@@ -1,43 +1,67 @@
 package tempest.app.neurons.base;
 
+import java.io.Serializable;
 import java.util.Random;
 import java.util.Vector;
 
 
-public class Genetic {
+public class Genetic implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Vector<NeuronNetwork> pool;
-	private int bestScore = 0;
-	private int worstScore = 0;
-	private int totalScore = 0;
-	private int avrScore = 0;
-	private NeuronNetwork bestPlayer;
-	private int generation = 0;
+	private int bestNetworkIndex;
+	private Vector<Integer> networkScores;
+	private int generation;
 	private static Random rnd = new Random();
 	
-	private static double crossOverRate = 0.7;
-	private static double mutationRate = 0.08;
+	private static double crossOverRate = Constants.crossRate;
+	private static double mutationRate = Constants.mutateRate;
 
 	public Genetic(Vector<NeuronNetwork> pool) {
 		super();
 		this.pool = pool;
-		bestPlayer = pool.get(rnd.nextInt(pool.size()));
+		bestNetworkIndex = rnd.nextInt(pool.size());
+		setNetworkScores(new Vector<Integer>(pool.size()));
 	}
 	
 	public void evolve() {
-		NeuronNetwork best = bestPlayer.clone();
+		NeuronNetwork best = pool.get(bestNetworkIndex).clone();
 		
-		for(int i = 0; i < pool.size(); i++) {
-			NeuronNetwork current = pool.get(i);
-			if (current == bestPlayer)
-				continue;
+		Vector<NeuronNetwork> newPool = new Vector<NeuronNetwork>(pool.size());
+		
+		for(int i = 0; i < pool.size() - 1; i++) {					
+			NeuronNetwork net1 = getNetworkRoulette();
+			NeuronNetwork net2 = getNetworkRoulette();
 			
-			crossOver(best, pool.get(i));
-			mutate(i);
+			crossOver(net1, net2);
 			
-			System.out.println("Weights: "+current.getWeights().toString());
+			mutate(net1);
+			mutate(net2);
+			
+			newPool.add(rnd.nextInt() % 2  > 0 ? net1 : net2);
 		}
 		
+		newPool.add(best);
+		
+		pool.clear();
+		pool = newPool;
+		
 		generation++;
+	}
+	
+	private NeuronNetwork getNetworkRoulette() {
+		double slice = rnd.nextDouble() * getTotalScore();
+		
+		double currentScore = 0;
+		
+		for(int i = 0; i< networkScores.size(); i++) {
+			currentScore += networkScores.get(i);
+			
+			if (currentScore >= slice) {
+				return pool.get(i);
+			}
+		}
+		
+		return pool.get(0); // Not reachable but for safety
 	}
 	
 	
@@ -59,71 +83,80 @@ public class Genetic {
 			networkOne.set(x, networkTwo.elementAt(x));
 			networkTwo.set(x, tmp);
 		}
-		
-		net1.updateWeights(networkOne);
-		net2.updateWeights(networkTwo);
 	}
 
-	private final void mutate(int net) {
-		for (int x=0;x<pool.get(net).getNumberOfWeights()+1;x++) {
-			if (rnd.nextDouble()<= mutationRate) {
-				Vector<Double> weights = pool.get(net).getWeights();
-				weights.set(x, rnd.nextDouble());
-				pool.get(net).updateWeights(weights);
+	private final void mutate(NeuronNetwork network) {
+		Vector<Double> weights = network.getWeights();
+		
+		for(int i = 0; i < network.getWeights().size(); i++) {
+			if (rnd.nextDouble() < mutationRate) {				
+				weights.set(i, rnd.nextDouble());
 			}
 		}
 	}
 	
 	public int getBestScore() {
+		int bestScore = -99999;
+		
+		for (int score : networkScores) {
+			if (score > bestScore) {
+				bestScore = score;
+				setBestPlayer(networkScores.indexOf(score));
+			}
+		}
+		
 		return bestScore;
 	}
 
-
-	public void setBestScore(int bestScore) {
-		this.bestScore = bestScore;
-	}
-
-
 	public int getWorstScore() {
+		int worstScore = 99999;
+		
+		for (int score : networkScores) {
+			if (score < worstScore) {
+				worstScore = score;
+			}
+		}
+		
 		return worstScore;
 	}
 
-
-	public void setWorstScore(int worstScore) {
-		this.worstScore = worstScore;
-	}
-
-
 	public int getTotalScore() {
+		int totalScore = 0;
+		
+		for (int score : networkScores) {
+			totalScore += score;
+		}
+		
 		return totalScore;
 	}
 
-
-	public void setTotalScore(int totalScore) {
-		this.totalScore = totalScore;
+	public int getAvrScosre() {
+		return getTotalScore() / networkScores.size();
 	}
 
 
-	public int getAvrScore() {
-		return avrScore;
+	public int getGeneration() {
+		return generation;
+	}
+
+	public NeuronNetwork getBestNetwork() {
+		return pool.get(bestNetworkIndex);
 	}
 
 
-	public void setAvrScore(int avrScore) {
-		this.avrScore = avrScore;
-	}
-
-
-	public NeuronNetwork getBestPlayer() {
-		return bestPlayer;
-	}
-
-
-	public void setBestPlayer(NeuronNetwork bestPlayer) {
-		this.bestPlayer = bestPlayer;
+	public void setBestPlayer(int bestNetwork) {
+		this.bestNetworkIndex = bestNetwork;
 	}
 	
 	public Vector<NeuronNetwork> getNetworks() {
 		return pool;
+	}
+
+	public Vector<Integer> getNetworkScores() {
+		return networkScores;
+	}
+
+	public void setNetworkScores(Vector<Integer> networkScores) {
+		this.networkScores = networkScores;
 	}
 }

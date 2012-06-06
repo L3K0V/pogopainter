@@ -5,8 +5,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
-import tempeset.game.pogopainter.R;
-import tempest.game.pogopainter.activities.CanvasActivity;
+import tempest.game.pogopainter.R;
+import tempest.app.neurons.base.Constants;
+import tempest.game.pogopainter.activities.PogoPainterActivity;
 import tempest.game.pogopainter.bonuses.BonusHandler;
 import tempest.game.pogopainter.bonuses.BonusObject;
 import tempest.game.pogopainter.bonuses.Bonuses;
@@ -92,13 +93,17 @@ public abstract class Game {
 
 	private void initRedUser(int classicCellNumber) {
 		players.add(new Player(0, classicCellNumber - 1, Color.RED,
-				0, new UserBehavior(panel)));
+				0, new AIBehavior(PogoPainterActivity.genetic.getNetworks().get(0), this)));
 		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 
-				0, new AIBehavior()));
+				0, new AIBehavior(PogoPainterActivity.genetic.getNetworks().get(1), this)));
 		players.add(new Player(0, 0, Color.GREEN, 
-				0, new AIBehavior()));
+				0, new AIBehavior(PogoPainterActivity.genetic.getNetworks().get(2), this)));
 		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 
-				0, new AIBehavior()));
+				0, new AIBehavior(PogoPainterActivity.genetic.getNetworks().get(3), this)));
+		
+		for (Player pl : players) {
+			pl.getBehaviour().setPlayer(pl);
+		}
 	}
 	
 	public void move(Board board, Player player, Direction dir) {
@@ -190,7 +195,7 @@ public abstract class Game {
 		if (bonus == null)
 			return;
 		playBonusMusic(bonus);
-		if (bonus.getType() == Bonuses.TELEPORT) {
+		if (bonus.getType() == Bonuses.TELEPORT && player.getState() != PlayerState.STUN) {
 			Random rnd = new Random();
 			Checkpoint cp;
 			List<Checkpoint> checkpoints = bHandler.getCheckpoints();
@@ -293,7 +298,7 @@ public abstract class Game {
 	}
 	
 	public Vector<Integer> updateNeuronsInputData(Player player) {
-		Vector<Integer> data =  new Vector<Integer>(24);
+		Vector<Integer> data =  new Vector<Integer>(Constants.networkInputs);
 		List<Player> AIs = new ArrayList<Player>();
 		AIs.addAll(this.players);
 		List<BonusObject> bonuses = new ArrayList<BonusObject>();
@@ -308,22 +313,22 @@ public abstract class Game {
 
 		//AIs.remove(player);
 
-		for (Player pl : AIs) {
-			data.add(pl.getX() - px);
-			data.add(pl.getY() - py);
-		}
-
 		//data.add(player.getPoints());
 
 		for (BonusObject bo : bonuses) {
 			data.add(bo.getX() - px);
 			data.add(bo.getY() - py);
 		}
-
+	/*
+		for (Player pl : AIs) {
+			data.add(pl.getX() - px);
+			data.add(pl.getY() - py);
+		}
+	
 		for (Player pl : AIs) {
 			data.add(pl.getPoints());
 		}
-
+		
 		int redCells    = 0;
 		int blueCells   = 0;
 		int greenCells  = 0;
@@ -352,11 +357,11 @@ public abstract class Game {
 		data.add(blueCells);
 		data.add(greenCells);
 		data.add(yellowCells);
-
-		while (data.size() < 24) {
-			data.add(-1);
+	*/
+		while (data.size() < Constants.networkInputs) {
+			data.add(0);
 		}
-		System.out.println(data.toString() + " size: " + data.size());
+		//System.out.println(data.toString() + " size: " + data.size());
 		return data;
 	}
 
@@ -364,10 +369,12 @@ public abstract class Game {
 		if (time == 0) {
 			finishGame();
 		} else {
+			//PogoPainterActivity.genetic.evolve();
 			manageStun();
 			for (Player pl: players) {
 				pl.getBehaviour().refreshInputData(updateNeuronsInputData(pl));
 				move(board, pl, pl.getBehaviour().getNextDirection());
+				board.setPlayerColorOnCell(pl);
 			}
 			movedPlayers.clear();
 			bHandler.update();
@@ -376,6 +383,11 @@ public abstract class Game {
 	}
 
 	private void finishGame() {
+		Vector<Integer> playersScores = new Vector<Integer>(4);
+		for (Player pl : players) {
+			playersScores.add(pl.getPoints());	
+		}
+		PogoPainterActivity.genetic.setNetworkScores(playersScores);
 		panel.stopThreads();
 		panel.surfaceDestroyed(panel.getHolder());
 		panel.clearFocus();

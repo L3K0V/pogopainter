@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.widget.Toast;
 
 public class CanvasActivity extends Activity {
 	public static boolean SHOW_RESULTS;
@@ -37,6 +38,7 @@ public class CanvasActivity extends Activity {
 		panel = new ClassicPanel(this, this);
 		setContentView(panel);
 		setResult(666);
+		Toast.makeText(this, "Generation: " + PogoPainterActivity.genetic.getGeneration(), Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

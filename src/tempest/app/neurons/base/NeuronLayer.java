@@ -1,8 +1,13 @@
 package tempest.app.neurons.base;
 
+import java.io.Serializable;
 import java.util.Vector;
 
-public class NeuronLayer {
+public class NeuronLayer implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int numberOfNeurons = 0;
 	private String label = "";
 	private Vector<Neuron> layer;

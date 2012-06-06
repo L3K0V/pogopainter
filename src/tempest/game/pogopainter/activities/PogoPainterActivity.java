@@ -1,8 +1,17 @@
 package tempest.game.pogopainter.activities;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import tempeset.game.pogopainter.R;
+import tempest.game.pogopainter.R;
+import tempest.app.neurons.base.Constants;
 import tempest.app.neurons.base.Genetic;
 import tempest.app.neurons.base.NeuronNetwork;
 import android.app.Activity;
@@ -11,6 +20,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,13 +41,38 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 	private int games = 0;
 	private Intent playgame;
 	public static Genetic genetic;
+	private static final Logger fLogger = Logger.getLogger(Genetic.class.getPackage().getName());
 	
 	static {
-		Vector<NeuronNetwork> AIs = new Vector<NeuronNetwork>(4);
-		for (int i = 0; i < 4; i++) {
-			AIs.add(new NeuronNetwork(24, 2, 2, 11));
+		genetic = null;
+		try {
+			File sdCard = Environment.getExternalStorageDirectory();
+			File dir = new File(sdCard.getAbsolutePath() + "/Android/data/tempest.game.pogopainter/files/");
+			dir.mkdirs();
+			File file = new File(dir, "genetic.ser");
+			FileInputStream fileIn = new FileInputStream(file);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			try {
+				genetic = (Genetic) in.readObject();
+			} catch (ClassNotFoundException cnfe) {
+				cnfe.printStackTrace();
+				fLogger.log(Level.SEVERE, "Cannot perform input. Class not found!", cnfe);
+			}
+			in.close();
+			fileIn.close();
+			System.out.println("Genetic load at: " + genetic.getGeneration() + " generation!");
+		} catch (IOException ioe) {
+			fLogger.log(Level.SEVERE, "Cannot perform input.", ioe);
 		}
-		genetic = new Genetic(AIs);
+		
+		if (genetic == null) {
+			Vector<NeuronNetwork> AIs = new Vector<NeuronNetwork>(4);
+			for (int i = 0; i < 4; i++) {
+				AIs.add(new NeuronNetwork(Constants.networkInputs, Constants.networkOutputs, Constants.networkHiddenLayers, Constants.networkHiddenNeurons));
+			}
+			genetic = new Genetic(AIs);
+			System.out.println("Genetic not was found... Created new one: " + genetic.getGeneration() + " generation!");
+		}	
 	}
 
 	@Override
@@ -63,6 +99,23 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 
 	@Override
 	protected void onDestroy() {
+		try {
+			File sdCard = Environment.getExternalStorageDirectory();
+			File dir = new File(sdCard.getAbsolutePath() + "/Android/data/tempest.game.pogopainter/files/");
+			dir.mkdirs();
+			File file = new File(dir, "genetic.ser");
+			FileOutputStream fileOut = new FileOutputStream(file);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(genetic);
+			out.flush();
+			out.close();
+			fileOut.flush();
+			fileOut.close();
+			System.out.println("Genetic saved at: " + genetic.getGeneration() + " generation!");
+		} catch (IOException ioe) {
+			fLogger.log(Level.SEVERE, "Cannot perform output.", ioe);
+		}
+		
 		Log.d(tag, "Exiting");
 		this.finish();
 		super.onDestroy();
@@ -105,8 +158,9 @@ public class PogoPainterActivity extends Activity implements OnClickListener {
 				finish();
 				startActivity(intent);
 				Toast.makeText(getBaseContext(), getString(R.string.lang_change), Toast.LENGTH_SHORT).show();
-			} else if (resultCode == 666 && games < 10) {
+			} else if (resultCode == 666 && games < Constants.trainingGames) {
 				games++;
+				genetic.evolve();
 				Log.d(tag, "Run: " + Integer.toString(games));
 				startActivityForResult(playgame, 1);
 			}

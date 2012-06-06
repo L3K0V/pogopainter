@@ -2,7 +2,7 @@ package tempest.game.pogopainter.system;
 
 import java.util.HashMap;
 import java.util.Map;
-import tempeset.game.pogopainter.R;
+import tempest.game.pogopainter.R;
 import tempest.game.pogopainter.activities.PogoPainterActivity;
 import android.content.Context;
 import android.media.AudioManager;

@@ -10,4 +10,28 @@
 0.1.2.1(20120604)
 + Working neuron network
 + Can run multiple games
++ Rewrited genetic methods
++ Create more simple neuron network for AIs
+- Not tested yet
 - No working genetic
+
+0.3.0(20120605)
++ Working genetic
++ Working neuron network
++ Refactoring & Creating constants class
++ Again change versions added ~neural at the end of version
++ Removed unused graphics in neural "mode" 
+EXAMPLE: 0.3.0~neural
+- Needs configure
+- Not save genetic neuron newtorks
+- Not show in options neurons generation
+
+0.3.1(20120606)
++ Added neural preferences
++ Added version to preferences
++ Change direction with random if neural network give invalid
++ Save/Load genetic from SD card path: /mnt/sdcard/Android/data/tempest.game.pogopainter/files/ file: genetic.ser
++ If there`s no such file, will be created from zero generation
++ Fixed main package in manifest
++ Fixed setPlayerColorOnCell() even when player not move
++ Fixed player can teleport when is stunned (can be enabled when achievements are implemented)
