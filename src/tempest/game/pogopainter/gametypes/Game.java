@@ -33,6 +33,10 @@ public abstract class Game {
 	protected List<Player> players;
 	protected List<Player> movedPlayers;
 	protected int stunTimer = -1;
+	protected int speedTime = -1;
+	
+	
+	private int nextUpdate[];
 	
 	protected abstract void initFields();
 	
@@ -54,53 +58,57 @@ public abstract class Game {
 			initRedUser(classicCellNumber);
 			break;
 		}
+		nextUpdate = new int[4];
+		for(int i = 0; i < 4; i++) {
+			nextUpdate[i] = 1000;
+		}
 	}
 
 	private void initYellowUser(int classicCellNumber) {
 		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
-				0, new UserBehavior(panel)));
+				0, new UserBehavior(panel), 10));
 		players.add(new Player(0, classicCellNumber - 1, Color.RED,
-				0, new AIBehavior(Difficulty.EASY, this)));
+				0, new AIBehavior(Difficulty.EASY, this), 10));
 		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
-				0, new AIBehavior(Difficulty.EASY, this)));
+				0, new AIBehavior(Difficulty.EASY, this), 10));
 		players.add(new Player(0, 0, Color.GREEN,
-				0, new AIBehavior(Difficulty.EASY, this)));
+				0, new AIBehavior(Difficulty.EASY, this), 10));
 	}
 
 	private void initGreenUser(int classicCellNumber) {
 		players.add(new Player(0, 0, Color.GREEN,
-				0, new UserBehavior(panel)));
+				0, new UserBehavior(panel), 10));
 		players.add(new Player(0, classicCellNumber - 1, Color.RED,
-				0, new AIBehavior(Difficulty.EASY, this)));
+				0, new AIBehavior(Difficulty.EASY, this), 10));
 		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
-				0, new AIBehavior(Difficulty.EASY, this)));
+				0, new AIBehavior(Difficulty.EASY, this), 10));
 		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW,
-				0, new AIBehavior(Difficulty.EASY, this)));
+				0, new AIBehavior(Difficulty.EASY, this), 10));
 	}
 
 	private void initBlueUser(int classicCellNumber) {
 		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE,
-				0, new UserBehavior(panel)));
+				0, new UserBehavior(panel), 10));
 		players.add(new Player(0, classicCellNumber - 1, Color.RED,
-				0, new AIBehavior(Difficulty.EASY, this)));
+				0, new AIBehavior(Difficulty.EASY, this), 10));
 		players.add(new Player(0, 0, Color.GREEN,
-				0, new AIBehavior(Difficulty.EASY, this)));
+				0, new AIBehavior(Difficulty.EASY, this), 10));
 		players.add(new Player(classicCellNumber - 1,
-				0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this)));
+				0, Color.YELLOW, 0, new AIBehavior(Difficulty.EASY, this), 10));
 	}
 
 	private void initRedUser(int classicCellNumber) {
 		players.add(new Player(0, classicCellNumber - 1, Color.RED,
-				0, new UserBehavior(panel)));
+				0, new UserBehavior(panel), 10));
 		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 
-				0, new AIBehavior(Difficulty.EASY, this)));
+				0, new AIBehavior(Difficulty.EASY, this), 10));
 		players.add(new Player(0, 0, Color.GREEN, 
-				0, new AIBehavior(Difficulty.EASY, this)));
+				0, new AIBehavior(Difficulty.EASY, this), 10));
 		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 
-				0, new AIBehavior(Difficulty.EASY, this)));
+				0, new AIBehavior(Difficulty.EASY, this), 10));
 	}
 	
-	public void move(Board board, Player player, Direction dir) {
+	public void move(Player player, Direction dir) {
 		if (player.getState() == PlayerState.STUN)
 			return;
 		movedPlayers.add(player);
@@ -207,6 +215,9 @@ public abstract class Game {
 			stunPl.remove(player);
 			bonus.setBonusEffect(stunPl, board);
 			stunTimer = 0;
+		} else if (bonus.getType() == Bonuses.SPEEDUP) {
+			speedTime = 0;
+			bonus.setBonusEffect(player, board);
 		} else {
 			bonus.setBonusEffect(player, board);
 		}
@@ -229,6 +240,8 @@ public abstract class Game {
 		case STUN :
 			music.playSound(R.raw.stun);
 			break;
+		case SPEEDUP :
+			music.playSound(R.raw.cleaner);
 		}
 	}
 
@@ -289,6 +302,19 @@ public abstract class Game {
 				stunTimer = -1;
 			}
 		}
+		
+		if (speedTime >= 0) {
+			speedTime++;
+			if (speedTime == STUN_TIME) {
+				for(Player pl : players) {
+					if (pl.getState() == PlayerState.SPEED) {
+						pl.setState(PlayerState.NORMAL);
+						pl.setSpeed(10);
+					}
+					speedTime = -1;
+				}
+			}
+		}
 	}
 
 	public void update() {
@@ -296,13 +322,19 @@ public abstract class Game {
 			finishGame();
 		} else {
 			manageStun();
-			for (Player pl: players) {
-				move(board, pl, pl.getBehaviour().getNextDirection());
-			}
 			movedPlayers.clear();
 			bHandler.update();
 		}
 		time--;
+	}
+	
+	public void updatePlayer(long time) {
+		for(int i = 0; i < 4; i++) {
+			nextUpdate[i] -= time;
+			if (nextUpdate[i] <= 0) {
+				nextUpdate[i] = players.get(i).update(this);
+			}
+		}
 	}
 
 	private void finishGame() {

@@ -43,7 +43,7 @@ public class BonusHandler {
 
 	private BonusObject getRandomBonus() {
 		BonusObject res = null;
-		int ran = rnd.nextInt(8);
+		int ran = rnd.nextInt(10);
 		switch (ran) {
 		case 0: case 1: case 2:
 			res = new Arrow();
@@ -57,6 +57,8 @@ public class BonusHandler {
 		case 6: case 7:
 			res = new Cleaner();
 			break;
+		case 8: case 9:
+			res = new SpeedUp();
 		}
 		return res;
 	}

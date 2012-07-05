@@ -1,7 +1,7 @@
 package tempest.game.pogopainter.player;
 
 public enum PlayerState {
-	STUN(0), NORMAL(1);
+	STUN(0), NORMAL(1), SPEED(2);
 	
 	private int state;
 	
