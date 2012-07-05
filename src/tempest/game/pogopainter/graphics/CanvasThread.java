@@ -10,14 +10,17 @@ public class CanvasThread extends Thread {
 	private final static int FRAME;
 	private long startTime;
 	private long timeBeforeUpdate;
+	private long timePlayer;
 
 	static {
 		FRAME = 1000;
 	}
+	
 	public CanvasThread(SurfaceHolder holder, Panel panel) {
 		this.surfaceHolder = holder;
 		this.panel = panel;
 		this.timeBeforeUpdate = FRAME;
+		this.timePlayer = 0;
 		setName("CanvasThread");
 	}
 	
@@ -25,6 +28,7 @@ public class CanvasThread extends Thread {
 		this.run = run;
 		if (this.run == false) {
 			timeBeforeUpdate = FRAME;
+			timePlayer = 0;
 		}
 	}
 	
@@ -42,8 +46,12 @@ public class CanvasThread extends Thread {
 			try {
 				canvas = surfaceHolder.lockCanvas(null);
 				synchronized (surfaceHolder) {
+					long temp = timePlayer;
+					timePlayer += (FRAME - timeBeforeUpdate) - timePlayer;
+					panel.getGame().updatePlayer(timePlayer - temp);
 					if (timeBeforeUpdate <= 0 ) {
 						timeBeforeUpdate = FRAME;
+						timePlayer = 0;
 						panel.getGame().update();
 					}
 					panel.onDraw(canvas);
