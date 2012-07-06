@@ -14,6 +14,7 @@ public abstract class BonusObject {
 	protected int x;
 	protected int y;
 	protected Bonuses type;
+	protected double weight;
 	protected Bitmap bonusBitmap = null;
 	protected boolean ifScaled = false;
 
@@ -37,6 +38,10 @@ public abstract class BonusObject {
 
 	public final Bonuses getType() {
 		return type;
+	}
+	
+	public final double getWeight() {
+		return weight;
 	}
 
 	public void setBitmap(Bitmap bonusBitmap) {

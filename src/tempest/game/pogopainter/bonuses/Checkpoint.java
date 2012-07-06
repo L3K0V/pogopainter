@@ -12,6 +12,7 @@ public class Checkpoint extends BonusObject {
 	
 	public Checkpoint() {
 		type = Bonuses.CHECKPOINT;
+		weight = 2.0;
 	}
 
 	@Override
