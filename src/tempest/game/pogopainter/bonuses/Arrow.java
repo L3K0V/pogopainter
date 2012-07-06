@@ -18,6 +18,7 @@ public class Arrow extends BonusObject {
 		changeState();
 		rotated = true;
 		type = Bonuses.ARROW;
+		weight = 1.0;
 	}
 
 	@Override
