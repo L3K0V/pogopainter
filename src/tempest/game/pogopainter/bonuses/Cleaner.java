@@ -10,6 +10,7 @@ public class Cleaner extends BonusObject {
 	
 	public Cleaner() {
 		type = Bonuses.CLEANER;
+		weight = 1.5;
 	}
 
 	@Override

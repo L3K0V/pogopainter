@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import tempest.game.pogopainter.bonuses.Arrow;
 import tempest.game.pogopainter.bonuses.BonusObject;
 import tempest.game.pogopainter.gametypes.Game;
 import tempest.game.pogopainter.system.Cell;
@@ -24,15 +25,20 @@ public class AIBehavior implements Behavior {
 	public void setPlayer(Player pl) {
 		this.ai = pl;
 	}
-	
+
 	public Direction getNextDirection() {
 		List<BonusObject> bonuses = new ArrayList<BonusObject>();
 		bonuses.addAll(actions.getBonusHandler().getCheckpoints());
 		bonuses.addAll(actions.getBonusHandler().getOtherBonuses());
-		double distance = 0.0, max = 0.0;
-		int px = 0, py = 0;
+
+		List<Player> otherPlayers = new ArrayList<Player>();
+		otherPlayers.addAll(actions.getPlayers());
+		otherPlayers.remove(ai);
+		double distance = 0.0, enemyDistance = 0.0, max = 0.0;
+		int px = 0, py = 0, ex = 0, ey = 0;
 
 		for (Direction dir : Direction.values()) {
+
 			if (actions.checkDir(dir, ai)) {
 				switch (dir) {
 				case LEFT:
@@ -50,12 +56,34 @@ public class AIBehavior implements Behavior {
 				default:
 					break;
 				}
-				
+
 				for (BonusObject bonus : bonuses) {
-					distance = calcDistance(px, py, bonus);
-					calcBonusScore(bonus, distance);
-					
-					if (calcBonusScore(bonus, distance) > max) {
+					for (Player player : otherPlayers) {
+						if (actions.checkDir(dir, player)) {
+							switch (dir) {
+							case LEFT:
+								px = player.getX() +1;
+								break;
+							case RIGHT:
+								px = player.getX() -1;
+								break;
+							case UP:
+								py = player.getY() -1;
+								break;
+							case DOWN:
+								py = player.getY() +1;
+								break;
+							default:
+								break;
+							}
+						}
+						enemyDistance = calcDistance(ex, ey, bonus);
+						
+						if (calcBonusScore(bonus, enemyDistance, player) > max) {
+							max = calcBonusScore(bonus, enemyDistance, player);
+						}
+					}
+					if (calcBonusScore(bonus, distance, ai) > max) {
 						getNextDirectionToBonus(bonus);
 					}
 				}
@@ -63,20 +91,54 @@ public class AIBehavior implements Behavior {
 		}
 		return nextDirection;
 	}
-	
+
 	private double calcDistance(int x, int y, Cell destination) {
 		double distance = Math.sqrt(Math.pow((x - destination.getX()), 2) + 
 				Math.pow((y - destination.getY()), 2));
 		return distance;
 	}
-	
+
 	private double calcDistance(int px, int py, BonusObject bonus) {
 		return Math.abs(px - bonus.getX()) + Math.abs(py - bonus.getY());
 	}
-	
-	private double calcBonusScore(BonusObject bonus, Double distance) {
-		Score score = new Score(actions.getBoard(), ai);
-		return ((score.Calculate() + distance) * bonus.getWeight() ) / distance;
+
+	private double calcBonusScore(BonusObject bonus, Double distance, Player pl) {
+		double result = 0.0;
+		Score score = new Score(actions.getBoard(), pl);
+		switch (bonus.getType()) {
+		case CHECKPOINT:
+			result = ((score.Calculate() + distance) * bonus.getWeight() ) / distance;
+			break;
+		case ARROW:
+			int cells = 0;
+			Arrow arrow = (Arrow) bonus;
+			switch (arrow.getState()) {
+			case 1:
+				for (int i = arrow.getX(); i < 8; i++) {
+					cells++;
+				}
+				break;
+			case 2:
+				for (int i = arrow.getY(); i < 8; i++) {
+					cells++;
+				}
+				break;
+			case 3:
+				for (int i = arrow.getX(); i < -1; i++) {
+					cells++;
+				}
+				break;
+			case 4:
+				for (int i = arrow.getX(); i < -1; i++) {
+					cells++;
+				}
+				break;
+			}
+			result = ((distance + cells) * bonus.getWeight() ) / distance;
+			break;
+		}
+
+		return result;
 	}
 
 	private void getNextDirectionToBonus(BonusObject bonus) {
