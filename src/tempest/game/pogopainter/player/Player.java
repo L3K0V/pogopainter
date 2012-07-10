@@ -9,8 +9,9 @@ import tempest.game.pogopainter.gametypes.Game;
 import tempest.game.pogopainter.graphics.PlayerAnimation;
 import tempest.game.pogopainter.system.Board;
 import tempest.game.pogopainter.system.Direction;
+import tempest.game.pogopainter.system.TimeListener;
 
-public class Player {
+public class Player implements TimeListener{
 	private int x;
 	private int y;
 	private int color;
@@ -104,6 +105,11 @@ public class Player {
 	
 	public int update(Game action) {
 		action.move(this, behaviour.getNextDirection());
+		return speed * 100;
+	}
+
+	public int wakeUp(Game game) {
+		game.move(this, behaviour.getNextDirection());
 		return speed * 100;
 	}
 }
