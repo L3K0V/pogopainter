@@ -11,6 +11,7 @@ import tempest.game.pogopainter.player.PlayerState;
 import tempest.game.pogopainter.system.Cell;
 import tempest.game.pogopainter.system.Direction;
 import tempest.game.pogopainter.system.Metrics;
+import tempest.game.pogopainter.system.TimeManager;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -26,6 +27,7 @@ import android.view.SurfaceView;
 
 public abstract class Panel extends SurfaceView implements SurfaceHolder.Callback {
 	protected Game game;
+	public TimeManager manager;
 	
 	private CanvasThread panelThread;
 	private int cellNumber;

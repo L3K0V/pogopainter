@@ -48,7 +48,7 @@ public class CanvasThread extends Thread {
 				synchronized (surfaceHolder) {
 					long temp = timePlayer;
 					timePlayer += (FRAME - timeBeforeUpdate) - timePlayer;
-					panel.getGame().updatePlayer(timePlayer - temp);
+					panel.manager.update(timePlayer - temp);
 					if (timeBeforeUpdate <= 0 ) {
 						timeBeforeUpdate = FRAME;
 						timePlayer = 0;

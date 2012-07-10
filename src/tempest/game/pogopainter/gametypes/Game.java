@@ -36,8 +36,6 @@ public abstract class Game {
 	protected int speedTime = -1;
 	
 	
-	private int nextUpdate[];
-	
 	protected abstract void initFields();
 	
 	protected void initPlayerColors(int classicCellNumber, int playerColor) {
@@ -58,9 +56,9 @@ public abstract class Game {
 			initRedUser(classicCellNumber);
 			break;
 		}
-		nextUpdate = new int[4];
-		for(int i = 0; i < 4; i++) {
-			nextUpdate[i] = 1000;
+		
+		for(Player pl: players) {
+			panel.manager.addListener(pl, 1000);
 		}
 	}
 
@@ -326,15 +324,6 @@ public abstract class Game {
 			bHandler.update();
 		}
 		time--;
-	}
-	
-	public void updatePlayer(long time) {
-		for(int i = 0; i < 4; i++) {
-			nextUpdate[i] -= time;
-			if (nextUpdate[i] <= 0) {
-				nextUpdate[i] = players.get(i).update(this);
-			}
-		}
 	}
 
 	private void finishGame() {
