@@ -9,9 +9,12 @@ public class TimeManager {
 	private ArrayList<Long> timesBeforeUpdae;
 	private Game game;
 	
-	public TimeManager(Game game) {
+	public TimeManager() {
 		listeners = new ArrayList<TimeListener>();
 		timesBeforeUpdae = new ArrayList<Long>();
+	}
+	
+	public void setGame(Game game) {
 		this.game = game;
 	}
 	

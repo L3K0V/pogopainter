@@ -102,11 +102,6 @@ public class Player implements TimeListener{
 	public void draw(Canvas canvas, Paint paint, Rect rectangle) {
 		canvas.drawBitmap(bitmap, null, rectangle, paint);
 	}
-	
-	public int update(Game action) {
-		action.move(this, behaviour.getNextDirection());
-		return speed * 100;
-	}
 
 	public int wakeUp(Game game) {
 		game.move(this, behaviour.getNextDirection());
