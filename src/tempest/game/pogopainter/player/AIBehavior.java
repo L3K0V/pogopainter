@@ -78,7 +78,7 @@ public class AIBehavior implements Behavior {
 							}
 						}
 						enemyDistance = calcDistance(ex, ey, bonus);
-						
+
 						if (calcBonusScore(bonus, enemyDistance, player) > max) {
 							max = calcBonusScore(bonus, enemyDistance, player);
 						}
