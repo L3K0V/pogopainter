@@ -94,10 +94,10 @@ public abstract class Game {
 				0, new UserBehavior(panel)));
 		players.add(new Player(classicCellNumber-1, classicCellNumber-1, Color.BLUE, 
 				0, new AIBehavior(Difficulty.EASY, this)));
-//		players.add(new Player(0, 0, Color.GREEN, 
-//				0, new AIBehavior(Difficulty.EASY, this)));
-//		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 
-//				0, new AIBehavior(Difficulty.EASY, this)));
+		players.add(new Player(0, 0, Color.GREEN, 
+				0, new AIBehavior(Difficulty.EASY, this)));
+		players.add(new Player(classicCellNumber - 1, 0, Color.YELLOW, 
+				0, new AIBehavior(Difficulty.EASY, this)));
 	}
 	
 	public void move(Board board, Player player, Direction dir) {
